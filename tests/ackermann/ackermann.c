@@ -3,7 +3,15 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MAX_M 3
+#define MAX_N 4
+
 typedef struct timespec timespec;
+
+const int correct[MAX_M+1][MAX_N+1] = { {1, 2, 3, 4, 5},
+                                        {2, 3, 4, 5, 6},
+                                        {3, 5, 7, 9, 11},
+                                        {5, 13, 29, 61, 125} };
 
 /* Ackermann function */
 int ackermann(int m, int n)
@@ -46,10 +54,16 @@ int main(int argc, char ** argv)
 	}
 
 	int m = atoi(argv[2]);
-	int n = atoi(argv[3]);
-	if(m < 0 || n < 0)
+	if(m < 0 || m > MAX_M)
 	{
-		fprintf(stderr, "m and n must be non-negative integers.\n");
+		fprintf(stderr, "m must be between 0 and %d inclusive.\n", MAX_M);
+		exit(1);
+	}
+
+	int n = atoi(argv[3]);
+	if(n < 0 || n > MAX_N)
+	{
+		fprintf(stderr, "n must be between 0 and %d inclusive.\n", MAX_N);
 		exit(1);
 	}
 
@@ -63,10 +77,13 @@ int main(int argc, char ** argv)
 		clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
 
 		int ack = ackermann(m, n);
-		//printf("result = %d\n", ack);
 
 		clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
 		timespec_subtract(&start, &stop, &interval);
+
+		//printf("result = %d\n", ack);
+		if(ack != correct[m][n])
+			printf("Error in iteration %d: function returns %d, correct result is %d\n", i, ack, correct[m][n]);
 
 		unsigned long long elapsed = interval.tv_sec * 1000000000L + interval.tv_nsec;
 		if(i > 0) // Do not include the first iteration; data need to be paged in/cached, so the first iteration will always throw the result
