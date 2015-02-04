@@ -20,25 +20,29 @@ namespace {
 		bool runOnModule(Module &M) override {
 			bool modified = false;
 
+			errs() << "FuncReorder: ";
+			errs().write_escaped(M.getName()) << '\n';
+
 			// Initialize RNG
 			std::mt19937 rng;
 			rng.seed(time(NULL)); // FIXME: use seed passed from command-line
 			std::uniform_int_distribution<uint32_t> dist(0, 1); // Restrict range to 0-1
 
-			errs() << "FuncReorder: ";
-			errs().write_escaped(M.getName()) << '\n';
-
+			// Move some functions to start of module at random
 			iplist<Function> &funcs = M.getFunctionList();
-
-			for(iplist<Function>::iterator it = funcs.begin(); it != funcs.end(); it++){
-				errs() << '\t';
+			iplist<Function>::iterator it = funcs.begin();
+			while(it != funcs.end()){
 				Function &F = (*it);
+				it++;
+
+				errs() << '\t';
 				errs().write_escaped(F.getName());
+
 				int chance = dist(rng);
 				if(chance == 0){
 					F.removeFromParent(); // Unlink function from parent module, without removing it
-					funcs.push_back(&F); // Put function at end of module
-					errs() << "\tSending to end.";
+					funcs.push_front(&F); // Put function at start of module
+					errs() << "\tSending to start.";
 					modified = true;
 				}
 				errs() << '\n';
