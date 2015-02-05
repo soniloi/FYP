@@ -37,7 +37,7 @@ namespace {
 			errs() << "AllocInsert: ";
 			errs().write_escaped(F.getName()) << '\n';
 
-			BasicBlock &BB = *(F.begin()); // FIXME: is this actually the entry block, or just some randomer? Does it matter?
+			BasicBlock &BB = F.getEntryBlock();
 			Instruction &I = *(BB.begin()); // FIXME: is this actually the first instruction in the block?
 
 			Type * Int32Type = IntegerType::getInt32Ty(getGlobalContext());
