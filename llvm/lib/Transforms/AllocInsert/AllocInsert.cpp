@@ -38,7 +38,7 @@ namespace {
 			errs().write_escaped(F.getName()) << '\n';
 
 			BasicBlock &BB = F.getEntryBlock();
-			Instruction &I = *(BB.begin()); // FIXME: is this actually the first instruction in the block?
+			Instruction &I = *(BB.getFirstNonPHI()); // First instruction in block that is not a PHINode instruction
 
 			Type * Int32Type = IntegerType::getInt32Ty(getGlobalContext());
 
