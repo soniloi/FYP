@@ -3,6 +3,7 @@
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
+#include "llvm/IR/ValueSymbolTable.h" // For dumping symbol table values
 #include "llvm/Pass.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/raw_ostream.h"
@@ -10,6 +11,7 @@
 
 #include <random>
 #include <time.h>
+
 
 using namespace llvm;
 
@@ -21,7 +23,12 @@ using namespace llvm;
 //static cl::opt<unsigned>
 //RandomSeed("random-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
 
+static std::mt19937 rng;
+static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
+static bool set = false;
+
 namespace {
+
 	struct AllocInsert : public FunctionPass {
 		static char ID; // Pass identification, replacement for typeid
 		AllocInsert() : FunctionPass(ID) {}
@@ -29,10 +36,10 @@ namespace {
 		bool runOnFunction(Function &F) override {
 			bool modified = false;
 
-			// Initialize RNG
-			std::mt19937 rng;
-			rng.seed(time(NULL)); // FIXME: use seed passed from command-line
-			std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as necessary
+			if(!set){
+				rng.seed(time(NULL));
+				set = true;
+			}
 
 			errs() << "AllocInsert: ";
 			errs().write_escaped(F.getName()) << '\n';
