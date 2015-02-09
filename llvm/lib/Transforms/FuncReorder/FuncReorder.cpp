@@ -9,6 +9,9 @@
 
 using namespace llvm;
 
+static std::mt19937 rng;
+static bool set = false;
+
 //#define DEBUG_TYPE "func-reorder" // FIXME: do we need this?
 
 //STATISTIC(FuncReorderCounter, "Reorders functions within a module at random"); // FIXME: do we need this?
@@ -21,12 +24,14 @@ namespace {
 		bool runOnModule(Module &M) override {
 			bool modified = false;
 
+			// Initialize RNG
+			if(!set){
+				rng.seed(time(NULL)); // FIXME: use seed passed from command-line
+				set = true;
+			}
+
 			errs() << "FuncReorder: ";
 			errs().write_escaped(M.getName()) << '\n';
-
-			// Initialize RNG
-			std::mt19937 rng;
-			rng.seed(time(NULL)); // FIXME: use seed passed from command-line
 
 			iplist<Function> &funcs = M.getFunctionList();
 			std::vector<Function*> funcs_tmp;
