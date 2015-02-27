@@ -31,7 +31,7 @@ namespace {
 			}
 
 			errs() << "FuncReorder: ";
-			errs().write_escaped(M.getName()) << '\n';
+			//errs().write_escaped(M.getName()) << '\n';
 
 			iplist<Function> &funcs = M.getFunctionList();
 			std::vector<Function*> funcs_tmp;
