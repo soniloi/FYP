@@ -1,27 +1,20 @@
-//#include "llvm/ADT/Statistic.h" // FIXME: this is in Hello pass sample code, do we need it?
-//#include "llvm/IR/Function.h"
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
 #include "llvm/IR/ValueSymbolTable.h" // For dumping symbol table values
 #include "llvm/Pass.h"
-#include "llvm/Support/CommandLine.h"
+#include "llvm/Support/CommandLine.h" // For passing command-line params
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/RandomNumberGenerator.h"
 
 #include <random>
-#include <time.h>
-
 
 using namespace llvm;
 
 //#define DEBUG_TYPE "alloc-insert" // FIXME: do we need this?
 
-//STATISTIC(AllocInsertCounter, "Allocates dummy local variables at random"); // FIXME: do we need this?
-
-//uncomment when enabling seed passed from command-line
-//static cl::opt<unsigned>
-//RandomSeed("random-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
+static cl::opt<unsigned>
+RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
 
 static std::mt19937 rng;
 static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
@@ -34,12 +27,14 @@ namespace {
 		AllocInsert() : FunctionPass(ID) {}
 
 		bool runOnFunction(Function &F) override {
-			bool modified = false;
-
 			if(!set){
-				rng.seed(time(NULL));
+				unsigned int sd = RandomSeed;
+				errs() << "seed: " << sd << "\n";
+				rng.seed(sd);
 				set = true;
 			}
+
+			bool modified = false;
 
 			errs() << "AllocInsert: ";
 			errs().write_escaped(F.getName()) << '\n';
@@ -51,6 +46,7 @@ namespace {
 
 			// Insert a (restricted) random number of alloca instructions at the start of the function
 			int its = dist(rng);
+			errs() << "its: " << its << '\n';
 			if(its > 0){
 				int i;
 				for(i = 0; i < its; i++){
