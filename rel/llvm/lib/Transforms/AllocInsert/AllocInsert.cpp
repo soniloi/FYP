@@ -29,24 +29,18 @@ namespace {
 		bool runOnFunction(Function &F) override {
 			if(!set){
 				unsigned int sd = RandomSeed;
-				errs() << "seed: " << sd << "\n";
 				rng.seed(sd);
 				set = true;
 			}
 
 			bool modified = false;
 
-			errs() << "AllocInsert: ";
-			errs().write_escaped(F.getName()) << '\n';
-
 			BasicBlock &BB = F.getEntryBlock();
 			Instruction &I = *(BB.getFirstNonPHI()); // First instruction in block that is not a PHINode instruction
-
 			Type * Int32Type = IntegerType::getInt32Ty(getGlobalContext());
 
 			// Insert a (restricted) random number of alloca instructions at the start of the function
 			int its = dist(rng);
-			errs() << "its: " << its << '\n';
 			if(its > 0){
 				int i;
 				for(i = 0; i < its; i++){
@@ -55,7 +49,8 @@ namespace {
 					modified = true;
 				}
 			}
-			errs() << "\tAllocating space for " << its << " dummy variables\n";
+			errs() << "AllocInsert: ";
+			errs().write_escaped(F.getName()) << "\tAllocating space for " << its << " dummy variables\n";
 
 			errs() << "-------\n";
 			return modified;
