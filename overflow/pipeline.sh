@@ -41,7 +41,7 @@ if [[ "$#" > 2 ]]; then
 	optso=""
 	for optflag in ${@:3}; do
 		if [[ $optflag == "-alloc-insert" ]]; then
-			optso="$optso $baseaddr/lib/AllocInsert.so"
+			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=13"
 		elif [[ $optflag == "-func-reorder" ]]; then
 			optso="$baseaddr/lib/FuncReorder.so"
 		elif [[ $optflag == "-bb-reorder" ]]; then
