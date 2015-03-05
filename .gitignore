@@ -27,6 +27,20 @@
 *.out
 *.app
 
-# IR files
+# IR and assembly files
 *.bc
 *.ll
+*.s
+
+# Payload files
+*.dat
+
+# LLVM release tree
+rel/*
+!rel/llvm/Transforms/*
+
+# Junk created in test directories
+tests/sieve/*
+!tests/sieve/sieve.c
+tests/ackermann/*
+!tests/ackermann/ackermann.c
