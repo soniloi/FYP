@@ -1,7 +1,8 @@
 #!/bin/bash
 
 usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> <seed> [options]"
-if [[ "$#" < 3 ]]; then
+args_mandatory=3
+if [[ "$#" < $args_mandatory ]]; then
 	echo $usage
 	exit 1
 fi
@@ -37,10 +38,11 @@ fi
 echo "compiled -> $progname"
 
 # Run optimizer, if requested
-if [[ "$#" > 3 ]]; then
+if [[ "$#" > $args_mandatory ]]; then
 	prognameopt=$prognamein"opt"
+	let pos_first=$((args_mandatory+1))
 	optso=""
-	for optflag in ${@:4}; do
+	for optflag in ${@:$pos_first}; do
 		if [[ $optflag == "-alloc-insert" ]]; then
 			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=$seed"
 		elif [[ $optflag == "-func-reorder" ]]; then
