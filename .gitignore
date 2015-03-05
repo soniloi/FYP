@@ -37,7 +37,27 @@
 
 # LLVM release tree
 rel/*
-!rel/llvm/Transforms/*
+!rel/llvm/
+rel/llvm/*
+!rel/llvm/lib/
+rel/llvm/lib/*
+!rel/llvm/lib/Transforms/
+
+# Assorted undesirables in the Transforms directory
+rel/llvm/lib/Transforms/.svn/
+rel/llvm/lib/Transforms/CMakeLists.txt
+rel/llvm/lib/Transforms/Hello/
+rel/llvm/lib/Transforms/Hello/
+rel/llvm/lib/Transforms/IPO/
+rel/llvm/lib/Transforms/InstCombine/
+rel/llvm/lib/Transforms/Instrumentation/
+rel/llvm/lib/Transforms/LLVMBuild.txt
+rel/llvm/lib/Transforms/Makefile
+rel/llvm/lib/Transforms/ObjCARC/
+rel/llvm/lib/Transforms/Scalar/
+rel/llvm/lib/Transforms/Utils/
+rel/llvm/lib/Transforms/Vectorize/
+rel/llvm/lib/Transforms/*/Debug+Asserts/
 
 # Junk created in test directories
 tests/sieve/*
