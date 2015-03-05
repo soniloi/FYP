@@ -1,7 +1,7 @@
 #!/bin/bash
 
-usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> [options]"
-if [[ "$#" < 2 ]]; then
+usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> <seed> [options]"
+if [[ "$#" < 3 ]]; then
 	echo $usage
 	exit 1
 fi
@@ -13,6 +13,7 @@ if ! [[ -d $baseaddr ]]; then
 fi
 
 prognamein=$2
+seed=$3
 
 # Aliases
 local_clang="$baseaddr/bin/clang"
@@ -36,12 +37,12 @@ fi
 echo "compiled -> $progname"
 
 # Run optimizer, if requested
-if [[ "$#" > 2 ]]; then
+if [[ "$#" > 3 ]]; then
 	prognameopt=$prognamein"opt"
 	optso=""
-	for optflag in ${@:3}; do
+	for optflag in ${@:4}; do
 		if [[ $optflag == "-alloc-insert" ]]; then
-			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=13"
+			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=$seed"
 		elif [[ $optflag == "-func-reorder" ]]; then
 			optso="$baseaddr/lib/FuncReorder.so"
 		elif [[ $optflag == "-bb-reorder" ]]; then
