@@ -1,11 +1,10 @@
-//#include "llvm/ADT/Statistic.h" // FIXME: this is in Hello pass sample code, do we need it?
 #include "llvm/IR/Module.h"
 #include "llvm/Pass.h"
+#include "llvm/Support/CommandLine.h" // For passing command-line params
 #include "llvm/Support/raw_ostream.h"
 
 #include <vector>
 #include <random>
-#include <time.h>
 
 using namespace llvm;
 
@@ -14,7 +13,8 @@ static bool set = false;
 
 //#define DEBUG_TYPE "func-reorder" // FIXME: do we need this?
 
-//STATISTIC(FuncReorderCounter, "Reorders functions within a module at random"); // FIXME: do we need this?
+static cl::opt<unsigned>
+RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
 
 namespace {
 	struct FuncReorder : public ModulePass {
@@ -26,7 +26,8 @@ namespace {
 
 			// Initialize RNG
 			if(!set){
-				rng.seed(time(NULL)); // FIXME: use seed passed from command-line
+				unsigned int sd = RandomSeed;
+				rng.seed(sd);
 				set = true;
 			}
 
