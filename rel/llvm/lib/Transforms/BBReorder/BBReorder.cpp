@@ -16,7 +16,7 @@ using namespace llvm;
 //#define DEBUG_TYPE "bb-reorder" // FIXME: do we need this?
 
 static cl::opt<unsigned>
-RandomSeed("random-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
+RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
 
 static std::mt19937 rng;
 static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
