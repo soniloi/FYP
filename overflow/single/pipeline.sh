@@ -48,7 +48,7 @@ if [[ "$#" > $args_mandatory ]]; then
 		elif [[ $optflag == "-func-reorder" ]]; then
 			optso="$baseaddr/lib/FuncReorder.so -rnd-seed=$seed"
 		elif [[ $optflag == "-bb-reorder" ]]; then
-			optso="$baseaddr/lib/BBReorder.so"
+			optso="$baseaddr/lib/BBReorder.so -rnd-seed=$seed"
 		else
 			echo "Unknown pass: $optflag"
 			exit 1
