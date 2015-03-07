@@ -1,10 +1,9 @@
-//#include "llvm/ADT/Statistic.h" // FIXME: this is in Hello pass sample code, do we need it?
 #include "llvm/IR/Function.h"
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/ValueSymbolTable.h" // For dumping symbol table values
 #include "llvm/Pass.h"
-#include "llvm/Support/CommandLine.h"
+#include "llvm/Support/CommandLine.h" // For passing command-line params
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/RandomNumberGenerator.h"
 
@@ -16,11 +15,8 @@ using namespace llvm;
 
 //#define DEBUG_TYPE "bb-reorder" // FIXME: do we need this?
 
-//STATISTIC(BBReorderCounter, "Reorders basic blocks at random"); // FIXME: do we need this?
-
-//uncomment when enabling seed passed from command-line
-//static cl::opt<unsigned>
-//RandomSeed("random-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
+static cl::opt<unsigned>
+RandomSeed("random-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
 
 static std::mt19937 rng;
 static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
@@ -36,7 +32,8 @@ namespace {
 			bool modified = false;
 
 			if(!set){
-				rng.seed(time(NULL));
+				unsigned int sd = RandomSeed;
+				rng.seed(sd);
 				set = true;
 			}
 
