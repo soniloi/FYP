@@ -46,7 +46,7 @@ if [[ "$#" > $args_mandatory ]]; then
 		if [[ $optflag == "-alloc-insert" ]]; then
 			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=$seed"
 		elif [[ $optflag == "-func-reorder" ]]; then
-			optso="$baseaddr/lib/FuncReorder.so"
+			optso="$baseaddr/lib/FuncReorder.so -rnd-seed=$seed"
 		elif [[ $optflag == "-bb-reorder" ]]; then
 			optso="$baseaddr/lib/BBReorder.so"
 		else
