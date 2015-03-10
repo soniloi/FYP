@@ -13,7 +13,7 @@ if ! [[ -d $baseaddr ]]; then
 	exit 1
 fi
 
-prognamein=$2
+progname=$2
 seed=$3
 
 # Aliases
@@ -23,7 +23,6 @@ local_llc="$baseaddr/bin/llc"
 local_llvmdis="$baseaddr/bin/llvm-dis"
 local_opt="$baseaddr/bin/opt"
 
-progname=$prognamein
 link=''
 irext='ll' # bc for IR bytecode, ll for IR assembly
 irflag='-S' # leave blank if using IR bytecode, use -S if using IR assembly
@@ -39,7 +38,7 @@ echo "compiled -> $progname"
 
 # Run optimizer, if requested
 if [[ "$#" > $args_mandatory ]]; then
-	prognameopt=$prognamein"opt"
+	cp $progname.ll $progname.ll.saved
 	let pos_first=$((args_mandatory+1))
 	optso=""
 	for optflag in ${@:$pos_first}; do
@@ -53,9 +52,7 @@ if [[ "$#" > $args_mandatory ]]; then
 			echo "Unknown pass: $optflag"
 			exit 1
 		fi
-		$local_opt -load $optso $optflag < $progir $irflag -o $prognameopt.$irext
-		progname=$prognameopt
-		progir=$prognameopt.$irext
+		$local_opt -load $optso $optflag < $progir $irflag -o $progir
 		if ! [[ -f $progir ]]; then
 			echo "Optimization failed, exiting."
 			exit 1
