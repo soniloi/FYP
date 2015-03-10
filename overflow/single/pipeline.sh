@@ -1,7 +1,7 @@
 #!/bin/bash
 
-usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> <seed> [options]"
-args_mandatory=3
+usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> <seed> <link> [options]"
+args_mandatory=4
 if [[ "$#" < $args_mandatory ]]; then
 	echo $usage
 	exit 1
@@ -15,6 +15,7 @@ fi
 
 progname=$2
 seed=$3
+link=$4
 
 # Aliases
 local_clang="$baseaddr/bin/clang"
@@ -23,7 +24,6 @@ local_llc="$baseaddr/bin/llc"
 local_llvmdis="$baseaddr/bin/llvm-dis"
 local_opt="$baseaddr/bin/opt"
 
-link=''
 irext='ll' # bc for IR bytecode, ll for IR assembly
 irflag='-S' # leave blank if using IR bytecode, use -S if using IR assembly
 progir=$progname.$irext
