@@ -73,7 +73,7 @@ fi
 echo "compiled -> $progs"
 
 # Assemble and Link
-gcc $progs -o $progname $link
+$local_clang $progs -o $progname $link
 if ! [[ -x $progname ]]; then
 	echo "Link failed, exiting."
 	exit 1
