@@ -4,6 +4,8 @@ import os
 import random
 import subprocess
 
+import concat
+
 original = 'amalgamation.c'
 headerpath = 'header.c'
 protogen = 'cproto'
@@ -12,7 +14,7 @@ prototypespath = 'prototypes.lst'
 macrodir = 'first'
 funcdir = 'funcs'
 fileoutpath = 'humpty.c'
-sep = '/*****************************************************************************/\n'
+#sep = '/*****************************************************************************/\n'
 
 # Output formatted header to file
 def output_header(fileout, label):
@@ -57,6 +59,10 @@ def main():
 	if os.path.isfile(fileoutpath):
 		os.remove(fileoutpath)
 
+	# Concatenate file
+	concat.concat_source(fileoutpath, headerpath, prototypespath, macrodir, funcdir, indarr)
+
+	'''
 	fileout = open(fileoutpath, 'w+')
 
 	# Generate file; output 'header'
@@ -95,5 +101,6 @@ def main():
 		fileout.write('\n\n')
 
 	fileout.close()
+	'''
 
 main()
