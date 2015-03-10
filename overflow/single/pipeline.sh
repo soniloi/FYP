@@ -31,7 +31,7 @@ progirsaved=$progir.saved
 progs=$progname.s
 progc=$progname.c
 
-# Compile without assembly/linking
+# Compile to IR
 $local_clang -emit-llvm $irflag $progname.c -c -o $progir
 if ! [[ -f $progir ]]; then
 	echo "Compilation failed, exiting."
@@ -64,18 +64,18 @@ if [[ "$#" > $args_mandatory ]]; then
 	done
 fi
 
-# Assemble
+# Compile to target assembly
 $local_llc $progir -o $progs
 if ! [[ -f $progs ]]; then
-	echo "Assembly failed, exiting."
+	echo "Compilation failed, exiting."
 	exit 1
 fi
-echo "assembled -> $progs"
+echo "compiled -> $progs"
 
-# Link
+# Assemble and Link
 gcc $progs -o $progname $link
 if ! [[ -x $progname ]]; then
 	echo "Link failed, exiting."
 	exit 1
 fi
-echo "linked -> $progname"
+echo "assembled and linked -> $progname"
