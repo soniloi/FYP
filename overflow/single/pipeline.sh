@@ -27,6 +27,9 @@ link=''
 irext='ll' # bc for IR bytecode, ll for IR assembly
 irflag='-S' # leave blank if using IR bytecode, use -S if using IR assembly
 progir=$progname.$irext
+progirsaved=$progir.saved
+progs=$progname.s
+progc=$progname.c
 
 # Compile without assembly/linking
 $local_clang -emit-llvm $irflag $progname.c -c -o $progir
@@ -34,11 +37,11 @@ if ! [[ -f $progir ]]; then
 	echo "Compilation failed, exiting."
 	exit 1
 fi
-echo "compiled -> $progname"
+echo "compiled -> $progir"
 
 # Run optimizer, if requested
 if [[ "$#" > $args_mandatory ]]; then
-	cp $progname.ll $progname.ll.saved
+	cp $progir $progirsaved
 	let pos_first=$((args_mandatory+1))
 	optso=""
 	for optflag in ${@:$pos_first}; do
@@ -57,20 +60,20 @@ if [[ "$#" > $args_mandatory ]]; then
 			echo "Optimization failed, exiting."
 			exit 1
 		fi
-		echo "optimized ($optflag) -> $progname"
+		echo "optimized ($optflag) -> $progir"
 	done
 fi
 
 # Assemble
-$local_llc $progir -o $progname.s
-if ! [[ -f $progname.s ]]; then
+$local_llc $progir -o $progs
+if ! [[ -f $progs ]]; then
 	echo "Assembly failed, exiting."
 	exit 1
 fi
-echo "assembled -> $progname"
+echo "assembled -> $progs"
 
 # Link
-gcc $progname.s -o $progname $link
+gcc $progs -o $progname $link
 if ! [[ -x $progname ]]; then
 	echo "Link failed, exiting."
 	exit 1
