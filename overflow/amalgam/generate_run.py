@@ -21,7 +21,8 @@ macrodir = scriptdir + '/first'
 funcdir = scriptdir + '/funcs'
 fileoutpath = scriptdir + '/humpty.c'
 
-pipeline = scriptdir + '/pipeline.sh'
+ctoir = scriptdir + '/CToIR.sh'
+irtobin = scriptdir + '/IRToBin.sh'
 overflow = scriptdir + '/overflow.sh'
 smashcheck = scriptdir + '/smashcheck.sh'
 binname = scriptdir + '/humpty'
@@ -74,7 +75,7 @@ def generate():
 	concat.concat_source(fileoutpath, headerpath, prototypespath, macrodir, funcdir, indarr)
 
 def compile_pipeline(daa, seed, optflags):
-	process_args = [pipeline, daa, binname, str(seed), link] + optflags
+	process_args = [irtobin, daa, binname, str(seed), link] + optflags
 	subprocess.call(process_args)
 
 def main():
@@ -88,7 +89,11 @@ def main():
 	# Generate base version
 	generate()
 
+	# Compile to IR (needed for both normal and randomized versions)
+	subprocess.call([ctoir, daa, binname])
+
 	# Compile base version without randomization
+	print '>>> No randomization:'
 	compile_pipeline(daa, seed, [])
 	subprocess.call([overflow, binname, libfn, str(bufsize)])	
 
@@ -98,7 +103,7 @@ def main():
 
 	# Compile and test with each randomization technique
 	for optimization in optimizations:
-		print '>>> ' + optimization
+		print '>>> ' + optimization + ':'
 		compile_pipeline(daa, seed, [optimization])
 		smashed = int(subprocess.check_output([smashcheck, binname]))
 		print smashed
