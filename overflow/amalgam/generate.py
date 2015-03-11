@@ -8,14 +8,27 @@ import sys
 import concat
 
 usage = sys.argv[0] + ' <path-to-build-tree>'
-original = 'amalgamation.c'
-headerpath = 'header.c'
+
+scriptdir = os.path.dirname(os.path.realpath(__file__))
+
 protogen = 'cproto'
 protogenopt = '-si'
-prototypespath = 'prototypes.lst'
-macrodir = 'first'
-funcdir = 'funcs'
-fileoutpath = 'humpty.c'
+
+original = scriptdir + '/amalgamation.c'
+headerpath = scriptdir + '/header.c'
+prototypespath = scriptdir + '/prototypes.lst'
+macrodir = scriptdir + '/first'
+funcdir = scriptdir + '/funcs'
+fileoutpath = scriptdir + '/humpty.c'
+
+pipeline = scriptdir + '/pipeline.sh'
+overflow = scriptdir + '/overflow.sh'
+smashcheck = scriptdir + '/smashcheck.sh'
+binname = scriptdir + '/humpty'
+
+link = '-lpthread -ldl'
+libfn = '_IO_putc'
+bufsize = 2031
 
 # Generate array of indices in simple in-order sequence
 def generate_identity_permutation(arrlen):
@@ -63,11 +76,14 @@ def main():
 		print usage
 		sys.exit(1)
 	daa = sys.argv[1]
+
+	seed = 13
+
 	generate()
-	subprocess.call(["./pipeline.sh", daa, "humpty", "13", "-lpthread -ldl"])
-	subprocess.call(["./overflow.sh", "humpty", "_IO_putc", "2031"])
+	subprocess.call([pipeline, daa, binname, str(seed), link])
+	subprocess.call([overflow, binname, libfn, str(bufsize)])
 	
-	lol = subprocess.check_output(["./smashcheck.sh", "./humpty"])
-	print lol,
+	smashed = subprocess.check_output([smashcheck, binname])
+	print smashed,
 
 main()
