@@ -30,6 +30,8 @@ link = '-lpthread -ldl'
 libfn = '_IO_putc'
 bufsize = 2031
 
+optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
+
 # Generate array of indices in simple in-order sequence
 def generate_identity_permutation(arrlen):
 	indarr = []
@@ -71,6 +73,10 @@ def generate():
 	# Concatenate file
 	concat.concat_source(fileoutpath, headerpath, prototypespath, macrodir, funcdir, indarr)
 
+def compile_pipeline(daa, seed, optflags):
+	process_args = [pipeline, daa, binname, str(seed), link] + optflags
+	subprocess.call(process_args)
+
 def main():
 	if len(sys.argv) != 2:
 		print usage
@@ -79,11 +85,22 @@ def main():
 
 	seed = 13
 
+	# Generate base version
 	generate()
-	subprocess.call([pipeline, daa, binname, str(seed), link])
-	subprocess.call([overflow, binname, libfn, str(bufsize)])
-	
-	smashed = subprocess.check_output([smashcheck, binname])
-	print smashed,
+
+	# Compile base version without randomization
+	compile_pipeline(daa, seed, [])
+	subprocess.call([overflow, binname, libfn, str(bufsize)])	
+
+	# Run tests on base version
+	smashed = int(subprocess.check_output([smashcheck, binname]))
+	print smashed
+
+	# Compile and test with each randomization technique
+	for optimization in optimizations:
+		print '>>> ' + optimization
+		compile_pipeline(daa, seed, [optimization])
+		smashed = int(subprocess.check_output([smashcheck, binname]))
+		print smashed
 
 main()
