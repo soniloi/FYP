@@ -4,6 +4,7 @@
 #include "llvm/IR/ValueSymbolTable.h" // For dumping symbol table values
 #include "llvm/Pass.h"
 #include "llvm/Support/CommandLine.h" // For passing command-line params
+#include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/RandomNumberGenerator.h"
 
@@ -13,7 +14,7 @@
 
 using namespace llvm;
 
-//#define DEBUG_TYPE "bb-reorder" // FIXME: do we need this?
+#define DEBUG_TYPE "bb-reorder"
 
 static cl::opt<unsigned>
 RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
@@ -37,8 +38,8 @@ namespace {
 				set = true;
 			}
 
-			errs() << "BBReorder: ";
-			errs().write_escaped(F.getName()) << '\n';
+			DEBUG(errs() << "BBReorder: ");
+			DEBUG(errs().write_escaped(F.getName()) << '\n');
 
 			iplist<BasicBlock> &blocks = F.getBasicBlockList();
 			std::vector<BasicBlock*> blocks_tmp;
@@ -50,8 +51,8 @@ namespace {
 			while(it != blocks.end()){
 				BasicBlock * BB = it;
 				it++;
-				errs() << "\tfound: ";
-				errs().write_escaped(BB->getName()) << '\n';
+				DEBUG(errs() << "\tfound: ");
+				DEBUG(errs().write_escaped(BB->getName()) << '\n');
 				BB->removeFromParent();
 				blocks_tmp.push_back(BB);
 			}
@@ -63,13 +64,14 @@ namespace {
 				BasicBlock * BB = blocks_tmp[index];
 				blocks_tmp.erase(blocks_tmp.begin() + index);
 				blocks.push_back(BB);
-				errs() << "\tpushing: ";
-				errs().write_escaped(BB->getName()) << '\n';
+				DEBUG(errs() << "\tpushing: ");
+				DEBUG(errs().write_escaped(BB->getName()) << '\n');
 				if(index > 0)
 					modified = true;
 			}
 
-							errs() << "-------\n";
+			DEBUG(errs() << "-------\n");
+
 			return modified;
 		}
 	};
