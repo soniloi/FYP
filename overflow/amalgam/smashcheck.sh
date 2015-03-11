@@ -9,6 +9,7 @@
 usage="Usage: $0 <path-to-binary>"
 grepnc="grep --color=never -q"
 pattern_smash="process [0-9][0-9]* is executing new program: /bin/bash"
+smashed=0
 
 if [[ "$#" -ne 1 ]]; then
 	echo $usage
@@ -26,10 +27,13 @@ logfile="run.log"
 gdb $bin -ex run > $logfile 2>&1 &
 wait
 if $grepnc "$pattern_smash" $logfile; then
-	echo "smashed"
+	smashed=1
 else
-	echo "blocked"
+	smashed=0
 fi
 
 # Clean up
 rm -f $logfile
+
+# Print result
+echo $smashed
