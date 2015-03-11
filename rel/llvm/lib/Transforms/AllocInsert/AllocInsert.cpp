@@ -4,6 +4,7 @@
 #include "llvm/IR/ValueSymbolTable.h" // For dumping symbol table values
 #include "llvm/Pass.h"
 #include "llvm/Support/CommandLine.h" // For passing command-line params
+#include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/RandomNumberGenerator.h"
 
@@ -11,7 +12,7 @@
 
 using namespace llvm;
 
-//#define DEBUG_TYPE "alloc-insert" // FIXME: do we need this?
+#define DEBUG_TYPE "alloc-insert"
 
 static cl::opt<unsigned>
 RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
@@ -39,7 +40,7 @@ namespace {
 			Instruction &I = *(BB.getFirstNonPHI()); // First instruction in block that is not a PHINode instruction
 			Type * Int32Type = IntegerType::getInt32Ty(getGlobalContext());
 
-			// Insert a (restricted) random number of alloca instructions at the start of the function
+			// Insert a bounded random number of alloca instructions at the start of the function
 			int its = dist(rng);
 			if(its > 0){
 				int i;
@@ -49,10 +50,10 @@ namespace {
 					modified = true;
 				}
 			}
-			errs() << "AllocInsert: ";
-			errs().write_escaped(F.getName()) << "\tAllocating space for " << its << " dummy variables\n";
+			DEBUG(errs() << "AllocInsert: ");
+			DEBUG(errs().write_escaped(F.getName()) << "\tAllocating space for " << its << " dummy variables\n");
+			DEBUG(errs() << "-------\n");
 
-			errs() << "-------\n";
 			return modified;
 		}
 	};
