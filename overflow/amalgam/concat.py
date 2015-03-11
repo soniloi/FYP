@@ -37,9 +37,9 @@ def concat_source(fileoutpath, headerpath, prototypespath, macrodir, funcdir, in
   funcpaths = os.listdir(funcdir)
   funcpaths.sort()
   for index in indarr:
-    print str(index) + '\t',
-    if index%20 == 0:
-      print
+    #print str(index) + '\t',
+    #if index%20 == 0:
+    #  print
     with open(funcdir + '/' + funcpaths[index], 'r') as funcfile:
       for line in funcfile:
         fileout.write(line)
