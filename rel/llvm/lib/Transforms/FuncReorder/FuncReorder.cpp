@@ -1,6 +1,7 @@
 #include "llvm/IR/Module.h"
 #include "llvm/Pass.h"
 #include "llvm/Support/CommandLine.h" // For passing command-line params
+#include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
 
 #include <vector>
@@ -11,7 +12,7 @@ using namespace llvm;
 static std::mt19937 rng;
 static bool set = false;
 
-//#define DEBUG_TYPE "func-reorder" // FIXME: do we need this?
+#define DEBUG_TYPE "func-reorder"
 
 static cl::opt<unsigned>
 RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
@@ -31,8 +32,8 @@ namespace {
 				set = true;
 			}
 
-			errs() << "FuncReorder: ";
-			//errs().write_escaped(M.getName()) << '\n';
+			DEBUG(errs() << "FuncReorder: ");
+			//DEBUG(errs().write_escaped(M.getName()) << '\n');
 
 			iplist<Function> &funcs = M.getFunctionList();
 			std::vector<Function*> funcs_tmp;
@@ -42,8 +43,8 @@ namespace {
 			while(it != funcs.end()){
 				Function * F = it;
 				it++;
-				errs() << "\tfound: ";
-				errs().write_escaped(F->getName()) << '\n';
+				DEBUG(errs() << "\tfound: ");
+				DEBUG(errs().write_escaped(F->getName()) << '\n');
 				F->removeFromParent();
 				funcs_tmp.push_back(F);
 			}
@@ -55,13 +56,14 @@ namespace {
 				Function * F = funcs_tmp[index];
 				funcs_tmp.erase(funcs_tmp.begin() + index);
 				funcs.push_back(F);
-				errs() << "\tpushing: ";
-				errs().write_escaped(F->getName()) << '\n';
+				DEBUG(errs() << "\tpushing: ");
+				DEBUG(errs().write_escaped(F->getName()) << '\n');
 				if(index > 0)
 					modified = true;
 			}
 			
-			errs() << "-------\n";
+			DEBUG(errs() << "-------\n");
+
 			return modified;
 		}
 	};
