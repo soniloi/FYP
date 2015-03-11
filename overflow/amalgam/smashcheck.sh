@@ -36,4 +36,4 @@ fi
 rm -f $logfile
 
 # Print result
-echo $smashed
+echo -n $smashed

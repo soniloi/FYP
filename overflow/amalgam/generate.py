@@ -3,9 +3,11 @@
 import os
 import random
 import subprocess
+import sys
 
 import concat
 
+usage = sys.argv[0] + ' <path-to-build-tree>'
 original = 'amalgamation.c'
 headerpath = 'header.c'
 protogen = 'cproto'
@@ -56,4 +58,16 @@ def generate():
 	# Concatenate file
 	concat.concat_source(fileoutpath, headerpath, prototypespath, macrodir, funcdir, indarr)
 
-generate()
+def main():
+	if len(sys.argv) != 2:
+		print usage
+		sys.exit(1)
+	daa = sys.argv[1]
+	generate()
+	subprocess.call(["./pipeline.sh", daa, "humpty", "13", "-lpthread -ldl"])
+	subprocess.call(["./overflow.sh", "humpty", "_IO_putc", "2031"])
+	
+	lol = subprocess.check_output(["./smashcheck.sh", "./humpty"])
+	print lol,
+
+main()
