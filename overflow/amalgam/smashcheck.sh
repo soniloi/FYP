@@ -7,7 +7,7 @@
 ###  there will be no output
 
 usage="Usage: $0 <path-to-binary>"
-grepnc="grep --color=never"
+grepnc="grep --color=never -q"
 pattern_smash="process [0-9][0-9]* is executing new program: /bin/bash"
 
 if [[ "$#" -ne 1 ]]; then
@@ -25,7 +25,11 @@ logfile="run.log"
 
 gdb $bin -ex run > $logfile 2>&1 &
 wait
-$grepnc "$pattern_smash" $logfile
+if $grepnc "$pattern_smash" $logfile; then
+	echo "smashed"
+else
+	echo "blocked"
+fi
 
 # Clean up
 rm -f $logfile
