@@ -19,14 +19,16 @@ headerpath = scriptdir + '/header.c'
 prototypespath = scriptdir + '/prototypes.lst'
 macrodir = scriptdir + '/first'
 funcdir = scriptdir + '/funcs'
-fileoutpath = scriptdir + '/humpty.c'
+binname = scriptdir + '/humpty'
+fileoutpath = binname + '.c'
+iroptpath = binname + '.ll.optimized'
+asmpath = binname + '.s'
 
 ctoir = scriptdir + '/CToIR.sh'
 irtobin = scriptdir + '/IRToBin.sh'
 overflow = scriptdir + '/overflow.sh'
 smashcheck = scriptdir + '/smashcheck.sh'
 sizecheck = scriptdir + '/sizecheck.sh'
-binname = scriptdir + '/humpty'
 
 link = '-lpthread -ldl'
 libfn = '_IO_putc'
@@ -106,6 +108,7 @@ def main():
 
 	# Compile and test with each randomization technique
 	for optimization in optimizations:
+		subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
 		print '>>> ' + optimization + ':'
 		compile_pipeline(daa, seed, [optimization])
 		smashed = int(subprocess.check_output([smashcheck, binname]))

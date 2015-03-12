@@ -30,11 +30,13 @@ if ! [[ -f $progir ]]; then
 	exit 1
 fi
 
+progirunopt=$progir.unoptimized
 progiropt=$progir.optimized
 progs=$progname.s
 
 # Run optimizer, if requested
 if [[ "$#" > $args_mandatory ]]; then
+	cp $progir $progirunopt
 	let pos_first=$((args_mandatory+1))
 	optso=""
 	for optflag in ${@:$pos_first}; do
@@ -48,12 +50,11 @@ if [[ "$#" > $args_mandatory ]]; then
 			echo "Unknown pass: $optflag"
 			exit 1
 		fi
-		$local_opt -load $optso $optflag < $progir $irflag -o $progiropt
-		if ! [[ -f $progiropt ]]; then
+		$local_opt -load $optso $optflag < $progir $irflag -o $progir
+		if ! [[ -f $progir ]]; then
 			echo "Optimization failed, exiting."
 			exit 1
 		fi
-		progir=$progiropt
 		echo "optimized ($optflag) -> $progir"
 	done
 fi
@@ -73,3 +74,10 @@ if ! [[ -x $progname ]]; then
 	exit 1
 fi
 echo "assembled and linked -> $progname"
+
+# Some tidying
+if [[ -f $progirunopt ]]; then
+	mv $progir $progiropt
+	mv $progirunopt $progir
+fi
+
