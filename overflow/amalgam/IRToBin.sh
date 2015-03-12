@@ -33,6 +33,7 @@ fi
 progirunopt=$progir.unoptimized
 progiropt=$progir.optimized
 progs=$progname.s
+irflag='-S'
 
 # Run optimizer, if requested
 if [[ "$#" > $args_mandatory ]]; then
@@ -50,7 +51,7 @@ if [[ "$#" > $args_mandatory ]]; then
 			echo "Unknown pass: $optflag"
 			exit 1
 		fi
-		$local_opt -load $optso $optflag < $progir $irflag -o $progir
+		$local_opt $irflag -load $optso $optflag < $progir -o $progir
 		if ! [[ -f $progir ]]; then
 			echo "Optimization failed, exiting."
 			exit 1

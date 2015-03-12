@@ -19,11 +19,17 @@ progname=$2
 progc=$progname.c
 progir=$progname.ll
 local_clang="$baseaddr/bin/clang"
+local_opt="$baseaddr/bin/opt"
+frontendflag='-emit-llvm -S -c'
+optlevel='-O2'
+optflag="$optlevel -S"
 
-$local_clang -emit-llvm -S $progc -c -o $progir
+$local_clang $frontendflag $progc -o $progir
 if ! [[ -f $progir ]]; then
 	echo "Compilation failed, exiting."
 	exit 1
 fi
 echo "compiled -> $progir"
 
+$local_opt $optflag $progir -o $progir
+echo "optimized ($optlevel) -> $progir"
