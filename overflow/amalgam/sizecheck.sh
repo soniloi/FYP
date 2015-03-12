@@ -18,4 +18,4 @@ fi
 
 sizebinline=`$sizer $bin`
 sizebin=($sizebinline)
-echo $sizebin
+echo -n ${sizebin[0]}

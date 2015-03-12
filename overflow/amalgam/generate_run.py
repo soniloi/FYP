@@ -25,6 +25,7 @@ ctoir = scriptdir + '/CToIR.sh'
 irtobin = scriptdir + '/IRToBin.sh'
 overflow = scriptdir + '/overflow.sh'
 smashcheck = scriptdir + '/smashcheck.sh'
+sizecheck = scriptdir + '/sizecheck.sh'
 binname = scriptdir + '/humpty'
 
 link = '-lpthread -ldl'
@@ -99,13 +100,17 @@ def main():
 
 	# Run tests on base version
 	smashed = int(subprocess.check_output([smashcheck, binname]))
-	print smashed
+	print 'Smashed? ' + str(smashed)
+	size = int(subprocess.check_output([sizecheck, binname]))
+	print 'Binary size: ' + str(size)
 
 	# Compile and test with each randomization technique
 	for optimization in optimizations:
 		print '>>> ' + optimization + ':'
 		compile_pipeline(daa, seed, [optimization])
 		smashed = int(subprocess.check_output([smashcheck, binname]))
-		print smashed
+		print 'Smashed? ' + str(smashed)
+		size = int(subprocess.check_output([sizecheck, binname]))
+		print 'Binary size: ' + str(size)
 
 main()
