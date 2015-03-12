@@ -81,6 +81,13 @@ def compile_pipeline(daa, seed, optflags):
 	process_args = [irtobin, daa, binname, str(seed), link] + optflags
 	subprocess.call(process_args)
 
+def run_tests():
+	smashed = int(subprocess.check_output([smashcheck, binname]))
+	print 'Smashed? ' + str(smashed)
+	size = int(subprocess.check_output([sizecheck, binname]))
+	print 'Binary size: ' + str(size)
+	
+
 def main():
 	if len(sys.argv) != 2:
 		print usage
@@ -101,19 +108,14 @@ def main():
 	subprocess.call([overflow, binname, libfn, str(bufsize)])	
 
 	# Run tests on base version
-	smashed = int(subprocess.check_output([smashcheck, binname]))
-	print 'Smashed? ' + str(smashed)
-	size = int(subprocess.check_output([sizecheck, binname]))
-	print 'Binary size: ' + str(size)
+	run_tests()
 
 	# Compile and test with each randomization technique
 	for optimization in optimizations:
 		subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
 		print '>>> ' + optimization + ':'
 		compile_pipeline(daa, seed, [optimization])
-		smashed = int(subprocess.check_output([smashcheck, binname]))
-		print 'Smashed? ' + str(smashed)
-		size = int(subprocess.check_output([sizecheck, binname]))
-		print 'Binary size: ' + str(size)
+		# Run tests on randomized version
+		run_tests()
 
 main()
