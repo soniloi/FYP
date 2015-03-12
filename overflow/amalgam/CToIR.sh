@@ -24,6 +24,7 @@ frontendflag='-emit-llvm -S -c'
 optlevel='-O2'
 optflag="$optlevel -S"
 
+# Run frontend
 $local_clang $frontendflag $progc -o $progir
 if ! [[ -f $progir ]]; then
 	echo "Compilation failed, exiting."
@@ -31,5 +32,6 @@ if ! [[ -f $progir ]]; then
 fi
 echo "compiled -> $progir"
 
-$local_opt $optflag $progir -o $progir
+# Run common optimizations; this is really slow!
+#$local_opt $optflag $progir -o $progir
 echo "optimized ($optlevel) -> $progir"
