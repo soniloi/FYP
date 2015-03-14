@@ -36,6 +36,16 @@ bufsize = 2031
 
 optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
 
+# Result bundle
+class result:
+
+	def __init__(self):
+		self.smashed = False
+		self.size = 0
+		self.instructions_retired = 0
+		self.stack_use = 0
+		self.heap_use = 0
+
 # Generate array of indices in simple in-order sequence
 def generate_identity_permutation(arrlen):
 	indarr = []
@@ -82,11 +92,10 @@ def compile_pipeline(daa, seed, optflags):
 	subprocess.call(process_args)
 
 def run_tests():
-	smashed = int(subprocess.check_output([smashcheck, binname]))
-	print 'Smashed? ' + str(smashed)
-	size = int(subprocess.check_output([sizecheck, binname]))
-	print 'Binary size: ' + str(size)
-	
+	res = result()	
+	res.smashed = bool(int(subprocess.check_output([smashcheck, binname])))
+	res.size = int(subprocess.check_output([sizecheck, binname]))
+	return res
 
 def main():
 	if len(sys.argv) != 2:
@@ -108,7 +117,8 @@ def main():
 	subprocess.call([overflow, binname, libfn, str(bufsize)])	
 
 	# Run tests on base version
-	run_tests()
+	res = run_tests()
+	print 'Base version. ' + '\tSmashed? ' + str(res.smashed) + '\tBinary size: ' + str(res.size) + '\tInstructions retired: ' + str(res.instructions_retired) + '\tStack usage: ' + str(res.stack_use) + '\tHeap usage: ' + str(res.heap_use)
 
 	# Compile and test with each randomization technique
 	for optimization in optimizations:
@@ -116,6 +126,7 @@ def main():
 		print '>>> ' + optimization + ':'
 		compile_pipeline(daa, seed, [optimization])
 		# Run tests on randomized version
-		run_tests()
+		res = run_tests()
+		print 'Randomized version. ' + '\tSmashed? ' + str(res.smashed) + '\tBinary size: ' + str(res.size) + '\tInstructions retired: ' + str(res.instructions_retired) + '\tStack usage: ' + str(res.stack_use) + '\tHeap usage: ' + str(res.heap_use)
 
 main()
