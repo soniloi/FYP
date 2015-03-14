@@ -64,3 +64,6 @@ tests/sieve/*
 !tests/sieve/sieve.c
 tests/ackermann/*
 !tests/ackermann/ackermann.c
+
+# pyc
+*.pyc
