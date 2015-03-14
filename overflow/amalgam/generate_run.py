@@ -36,6 +36,11 @@ bufsize = 2031
 
 optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
 
+testrun_count = 100 # How many times each randomization optimization should be tested
+
+minseed = 0
+maxseed = 16777215
+
 # Result bundle
 class result:
 
@@ -108,7 +113,9 @@ def main():
 		sys.exit(1)
 	daa = sys.argv[1]
 
-	seed = 13
+	#seed = 13
+	random.seed(13)
+	seeds = random.sample(range(minseed, maxseed), testrun_count) # Generate pseudorandom list of seeds
 
 	# Generate base version
 	generate()
@@ -119,7 +126,7 @@ def main():
 	#print stdout
 
 	# Compile base version without randomization
-	compile_pipeline(daa, seed, [])
+	compile_pipeline(daa, 0, []) # Pass a zero seed, as there is no randomization seed
 	run_overflow = subprocess.Popen([overflow, binname, libfn, str(bufsize)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	stdout, stderr = run_overflow.communicate()
 	#print stdout
@@ -128,12 +135,14 @@ def main():
 	res = run_tests()
 	print 'Unrandomized: ' + res.to_string()
 
-	# Compile and test with each randomization technique
-	for optimization in optimizations:
-		subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
-		compile_pipeline(daa, seed, [optimization])
-		# Run tests on randomized version
-		res = run_tests()
-		print optimization + ': ' + res.to_string()
+	for seed in seeds:
+		print '--- seed = ' + str(seed) + '---'
+		# Compile and test with each randomization technique
+		for optimization in optimizations:
+			subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
+			compile_pipeline(daa, seed, [optimization])
+			# Run tests on randomized version
+			res = run_tests()
+			print optimization + ': ' + res.to_string()
 
 main()
