@@ -37,7 +37,7 @@ bufsize = 2031
 
 optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
 
-testrun_count = 100 # How many times each randomization optimization should be tested
+testrun_count = 1 # How many times each randomization optimization should be tested
 
 minseed = 0
 maxseed = 16777215
@@ -92,7 +92,10 @@ def compile_pipeline(daa, seed, optflags):
 def run_tests():
 	res = result.result()	
 	res.smashed = bool(int(subprocess.check_output([smashcheck, binname])))
-	res.size = int(subprocess.check_output([sizecheck, binname]))
+	res.metrics['size'] = int(subprocess.check_output([sizecheck, binname]))
+	res.metrics['retired'] = 0 # FIXME
+	res.metrics['stack'] = 0 # FIXME
+	res.metrics['heap'] = 0 # FIXME
 	return res
 
 def main():
@@ -109,7 +112,7 @@ def main():
 	generate()
 
 	# Compile to IR (needed for both normal and randomized versions)
-	run_ctoir = subprocess.Popen([ctoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	run_ctoir = subprocess.Popen([cntoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	stdout, stderr = run_ctoir.communicate()
 	#print stdout
 
@@ -123,6 +126,10 @@ def main():
 	res = run_tests()
 	print 'Unrandomized: ' + res.to_string()
 
+	results = {}
+	for optimization in optimizations:
+		results[optimization] = {}
+
 	for seed in seeds:
 		print '--- seed = ' + str(seed) + '---'
 		# Compile and test with each randomization technique
@@ -132,5 +139,14 @@ def main():
 			# Run tests on randomized version
 			res = run_tests()
 			print optimization + ': ' + res.to_string()
+			results[optimization][seed] = res
+
+	for k, v in results.iteritems():
+		print 'type: ' + k
+		for k1, v1 in v.iteritems():
+			print 'seed: ' + str(k1)
+			print v1.to_string()
+
 
 main()
+
