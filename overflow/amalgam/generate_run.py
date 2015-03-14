@@ -92,13 +92,9 @@ def generate():
 
 def compile_pipeline(daa, seed, optflags):
 	process_args = [irtobin, daa, binname, str(seed), link] + optflags
-	#subprocess.call(process_args)
-	run_pipeline = subprocess.Popen(process_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-	#pipeline_output = run_pipeline.stdout.read()
-	#print '###' + pipeline_output
-	#run_pipeline.wait()
+	run_pipeline = subprocess.Popen(process_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	stdout, stderr = run_pipeline.communicate()
-	print stdout
+	#print stdout
 
 def run_tests():
 	res = result()	
@@ -118,15 +114,15 @@ def main():
 	generate()
 
 	# Compile to IR (needed for both normal and randomized versions)
-	#run_ctoir = subprocess.Popen([ctoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-	#ctoir_output = run_ctoir.stdout.read()
-	#run_ctoir.wait()
-	subprocess.call([ctoir, daa, binname])
+	run_ctoir = subprocess.Popen([ctoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	stdout, stderr = run_ctoir.communicate()
+	#print stdout
 
 	# Compile base version without randomization
-	#print '>>> No randomization:'
 	compile_pipeline(daa, seed, [])
-	subprocess.call([overflow, binname, libfn, str(bufsize)])	
+	run_overflow = subprocess.Popen([overflow, binname, libfn, str(bufsize)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	stdout, stderr = run_overflow.communicate()
+	#print stdout
 
 	# Run tests on base version
 	res = run_tests()
@@ -135,7 +131,6 @@ def main():
 	# Compile and test with each randomization technique
 	for optimization in optimizations:
 		subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
-		#print '>>> ' + optimization + ':'
 		compile_pipeline(daa, seed, [optimization])
 		# Run tests on randomized version
 		res = run_tests()
