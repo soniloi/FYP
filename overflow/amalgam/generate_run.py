@@ -37,7 +37,7 @@ bufsize = 2031
 
 optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
 
-testrun_count = 1 # How many times each randomization optimization should be tested
+testrun_count = 3 # How many times each randomization optimization should be tested
 
 minseed = 0
 maxseed = 16777215
@@ -112,7 +112,7 @@ def main():
 	generate()
 
 	# Compile to IR (needed for both normal and randomized versions)
-	run_ctoir = subprocess.Popen([cntoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	run_ctoir = subprocess.Popen([ctoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	stdout, stderr = run_ctoir.communicate()
 	#print stdout
 
@@ -131,7 +131,7 @@ def main():
 		results[optimization] = {}
 
 	for seed in seeds:
-		print '--- seed = ' + str(seed) + '---'
+		print '\n--- seed = ' + str(seed) + ' ---'
 		# Compile and test with each randomization technique
 		for optimization in optimizations:
 			subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
@@ -142,11 +142,29 @@ def main():
 			results[optimization][seed] = res
 
 	for k, v in results.iteritems():
-		print 'type: ' + k
+		print '\ntype: ' + k
+		smashed_count = 0
+		metric_counts = {}
 		for k1, v1 in v.iteritems():
-			print 'seed: ' + str(k1)
-			print v1.to_string()
+			print '\tseed: ' + str(k1) + v1.to_string()
+			smashed_count += int(v1.smashed)
+			for metricname, metricvalue in v1.metrics.iteritems():
+				if not metricname in metric_counts:
+					metric_counts[metricname] = {}
+					metric_counts[metricname]['min'] = sys.maxint
+					metric_counts[metricname]['max'] = 0
+					metric_counts[metricname]['avg'] = 0
 
+				if v1.metrics[metricname] < metric_counts[metricname]['min']:
+					metric_counts[metricname]['min'] = v1.metrics[metricname]
+				if v1.metrics[metricname] > metric_counts[metricname]['max']:
+					metric_counts[metricname]['max'] = v1.metrics[metricname]
+				metric_counts[metricname]['avg'] += v1.metrics[metricname]
+
+		print '\tsmashed: ' + str(smashed_count)
+		for metric, metrictype in metric_counts.iteritems():
+			print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/len(seeds))
+	
 
 main()
 
