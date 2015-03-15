@@ -2,7 +2,7 @@
 
 ### Determine the number of retired instructions in a binary's run
 
-usage="Usage: $0 <path-to-sample-sql> <path-to-binary>"
+usage="Usage: $0 <path-to-sample-input> <path-to-binary>"
 stat='retired'
 counter='pcm.x'
 grepnc='grep --color=never'
@@ -21,6 +21,14 @@ if ! [[ -f $input ]] || ! [[ -x $bin ]]; then
 fi
 
 cat $input | $counter $bin > $temp 2>&1
-$grepnc "$stat" $temp
+retline=`$grepnc "$stat" $temp`
+retwords=($retline)
+let retinsts=${retwords[2]}
+if [[ ${retwords[3]} == 'M' ]]; then
+	let retinsts=$(($retinsts * 1000000))
+fi
 
 rm -f $temp
+
+echo $retinsts
+
