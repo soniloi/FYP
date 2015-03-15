@@ -30,6 +30,8 @@ irtobin = scriptdir + '/IRToBin.sh'
 overflow = scriptdir + '/overflow.sh'
 smashcheck = scriptdir + '/smashcheck.sh'
 sizecheck = scriptdir + '/sizecheck.sh'
+retiredcheck = scriptdir + '/retinstcheck.sh'
+samplein = scriptdir + '/sample1.sql'
 
 link = '-lpthread -ldl'
 libfn = '_IO_putc'
@@ -61,9 +63,6 @@ def generate_random_permutation(arr):
 	return permutation
 
 def generate():
-	# Seed random number generator for choosing order of permutations
-	random.seed(13)
-
 	# Generate list of prototypes
 	subprocess.call([protogen, protogenopt, original, '-o', prototypespath])
 
@@ -93,7 +92,7 @@ def run_tests():
 	res = result.result()	
 	res.smashed = bool(int(subprocess.check_output([smashcheck, binname])))
 	res.metrics['size'] = int(subprocess.check_output([sizecheck, binname]))
-	res.metrics['retired'] = 0 # FIXME
+	res.metrics['retired'] = int(subprocess.check_output([retiredcheck, binname, samplein]))
 	res.metrics['stack'] = 0 # FIXME
 	res.metrics['heap'] = 0 # FIXME
 	return res
@@ -104,9 +103,10 @@ def main():
 		sys.exit(1)
 	daa = sys.argv[1]
 
-	#seed = 13
-	random.seed(13)
-	seeds = random.sample(range(minseed, maxseed), testrun_count) # Generate pseudorandom list of seeds
+	random.seed(13) # Seed pseudo-random number generator for generating list of seeds to be passed to runs
+	seeds = random.sample(range(minseed, maxseed), testrun_count)
+
+	random.seed(13) # Seed pseudo-random number generator for choosing order of permutations
 
 	# Generate base version
 	generate()
