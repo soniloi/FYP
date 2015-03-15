@@ -39,6 +39,7 @@ bufsize = 2031
 
 optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
 
+generation_count = 2 # How many different versions of the source to generate
 testrun_count = 3 # How many times each randomization optimization should be tested
 
 minseed = 0
@@ -111,63 +112,66 @@ def main():
 
 	random.seed(13) # Seed pseudo-random number generator for choosing order of permutations
 
-	# Generate base version
-	generate()
+	for i in range(0, generation_count):
+		print '[=== Source version ' + str(i+1) + ' ===]'
 
-	# Compile to IR (needed for both normal and randomized versions)
-	run_ctoir = subprocess.Popen([ctoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-	stdout, stderr = run_ctoir.communicate()
-	#print stdout
+		# Generate base version
+		generate()
 
-	# Compile base version without randomization
-	compile_pipeline(daa, 0, []) # Pass a zero seed, as there is no randomization seed
-	run_overflow = subprocess.Popen([overflow, binname, libfn, str(bufsize)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-	stdout, stderr = run_overflow.communicate()
-	#print stdout
+		# Compile to IR (needed for both normal and randomized versions)
+		run_ctoir = subprocess.Popen([ctoir, daa, binname], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+		stdout, stderr = run_ctoir.communicate()
+		#print stdout
 
-	# Run tests on base version
-	res = run_tests()
-	print 'Unrandomized: ' + res.to_string()
+		# Compile base version without randomization
+		compile_pipeline(daa, 0, []) # Pass a zero seed, as there is no randomization seed
+		run_overflow = subprocess.Popen([overflow, binname, libfn, str(bufsize)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+		stdout, stderr = run_overflow.communicate()
+		#print stdout
 
-	results = {}
-	for optimization in optimizations:
-		results[optimization] = {}
+		# Run tests on base version
+		res = run_tests()
+		print 'Unrandomized: ' + res.to_string()
 
-	for seed in seeds:
-		print '\n--- seed = ' + str(seed) + ' ---'
-		# Compile and test with each randomization technique
+		results = {}
 		for optimization in optimizations:
-			subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
-			compile_pipeline(daa, seed, [optimization])
-			# Run tests on randomized version
-			res = run_tests()
-			print optimization + ': ' + res.to_string()
-			results[optimization][seed] = res
+			results[optimization] = {}
 
-	for k, v in results.iteritems():
-		print '\ntype: ' + k
-		smashed_count = 0
-		metric_counts = {}
-		for k1, v1 in v.iteritems():
-			print '\tseed: ' + str(k1) + v1.to_string()
-			smashed_count += int(v1.smashed)
-			for metricname, metricvalue in v1.metrics.iteritems():
-				if not metricname in metric_counts:
-					metric_counts[metricname] = {}
-					metric_counts[metricname]['min'] = sys.maxint
-					metric_counts[metricname]['max'] = 0
-					metric_counts[metricname]['avg'] = 0
+		for seed in seeds:
+			print '\n--- seed = ' + str(seed) + ' ---'
+			# Compile and test with each randomization technique
+			for optimization in optimizations:
+				subprocess.call(['rm', '-f', iroptpath, asmpath]) # Delete intermediates from earlier optimizer runs
+				compile_pipeline(daa, seed, [optimization])
+				# Run tests on randomized version
+				res = run_tests()
+				print optimization + ': ' + res.to_string()
+				results[optimization][seed] = res
 
-				if v1.metrics[metricname] < metric_counts[metricname]['min']:
-					metric_counts[metricname]['min'] = v1.metrics[metricname]
-				if v1.metrics[metricname] > metric_counts[metricname]['max']:
-					metric_counts[metricname]['max'] = v1.metrics[metricname]
-				metric_counts[metricname]['avg'] += v1.metrics[metricname]
+		for k, v in results.iteritems():
+			print '\ntype: ' + k
+			smashed_count = 0
+			metric_counts = {}
+			for k1, v1 in v.iteritems():
+				print '\tseed: ' + str(k1) + v1.to_string()
+				smashed_count += int(v1.smashed)
+				for metricname, metricvalue in v1.metrics.iteritems():
+					if not metricname in metric_counts:
+						metric_counts[metricname] = {}
+						metric_counts[metricname]['min'] = sys.maxint
+						metric_counts[metricname]['max'] = 0
+						metric_counts[metricname]['avg'] = 0
 
-		print '\tsmashed: ' + str(smashed_count)
-		for metric, metrictype in metric_counts.iteritems():
-			print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/len(seeds))
-	
+					if v1.metrics[metricname] < metric_counts[metricname]['min']:
+						metric_counts[metricname]['min'] = v1.metrics[metricname]
+					if v1.metrics[metricname] > metric_counts[metricname]['max']:
+						metric_counts[metricname]['max'] = v1.metrics[metricname]
+					metric_counts[metricname]['avg'] += v1.metrics[metricname]
+
+			print '\tsmashed: ' + str(smashed_count)
+			for metric, metrictype in metric_counts.iteritems():
+				print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/len(seeds))
+		
 
 main()
 
