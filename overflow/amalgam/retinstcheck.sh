@@ -2,7 +2,7 @@
 
 ### Determine the number of retired instructions in a binary's run
 
-usage="Usage: $0 <path-to-sample-input> <path-to-binary>"
+usage="Usage: $0 <path-to-binary> <path-to-sample-input>"
 stat='retired'
 counter='pcm.x'
 grepnc='grep --color=never'
@@ -13,9 +13,9 @@ if [[ $# -ne 2 ]]; then
 	exit 1
 fi
 
-input=$1
-bin=$2
-if ! [[ -f $input ]] || ! [[ -x $bin ]]; then
+bin=$1
+input=$2
+if ! [[ -x $bin ]] || ! [[ -f $input ]]; then
 	echo $usage
 	exit 1
 fi
@@ -30,5 +30,5 @@ fi
 
 rm -f $temp
 
-echo $retinsts
+echo -n $retinsts
 
