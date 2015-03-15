@@ -92,7 +92,10 @@ def run_tests():
 	res = result.result()	
 	res.smashed = bool(int(subprocess.check_output([smashcheck, binname])))
 	res.metrics['size'] = int(subprocess.check_output([sizecheck, binname]))
-	res.metrics['retired'] = int(subprocess.check_output([retiredcheck, binname, samplein]))
+	try:
+		res.metrics['retired'] = int(subprocess.check_output([retiredcheck, binname, samplein], stderr=subprocess.STDOUT))
+	except:
+		res.metrics['retired'] = 0 # Some systems (e.g. virtualized ones) will not have hardware counters available
 	res.metrics['stack'] = 0 # FIXME
 	res.metrics['heap'] = 0 # FIXME
 	return res
