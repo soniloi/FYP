@@ -1,10 +1,18 @@
+#include <algorithm> // shuffle
 #include <iostream>
 #include <cstdlib>
 #include <random>
+#include <vector>
 
 using namespace std;
 
 const string usage = "run <path-to-build-tree> <total-generations> <initial-seed>";
+
+vector<int> generate_random_permutation(vector<int> original, std::mt19937 rng){
+	vector<int> result(original);
+	shuffle(result.begin(), result.end(), rng);
+	return result;
+}
 
 int main(int argc, char ** argv){
 
@@ -22,11 +30,15 @@ int main(int argc, char ** argv){
 	std::uniform_int_distribution<uint32_t> dist(0, 16777215);
 	rng.seed(initial_seed);
 
-	/*
-	cout << "s1: " << dist(rng) << endl;
-	cout << "s2: " << dist(rng) << endl;
-	cout << "s3: " << dist(rng) << endl;
-	*/
+	vector<int> identity;
+	for(int i = 0; i < 1800; i++){
+		identity.push_back(i);
+	}
+
+	vector<int> index_array = generate_random_permutation(identity, rng);
+	for(int i = 0; i < index_array.size(); i++){
+		cout << i << ": " << index_array[i] << endl;
+	}
 
 	return 0;
 }
