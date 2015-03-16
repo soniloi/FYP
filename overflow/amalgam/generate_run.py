@@ -31,6 +31,7 @@ overflow = scriptdir + '/overflow.sh'
 smashcheck = scriptdir + '/smashcheck.sh'
 sizecheck = scriptdir + '/sizecheck.sh'
 retiredcheck = scriptdir + '/retiredcheck.sh'
+heapcheck = scriptdir + '/heapcheck.sh'
 samplein = scriptdir + '/sample1.sql'
 
 link = '-lpthread -ldl'
@@ -99,7 +100,7 @@ def run_tests():
 	except:
 		res.metrics['retired'] = 0 # Some systems (e.g. virtualized ones) will not have hardware counters available
 	res.metrics['stack'] = 0 # FIXME
-	res.metrics['heap'] = 0 # FIXME
+	res.metrics['heap'] = int(subprocess.check_output([heapcheck, binname, samplein], stderr=subprocess.STDOUT))
 	return res
 
 def main():
@@ -125,7 +126,7 @@ def main():
 			global_metric_counts[optimization][metric_type]['avg'] = 0	
 
 	for i in range(0, generation_count):
-		print '[=== Source version ' + str(i+1) + ' ===]'
+		print '\n[=== Source version ' + str(i+1) + ' ===]'
 
 		# Generate base version
 		generate()
@@ -198,11 +199,7 @@ def main():
 		print optimization + '\t' + str(global_smashed_counts[optimization]),
 		for metric in ['size', 'retired', 'heap', 'stack']:
 			print '\t' + str(global_metric_counts[optimization][metric]['min']) + '\t' + str(global_metric_counts[optimization][metric]['max']) + '\t' + str(global_metric_counts[optimization][metric]['avg']/(len(seeds)*generation_count)),
-		print
-		#for metric, metrictype in global_metric_counts[optimization].iteritems():
-		#	print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/(len(seeds)*generation_count))
-
-		
+		print	
 
 main()
 
