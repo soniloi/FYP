@@ -192,12 +192,12 @@ def main():
 				print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/len(seeds))
 
 	print '\n[=== Grand summary ===]\n'
-	print 'optimization\tsmashed?\tbin size\t\tretired\t\t\tstack use\t\t\theap use'
-	print '\t\t\t\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg'
+	print 'optimization\tsmashed?\tbin size\t\t\tretired\t\t\tstack use\t\t\theap use'
+	print '\t\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg'
 	for optimization in optimizations:
 		print optimization + '\t' + str(global_smashed_counts[optimization]),
 		for metric in ['size', 'retired', 'heap', 'stack']:
-			print '\t' + str(global_metric_counts[optimization][metric]['min']) + '\t' + str(global_metric_counts[optimization][metric]['max']) + '\t' + str(global_metric_counts[optimization][metric]['avg']),
+			print '\t' + str(global_metric_counts[optimization][metric]['min']) + '\t' + str(global_metric_counts[optimization][metric]['max']) + '\t' + str(global_metric_counts[optimization][metric]['avg']/(len(seeds)*generation_count)),
 		print
 		#for metric, metrictype in global_metric_counts[optimization].iteritems():
 		#	print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/(len(seeds)*generation_count))
