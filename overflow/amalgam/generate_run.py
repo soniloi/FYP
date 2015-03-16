@@ -30,7 +30,7 @@ irtobin = scriptdir + '/IRToBin.sh'
 overflow = scriptdir + '/overflow.sh'
 smashcheck = scriptdir + '/smashcheck.sh'
 sizecheck = scriptdir + '/sizecheck.sh'
-retiredcheck = scriptdir + '/retinstcheck.sh'
+retiredcheck = scriptdir + '/retiredcheck.sh'
 samplein = scriptdir + '/sample1.sql'
 
 link = '-lpthread -ldl'
