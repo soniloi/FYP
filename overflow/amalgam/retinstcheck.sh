@@ -24,8 +24,12 @@ cat $input | $counter $bin > $temp 2>&1
 retline=`$grepnc "$stat" $temp`
 retwords=($retline)
 let retinsts=${retwords[2]}
-if [[ ${retwords[3]} == 'M' ]]; then
+if [[ ${retwords[3]} == 'G' ]]; then
+	let retinsts=$(($retinsts * 1000000000))
+elif [[ ${retwords[3]} == 'M' ]]; then
 	let retinsts=$(($retinsts * 1000000))
+elif [[ ${retwords[3]} == 'K' ]]; then
+	let retinsts=$(($retinsts * 1000))
 fi
 
 rm -f $temp
