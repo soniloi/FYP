@@ -2,16 +2,29 @@
 #include <iostream>
 #include <cstdlib>
 #include <random>
+#include <sstream>
 #include <vector>
 
 using namespace std;
 
 const string usage = "run <path-to-build-tree> <total-generations> <initial-seed>";
+const string original = "./amalgamation.c";
+const string prototypespath = "./prototypes.lst";
+const string protogen = "cproto";
+const string protogenopt = "-si";
 
 vector<int> generate_random_permutation(vector<int> original, std::mt19937 rng){
 	vector<int> result(original);
 	shuffle(result.begin(), result.end(), rng);
 	return result;
+}
+
+void generate_source(){
+	// Generate prototypes file
+	stringstream protocom;
+	protocom << protogen << ' ' << protogenopt << ' ' <<  "-o " << prototypespath << ' ' << original;
+	system(protocom.str().c_str());
+	
 }
 
 int main(int argc, char ** argv){
@@ -39,6 +52,8 @@ int main(int argc, char ** argv){
 	for(int i = 0; i < index_array.size(); i++){
 		cout << i << ": " << index_array[i] << endl;
 	}
+
+	generate_source();
 
 	return 0;
 }
