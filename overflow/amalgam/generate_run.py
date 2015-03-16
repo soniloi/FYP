@@ -38,6 +38,7 @@ libfn = '_IO_putc'
 bufsize = 2031
 
 optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
+metric_types = ['size', 'retired', 'stack', 'heap']
 
 generation_count = 2 # How many different versions of the source to generate
 testrun_count = 3 # How many times each randomization optimization should be tested
@@ -112,6 +113,17 @@ def main():
 
 	random.seed(13) # Seed pseudo-random number generator for choosing order of permutations
 
+	global_smashed_counts = {}
+	global_metric_counts = {}
+	for optimization in optimizations:
+		global_smashed_counts[optimization] = 0
+		global_metric_counts[optimization] = {}
+		for metric_type in metric_types:
+			global_metric_counts[optimization][metric_type] = {}
+			global_metric_counts[optimization][metric_type]['min'] = sys.maxint
+			global_metric_counts[optimization][metric_type]['max'] = 0
+			global_metric_counts[optimization][metric_type]['avg'] = 0	
+
 	for i in range(0, generation_count):
 		print '[=== Source version ' + str(i+1) + ' ===]'
 
@@ -147,14 +159,15 @@ def main():
 				res = run_tests()
 				print optimization + ': ' + res.to_string()
 				results[optimization][seed] = res
-
+		
 		for k, v in results.iteritems():
-			print '\ntype: ' + k
+			print '\n[--- Summary for randomization: ' + k + ' on version: ' + str(i+1) + ' ---]'
 			smashed_count = 0
 			metric_counts = {}
 			for k1, v1 in v.iteritems():
 				print '\tseed: ' + str(k1) + v1.to_string()
 				smashed_count += int(v1.smashed)
+				global_smashed_counts[k] += int(v1.smashed)
 				for metricname, metricvalue in v1.metrics.iteritems():
 					if not metricname in metric_counts:
 						metric_counts[metricname] = {}
@@ -168,9 +181,27 @@ def main():
 						metric_counts[metricname]['max'] = v1.metrics[metricname]
 					metric_counts[metricname]['avg'] += v1.metrics[metricname]
 
+					if v1.metrics[metricname] < global_metric_counts[k][metricname]['min']:
+						global_metric_counts[k][metricname]['min'] = v1.metrics[metricname]
+					if v1.metrics[metricname] > global_metric_counts[k][metricname]['max']:
+						global_metric_counts[k][metricname]['max'] = v1.metrics[metricname]
+					global_metric_counts[k][metricname]['avg'] += v1.metrics[metricname]
+
 			print '\tsmashed: ' + str(smashed_count)
 			for metric, metrictype in metric_counts.iteritems():
 				print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/len(seeds))
+
+	print '\n[=== Grand summary ===]\n'
+	print 'optimization\tsmashed?\tbin size\t\tretired\t\t\tstack use\t\t\theap use'
+	print '\t\t\t\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg'
+	for optimization in optimizations:
+		print optimization + '\t' + str(global_smashed_counts[optimization]),
+		for metric in ['size', 'retired', 'heap', 'stack']:
+			print '\t' + str(global_metric_counts[optimization][metric]['min']) + '\t' + str(global_metric_counts[optimization][metric]['max']) + '\t' + str(global_metric_counts[optimization][metric]['avg']),
+		print
+		#for metric, metrictype in global_metric_counts[optimization].iteritems():
+		#	print '\t' + metric + ':\tmin: ' + str(metrictype['min']) + '\tmax: ' + str(metrictype['max']) + '\tavg: ' + str(metrictype['avg']/(len(seeds)*generation_count))
+
 		
 
 main()
