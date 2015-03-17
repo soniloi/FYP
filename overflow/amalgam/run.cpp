@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include <map>
 #include <random>
 #include <sstream>
 #include <vector>
@@ -29,6 +30,19 @@ const string irtobin = "IRToBin.sh";
 const string overflow = "overflow.sh";
 
 const int testrun_count = 3; // The number of times each randomization pass is to be run
+
+class ResultBundle{
+private:
+	bool smashed;
+	std::map<string, int> metrics;
+public:
+	ResultBundle();
+	std::string to_string();
+};
+
+ResultBundle::ResultBundle(){
+	this->smashed = false;
+}
 
 // Generate file consisting of all prototypes of original C source file
 void generate_prototypes(){
@@ -188,6 +202,7 @@ int main(int argc, char ** argv){
 		// Generate base source version
 		concat_source(fileoutpath.str(), headerpath, prototypespath, macropath, funcarr, indexarray);
 
+		// Compile to IR (needed for both normal and randomized versions)
 		stringstream run_ctoir;
 		run_ctoir << "./" << ctoir << ' ' << daa << ' ' << dirout.str() << '/' << binname;
 		cout << run_ctoir.str() << endl;
