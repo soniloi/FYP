@@ -21,8 +21,12 @@ const string prototypespath = "./prototypes.lst";
 const string protogen = "cproto";
 const string protogenopt = "-si";
 
-const string binname = "./humpty";
+const string binname = "humpty";
 const string fileoutbasepath = "humpty.c";
+
+const string ctoir = "CToIR.sh";
+const string irtobin = "IRToBin.sh";
+const string overflow = "overflow.sh";
 
 const int testrun_count = 3; // The number of times each randomization pass is to be run
 
@@ -145,17 +149,19 @@ int main(int argc, char ** argv){
 	std::mt19937 rng_permutations; // RNG for generating permutations
 	rng_permutations.seed(initial_seed_permutations);
 	vector<int> permutation_seeds = get_seed_array(generation_count, rng_permutations);
-	for(int i = 0; i < permutation_seeds.size(); i++)
-		cout << "perm seed " << i << ": " << permutation_seeds[i] << endl;
+	//for(int i = 0; i < permutation_seeds.size(); i++)
+	//	cout << "perm seed " << i << ": " << permutation_seeds[i] << endl;
 
 	std::mt19937 rng_runs; // RNG for generating seeds to be passed to compiler randomization runs
 	rng_runs.seed(initial_seed_runs);
 	vector<int> run_seeds = get_seed_array(testrun_count, rng_runs);
-	for(int i = 0; i < run_seeds.size(); i++)
-		cout << "run seed " << i << ": " << run_seeds[i] << endl;
+	//for(int i = 0; i < run_seeds.size(); i++)
+	//	cout << "run seed " << i << ": " << run_seeds[i] << endl;
 
 	//#pragma omp parallel for
-	for(int version = 0; version < generation_count; version++){
+	for(int version = 1; version <= generation_count; version++){
+		cout << endl << "[=== Source version " << version << " ===]" << endl;
+
 		std::mt19937 rng_permutations_local;
 		rng_permutations_local.seed(permutation_seeds[version]);
 
@@ -168,17 +174,25 @@ int main(int argc, char ** argv){
 
 		stringstream fileoutpath;
 		fileoutpath << dirout.str() << '/' << fileoutbasepath;
-		cout << fileoutpath.str() << endl;
 
 		vector<int> indexarray(identity);
 		shuffle(indexarray.begin(), indexarray.end(), rng_permutations_local);
+		/*
 		for(int i = 0; i < indexarray.size(); i++){
 			stringstream ss;
 			ss << "v" << version << ": " << i << ": " << indexarray[i] << endl;
 			cout << ss.str();
 		}
+		*/
 
+		// Generate base source version
 		concat_source(fileoutpath.str(), headerpath, prototypespath, macropath, funcarr, indexarray);
+
+		stringstream run_ctoir;
+		run_ctoir << "./" << ctoir << ' ' << daa << ' ' << dirout.str() << '/' << binname;
+		cout << run_ctoir.str() << endl;
+		system(run_ctoir.str().c_str());
+
 	}
 
 	return 0;
