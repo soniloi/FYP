@@ -75,8 +75,9 @@ void output_heading(ofstream &fileout, string label){
 }
 
 // Concatenate file at filepathin onto fileout
-void cat_file(ofstream &fileout, string filepathin, string label){
-	output_heading(fileout, label);
+void cat_file(ofstream &fileout, string filepathin, string label=""){
+	if(!label.empty())
+		output_heading(fileout, label);
 	ifstream filein(filepathin);
 	if(filein){
 		string line;
