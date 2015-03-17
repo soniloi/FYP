@@ -1,4 +1,5 @@
 #include <algorithm> // shuffle, sort
+#include <assert.h>
 #include <dirent.h> // directory operations
 #include <fstream>
 #include <iostream>
@@ -78,6 +79,8 @@ void output_heading(ofstream &fileout, string label){
 void cat_file(ofstream &fileout, string filepathin, string label=""){
 	if(!label.empty())
 		output_heading(fileout, label);
+	else
+		fileout << endl << endl;
 	ifstream filein(filepathin);
 	if(filein){
 		string line;
@@ -89,6 +92,8 @@ void cat_file(ofstream &fileout, string filepathin, string label=""){
 
 // Concatenate constituents of a source file into complete source file at fileoutpath
 void concat_source(string fileoutpath, string headerpath, string prototypespath, string macropath, vector<string> funcarr, vector<int> indarr){
+	assert(funcarr.size() == indarr.size());	
+
 	ofstream fileout(fileoutpath);
 
 	// Output 'header'
@@ -99,6 +104,13 @@ void concat_source(string fileoutpath, string headerpath, string prototypespath,
 
 	// Concatenate macros
 	cat_file(fileout, macropath, "Macros");
+
+	//Concatenate functions in specified order
+	output_heading(fileout, "Functions");
+	int len = funcarr.size();
+	for(int i = 0; i < len; i++){
+		cat_file(fileout, funcarr[indarr[i]]);
+	}
 
 	fileout.close();
 }
@@ -139,7 +151,6 @@ int main(int argc, char ** argv){
 
 	int version = 0;
 	concat_source(fileoutpath, headerpath, prototypespath, macropath, funcarr, index_array);
-//void concat_source(string fileoutpath, string headerpath, string prototypespath, string macropath, vector<string> funcarr, vector<int> indarr){
 
 	return 0;
 }
