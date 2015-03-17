@@ -27,6 +27,7 @@ const string protogenopt = "-si";
 const string binbasename = "humpty";
 const string fileoutbasepath = "humpty.c";
 
+const string wd = "./";
 const string ctoir = "CToIR.sh";
 const string irtobin = "IRToBin.sh";
 const string overflow = "overflow.sh";
@@ -41,15 +42,15 @@ const string heapcheck = "heapcheck.sh";
 const string link = "-lpthread -ldl";
 const string libfn = "_IO_putc";
 const string bufsize = "2031";
-const string sampelin = "sample1.sql"; // Sample file used in testing
+const string samplein = "sample1.sql"; // Sample file used in testing
 
 const int testrun_count = 3; // The number of times each randomization pass is to be run
 
 static map<string, string> checkscripts =
 	{{"smashed", "smashcheck.sh"},
-	 {"size", "sizecheck.sh"}};
-	 //{"retired", "retiredcheck.sh"},
-	 //{"heap", "heapcheck.sh"}};
+	 {"size", "sizecheck.sh"},
+	 {"retired", "retiredcheck.sh"},
+	 {"heap", "heapcheck.sh"}};
 
 class ResultBundle{
 private:
@@ -174,7 +175,7 @@ vector<int> get_seed_array(int len, std::mt19937 rng){
 // Call the compilation pipeline, including randomization passes where requested
 void compile_pipeline(string daa, string binname, int seed, vector<string> optflags){
 	stringstream command;
-	command << "./" << irtobin << ' ' << daa << ' ' << binname << ' ' << seed << " '" << link << "' ";
+	command << wd << irtobin << ' ' << daa << ' ' << binname << ' ' << seed << " '" << link << "' ";
 	for(vector<string>::iterator it = optflags.begin(); it != optflags.end(); it++)
 		command << (*it) << ' ';
 	//cout << command.str() << endl;
@@ -200,7 +201,7 @@ ResultBundle run_tests(string binname){
 
 	for(map<string, string>::iterator it = checkscripts.begin(); it != checkscripts.end(); it++){
 		stringstream command;
-		command << "./" << it->second << ' ' << binname;
+		command << wd << it->second << ' ' << binname << ' ' << wd << samplein;
 		cout << command.str() << endl;
 		string output = check_output(command.str());
 		rbundle.set(it->first, atoi(output.c_str()));
@@ -268,7 +269,7 @@ int main(int argc, char ** argv){
 		rng_permutations_local.seed(permutation_seeds[version-1]);
 
 		stringstream dirout;
-		dirout << "./" << version_number.str();
+		dirout << wd << version_number.str();
 
 		stringstream dirmake;
 		dirmake << "mkdir " << dirout.str();
@@ -294,7 +295,7 @@ int main(int argc, char ** argv){
 
 		// Compile to IR (needed for both normal and randomized versions)
 		stringstream run_ctoir;
-		run_ctoir << "./" << ctoir << ' ' << daa << ' ' << binname.str();
+		run_ctoir << wd << ctoir << ' ' << daa << ' ' << binname.str();
 		cout << run_ctoir.str() << endl;
 		system(run_ctoir.str().c_str());
 
@@ -304,7 +305,7 @@ int main(int argc, char ** argv){
 
 		// Run overflow script on base version
 		stringstream run_overflow;
-		run_overflow << "./" << overflow << ' ' << binname.str() << ' ' << libfn << ' ' << bufsize;
+		run_overflow << wd << overflow << ' ' << binname.str() << ' ' << libfn << ' ' << bufsize;
 		cout << run_overflow.str() << endl;
 		system(run_overflow.str().c_str());
 
