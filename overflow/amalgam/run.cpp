@@ -9,6 +9,8 @@
 #include <sstream>
 #include <vector>
 
+#define MAX_BUFFER 128
+
 using namespace std;
 
 const string usage = "run <path-to-build-tree> <total-generations> <initial-permutation-seed> <initial-run-seed>";
@@ -29,6 +31,12 @@ const string ctoir = "CToIR.sh";
 const string irtobin = "IRToBin.sh";
 const string overflow = "overflow.sh";
 
+const string smashcheck = "smashcheck.sh";
+const string sizecheck = "sizecheck.sh";
+const string retiredcheck = "retiredcheck.sh";
+const string heapcheck = "heapcheck.sh";
+const string sampelin = "sample1.sql";
+
 const string link = "-lpthread -ldl";
 const string libfn = "_IO_putc";
 const string bufsize = "2031";
@@ -37,15 +45,27 @@ const int testrun_count = 3; // The number of times each randomization pass is t
 
 class ResultBundle{
 private:
-	bool smashed;
 	std::map<string, int> metrics;
 public:
-	ResultBundle();
-	std::string to_string();
+	void set(string key, int value);
+	int get(string key);
+	string to_string();
 };
 
-ResultBundle::ResultBundle(){
-	this->smashed = false;
+void ResultBundle::set(string key, int value){
+	this->metrics[key] = value;
+}
+
+int ResultBundle::get(string key){
+	return this->metrics[key];
+}
+
+string ResultBundle::to_string(){
+	stringstream ss;
+	for(map<string, int>::iterator it = this->metrics.begin(); it != this->metrics.end(); it++){
+		ss << it->first << ": " << it->second << ' ';
+	}
+	return ss.str();
 }
 
 // Generate file consisting of all prototypes of original C source file
@@ -153,6 +173,31 @@ void compile_pipeline(string daa, string binname, int seed, vector<string> optfl
 	system(command.str().c_str());
 }
 
+string check_output(string command){
+	string result = "";
+	char buffer[MAX_BUFFER];
+	FILE * pipe = popen(command.c_str(), "r");
+	while(!feof(pipe)){
+		if(fgets(buffer, MAX_BUFFER, pipe))
+			result += buffer;
+	}
+	pclose(pipe);
+	return result;
+}
+
+// Run tests
+ResultBundle run_tests(string binname){
+	ResultBundle rbundle;
+
+	stringstream smashed_command;
+	smashed_command << "./" << smashcheck << ' ' << binname;
+	cout << smashed_command.str() << endl;
+	string smashed_output = check_output(smashed_command.str());
+	rbundle.set("smashed", atoi(smashed_output.c_str()));
+	
+	return rbundle;
+}
+
 int main(int argc, char ** argv){
 
 	// Parse args
@@ -189,15 +234,18 @@ int main(int argc, char ** argv){
 
 	//#pragma omp parallel for
 	for(int version = 1; version <= generation_count; version++){
+		stringstream version_number;
+		version_number << "version-" << version;
+
 		stringstream version_heading;
-		version_heading << endl << "[=== Source version " << version << " ===]" << endl;
+		version_heading << endl << "[=== Source " << version_number.str() << " ===]" << endl;
 		cout << version_heading.str();
 
 		std::mt19937 rng_permutations_local;
 		rng_permutations_local.seed(permutation_seeds[version-1]);
 
 		stringstream dirout;
-		dirout << "./version-" << version;
+		dirout << "./" << version_number.str();
 
 		stringstream dirmake;
 		dirmake << "mkdir " << dirout.str();
@@ -234,8 +282,11 @@ int main(int argc, char ** argv){
 		// Run overflow script on base version
 		stringstream run_overflow;
 		run_overflow << "./" << overflow << ' ' << binname.str() << ' ' << libfn << ' ' << bufsize;
-		cout << run_overflow.str();
+		cout << run_overflow.str() << endl;
 		system(run_overflow.str().c_str());
+
+		ResultBundle results = run_tests(binname.str());
+		cout << version_number.str() << ": " << results.to_string() << endl;
 
 	}
 
