@@ -22,7 +22,7 @@ const string protogen = "cproto";
 const string protogenopt = "-si";
 
 const string binname = "./humpty";
-const string fileoutpath = "./humpty.c";
+const string fileoutbasepath = "humpty.c";
 
 vector<int> generate_random_permutation(vector<int> original, std::mt19937 rng){
 	vector<int> result(original);
@@ -131,10 +131,6 @@ int main(int argc, char ** argv){
 
 	// Retrieve sorted list of function filenames
 	vector<string> funcarr = get_filenames(funcdir);
-	for(vector<string>::iterator it = funcarr.begin(); it != funcarr.end(); it++){
-		cout << (*it) << endl;
-	}
-	cout << "Total number of files: " << funcarr.size() << endl;
 
 	// Construct identity array of the appropriate size
 	vector<int> identity = identity_array(funcarr.size());
@@ -144,13 +140,24 @@ int main(int argc, char ** argv){
 	std::uniform_int_distribution<uint32_t> dist(0, 16777215);
 	rng.seed(initial_seed);
 
-	vector<int> index_array = generate_random_permutation(identity, rng);
-	for(int i = 0; i < index_array.size(); i++){
-		cout << i << ": " << index_array[i] << endl;
-	}
+	vector<int> indexarray = generate_random_permutation(identity, rng);
+	//for(int i = 0; i < indexarray.size(); i++)
+	//	cout << i << ": " << indexarray[i] << endl;
 
-	int version = 0;
-	concat_source(fileoutpath, headerpath, prototypespath, macropath, funcarr, index_array);
+	for(int version = 0; version < 1; version++){
+		stringstream dirout;
+		dirout << "./version-" << version;
+
+		stringstream dirmake;
+		dirmake << "mkdir " << dirout.str();
+		system(dirmake.str().c_str());
+
+		stringstream fileoutpath;
+		fileoutpath << dirout.str() << '/' << fileoutbasepath;
+
+		cout << fileoutpath.str() << endl;
+		concat_source(fileoutpath.str(), headerpath, prototypespath, macropath, funcarr, indexarray);
+	}
 
 	return 0;
 }
