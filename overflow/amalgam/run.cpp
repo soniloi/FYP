@@ -32,13 +32,6 @@ const string ctoir = "CToIR.sh";
 const string irtobin = "IRToBin.sh";
 const string overflow = "overflow.sh";
 
-/*
-const string smashcheck = "smashcheck.sh";
-const string sizecheck = "sizecheck.sh";
-const string retiredcheck = "retiredcheck.sh";
-const string heapcheck = "heapcheck.sh";
-*/
-
 const string link = "-lpthread -ldl";
 const string libfn = "_IO_putc";
 const string bufsize = "2031";
@@ -51,6 +44,11 @@ static map<string, string> checkscripts =
 	 {"size", "sizecheck.sh"},
 	 {"retired", "retiredcheck.sh"},
 	 {"heap", "heapcheck.sh"}};
+
+static vector<string> optimizations =
+	{"-alloc-insert",
+	 "-func-reorder",
+	 "-bb-reorder"};
 
 class ResultBundle{
 private:
@@ -206,19 +204,7 @@ ResultBundle run_tests(string binname){
 		string output = check_output(command.str());
 		rbundle.set(it->first, atoi(output.c_str()));
 	}
-/*
-	stringstream smashed_command;
-	smashed_command << "./" << smashcheck << ' ' << binname;
-	cout << smashed_command.str() << endl;
-	string smashed_output = check_output(smashed_command.str());
-	rbundle.set("smashed", atoi(smashed_output.c_str()));
 
-	stringstream size_command;
-	size_command << "./" << sizecheck << ' ' << binname;
-	cout << sizecheck.str() << endl;
-	string size_output = check_output(size_command.str());
-	rbundle.set("size", atoi(size_output.c_str()));
-*/
 	return rbundle;
 }
 
@@ -290,8 +276,11 @@ int main(int argc, char ** argv){
 
 		// Generate base source version
 		concat_source(fileoutpath.str(), headerpath, prototypespath, macropath, funcarr, indexarray);
-		stringstream binname;
+		stringstream binname, fileoutir, fileoutasm;
 		binname << dirout.str() << '/' << binbasename;
+		fileoutir << binname.str() << ".ll.optimized";
+		fileoutasm << binname.str() << ".s";
+		//cout << "base: " << binname.str() << " ir: " << fileoutir.str() << " asm: " << fileoutasm.str() << endl;
 
 		// Compile to IR (needed for both normal and randomized versions)
 		stringstream run_ctoir;
@@ -309,8 +298,27 @@ int main(int argc, char ** argv){
 		cout << run_overflow.str() << endl;
 		system(run_overflow.str().c_str());
 
+		// Run tests on base version
 		ResultBundle results = run_tests(binname.str());
 		cout << version_number.str() << ": " << results.to_string() << endl;
+
+		for(vector<int>::iterator it = run_seeds.begin(); it != run_seeds.end(); it++){
+			uint seed = (*it);
+			cout << endl << "[--- seed = " << seed << " ---]" << endl;
+			// Compile and test with each randomization technique
+			for(vector<string>::iterator jt = optimizations.begin(); jt != optimizations.end(); jt++){
+				// Clear artefacts from previous optimizer runs
+				stringstream run_clear;
+				run_clear << "rm -f " << fileoutir.str() << ' ' << fileoutasm.str();
+				system(run_clear.str().c_str());
+
+				vector<string> opts = {(*jt)};
+				compile_pipeline(daa, binname.str(), seed, opts);
+				ResultBundle optresults = run_tests(binname.str());
+				cout << version_number.str() << '-' << seed << ": " << optresults.to_string() << endl;
+			}
+			
+		}
 
 	}
 
