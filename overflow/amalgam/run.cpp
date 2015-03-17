@@ -31,17 +31,25 @@ const string ctoir = "CToIR.sh";
 const string irtobin = "IRToBin.sh";
 const string overflow = "overflow.sh";
 
+/*
 const string smashcheck = "smashcheck.sh";
 const string sizecheck = "sizecheck.sh";
 const string retiredcheck = "retiredcheck.sh";
 const string heapcheck = "heapcheck.sh";
-const string sampelin = "sample1.sql";
+*/
 
 const string link = "-lpthread -ldl";
 const string libfn = "_IO_putc";
 const string bufsize = "2031";
+const string sampelin = "sample1.sql"; // Sample file used in testing
 
 const int testrun_count = 3; // The number of times each randomization pass is to be run
+
+static map<string, string> checkscripts =
+	{{"smashed", "smashcheck.sh"},
+	 {"size", "sizecheck.sh"}};
+	 //{"retired", "retiredcheck.sh"},
+	 //{"heap", "heapcheck.sh"}};
 
 class ResultBundle{
 private:
@@ -173,6 +181,7 @@ void compile_pipeline(string daa, string binname, int seed, vector<string> optfl
 	system(command.str().c_str());
 }
 
+// Run an external command and return its output as a string
 string check_output(string command){
 	string result = "";
 	char buffer[MAX_BUFFER];
@@ -189,12 +198,26 @@ string check_output(string command){
 ResultBundle run_tests(string binname){
 	ResultBundle rbundle;
 
+	for(map<string, string>::iterator it = checkscripts.begin(); it != checkscripts.end(); it++){
+		stringstream command;
+		command << "./" << it->second << ' ' << binname;
+		cout << command.str() << endl;
+		string output = check_output(command.str());
+		rbundle.set(it->first, atoi(output.c_str()));
+	}
+/*
 	stringstream smashed_command;
 	smashed_command << "./" << smashcheck << ' ' << binname;
 	cout << smashed_command.str() << endl;
 	string smashed_output = check_output(smashed_command.str());
 	rbundle.set("smashed", atoi(smashed_output.c_str()));
-	
+
+	stringstream size_command;
+	size_command << "./" << sizecheck << ' ' << binname;
+	cout << sizecheck.str() << endl;
+	string size_output = check_output(size_command.str());
+	rbundle.set("size", atoi(size_output.c_str()));
+*/
 	return rbundle;
 }
 
