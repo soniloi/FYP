@@ -22,12 +22,14 @@ const string prototypespath = "./prototypes.lst";
 const string protogen = "cproto";
 const string protogenopt = "-si";
 
-const string binname = "humpty";
+const string binbasename = "humpty";
 const string fileoutbasepath = "humpty.c";
 
 const string ctoir = "CToIR.sh";
 const string irtobin = "IRToBin.sh";
 const string overflow = "overflow.sh";
+
+const string link = "-lpthread -ldl";
 
 const int testrun_count = 3; // The number of times each randomization pass is to be run
 
@@ -129,6 +131,7 @@ void concat_source(string fileoutpath, string headerpath, string prototypespath,
 	fileout.close();
 }
 
+// Get a pseudo-randomly generated array of seeds
 vector<int> get_seed_array(int len, std::mt19937 rng){
 	vector<int> possible_seeds = identity_array(16777215);
 	shuffle(possible_seeds.begin(), possible_seeds.end(), rng);
@@ -136,6 +139,16 @@ vector<int> get_seed_array(int len, std::mt19937 rng){
 	for(int i = 0; i < len; i++)
 		result.push_back(possible_seeds[i]);
 	return result;
+}
+
+// Call the compilation pipeline, including randomization passes where requested
+void compile_pipeline(string daa, string binname, int seed, vector<string> optflags){
+	stringstream command;
+	command << "./" << irtobin << ' ' << daa << ' ' << binname << ' ' << seed << " '" << link << "' ";
+	for(vector<string>::iterator it = optflags.begin(); it != optflags.end(); it++)
+		command << (*it) << ' ';
+	cout << command.str() << endl;
+	system(command.str().c_str());
 }
 
 int main(int argc, char ** argv){
@@ -201,12 +214,18 @@ int main(int argc, char ** argv){
 
 		// Generate base source version
 		concat_source(fileoutpath.str(), headerpath, prototypespath, macropath, funcarr, indexarray);
+		stringstream binname;
+		binname << dirout.str() << '/' << binbasename;
 
 		// Compile to IR (needed for both normal and randomized versions)
 		stringstream run_ctoir;
-		run_ctoir << "./" << ctoir << ' ' << daa << ' ' << dirout.str() << '/' << binname;
+		run_ctoir << "./" << ctoir << ' ' << daa << ' ' << binname.str();
 		cout << run_ctoir.str() << endl;
 		system(run_ctoir.str().c_str());
+
+		vector<string> dummy;
+		// Compile base version without randomization
+		compile_pipeline(daa, binname.str(), 0, dummy); // Pass a zero seed, because there are no randomization passes
 
 	}
 
