@@ -30,6 +30,8 @@ const string irtobin = "IRToBin.sh";
 const string overflow = "overflow.sh";
 
 const string link = "-lpthread -ldl";
+const string libfn = "_IO_putc";
+const string bufsize = "2031";
 
 const int testrun_count = 3; // The number of times each randomization pass is to be run
 
@@ -147,7 +149,7 @@ void compile_pipeline(string daa, string binname, int seed, vector<string> optfl
 	command << "./" << irtobin << ' ' << daa << ' ' << binname << ' ' << seed << " '" << link << "' ";
 	for(vector<string>::iterator it = optflags.begin(); it != optflags.end(); it++)
 		command << (*it) << ' ';
-	cout << command.str() << endl;
+	//cout << command.str() << endl;
 	system(command.str().c_str());
 }
 
@@ -187,10 +189,12 @@ int main(int argc, char ** argv){
 
 	//#pragma omp parallel for
 	for(int version = 1; version <= generation_count; version++){
-		cout << endl << "[=== Source version " << version << " ===]" << endl;
+		stringstream version_heading;
+		version_heading << endl << "[=== Source version " << version << " ===]" << endl;
+		cout << version_heading.str();
 
 		std::mt19937 rng_permutations_local;
-		rng_permutations_local.seed(permutation_seeds[version]);
+		rng_permutations_local.seed(permutation_seeds[version-1]);
 
 		stringstream dirout;
 		dirout << "./version-" << version;
@@ -223,9 +227,15 @@ int main(int argc, char ** argv){
 		cout << run_ctoir.str() << endl;
 		system(run_ctoir.str().c_str());
 
-		vector<string> dummy;
 		// Compile base version without randomization
+		vector<string> dummy;
 		compile_pipeline(daa, binname.str(), 0, dummy); // Pass a zero seed, because there are no randomization passes
+
+		// Run overflow script on base version
+		stringstream run_overflow;
+		run_overflow << "./" << overflow << ' ' << binname.str() << ' ' << libfn << ' ' << bufsize;
+		cout << run_overflow.str();
+		system(run_overflow.str().c_str());
 
 	}
 
