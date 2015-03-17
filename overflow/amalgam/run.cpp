@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const string usage = "run <path-to-build-tree> <total-generations> <initial-seed>";
+const string usage = "run <path-to-build-tree> <total-generations> <initial-permutation-seed> <initial-run-seed>";
 const string sep = "/*****************************************************************************/";
 
 const string original = "./amalgamation.c";
@@ -23,12 +23,6 @@ const string protogenopt = "-si";
 
 const string binname = "./humpty";
 const string fileoutbasepath = "humpty.c";
-
-vector<int> generate_random_permutation(vector<int> original, std::mt19937 rng){
-	vector<int> result(original);
-	shuffle(result.begin(), result.end(), rng);
-	return result;
-}
 
 // Generate file consisting of all prototypes of original C source file
 void generate_prototypes(){
@@ -115,16 +109,26 @@ void concat_source(string fileoutpath, string headerpath, string prototypespath,
 	fileout.close();
 }
 
+vector<int> get_seed_array(int len, std::mt19937 rng){
+	vector<int> possible_seeds = identity_array(16777215);
+	shuffle(possible_seeds.begin(), possible_seeds.end(), rng);
+	vector<int> result;
+	for(int i = 0; i < len; i++)
+		result.push_back(possible_seeds[i]);
+	return result;
+}
+
 int main(int argc, char ** argv){
 
 	// Parse args
-	if(argc != 4){
+	if(argc != 5){
 		cout << usage << endl;
 		exit(1);
 	}
 	string daa = argv[1]; // Path to Debug+Asserts build
 	int generation_count = atoi(argv[2]); // Number of permutations of source to generate
-	int initial_seed = atoi(argv[3]);
+	int initial_seed_permutations = atoi(argv[3]);
+	int initial_seed_runs = atoi(argv[4]);
 
 	// Generate common file listing function prototypes
 	generate_prototypes();
@@ -135,16 +139,17 @@ int main(int argc, char ** argv){
 	// Construct identity array of the appropriate size
 	vector<int> identity = identity_array(funcarr.size());
 	
-	// Initialize RNG
-	std::mt19937 rng;
-	std::uniform_int_distribution<uint32_t> dist(0, 16777215);
-	rng.seed(initial_seed);
+	// Initialize RNGs 
+	std::mt19937 rng_permutations; // RNG for generating permutations
+	rng_permutations.seed(initial_seed_permutations);
 
-	vector<int> indexarray = generate_random_permutation(identity, rng);
-	//for(int i = 0; i < indexarray.size(); i++)
-	//	cout << i << ": " << indexarray[i] << endl;
+	std::mt19937 rng_runs; // RNG for generating seeds to be passed to compiler randomization runs
+	rng_runs.seed(initial_seed_runs);
+	vector<int> seeds = get_seed_array(generation_count, rng_runs);
+	//for(int i = 0; i < seeds.size(); i++)
+	//	cout << "seed " << i << ": " << seeds[i] << endl;
 
-	for(int version = 0; version < 1; version++){
+	for(int version = 0; version < generation_count; version++){
 		stringstream dirout;
 		dirout << "./version-" << version;
 
@@ -154,8 +159,13 @@ int main(int argc, char ** argv){
 
 		stringstream fileoutpath;
 		fileoutpath << dirout.str() << '/' << fileoutbasepath;
-
 		cout << fileoutpath.str() << endl;
+
+		vector<int> indexarray(identity);
+		shuffle(indexarray.begin(), indexarray.end(), rng_permutations);
+		//for(int i = 0; i < indexarray.size(); i++)
+		//	cout << i << ": " << indexarray[i] << endl;
+
 		concat_source(fileoutpath.str(), headerpath, prototypespath, macropath, funcarr, indexarray);
 	}
 
