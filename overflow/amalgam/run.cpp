@@ -1,5 +1,6 @@
 #include <algorithm> // shuffle, sort
 #include <dirent.h> // directory operations
+#include <fstream>
 #include <iostream>
 #include <cstdlib>
 #include <random>
@@ -9,6 +10,8 @@
 using namespace std;
 
 const string usage = "run <path-to-build-tree> <total-generations> <initial-seed>";
+const string sep = "/*****************************************************************************/";
+
 const string original = "./amalgamation.c";
 const string headerpath = "./header.c";
 const string macropath = "./macros.c";
@@ -18,7 +21,7 @@ const string protogen = "cproto";
 const string protogenopt = "-si";
 
 const string binname = "./humpty";
-//const string fileoutpath = 
+const string fileoutpath = "./humpty.c";
 
 vector<int> generate_random_permutation(vector<int> original, std::mt19937 rng){
 	vector<int> result(original);
@@ -43,7 +46,7 @@ vector<string> get_filenames(string dirpath){
 
 	dir = opendir(dirpath.c_str());
 	if(dir){
-		while(ent = readdir(dir)){
+		while((ent = readdir(dir))){
 			string dname = ent->d_name;
 			if(dname.compare(".") && dname.compare("..")){
 				stringstream filepath;
@@ -66,8 +69,34 @@ vector<int> identity_array(int len){
 	return result;
 }
 
+// Output a formatted heading to file
+void output_heading(ofstream &fileout, string label){
+	fileout << endl << endl << sep << endl << "/** " << label << " **/" << endl << sep << endl << endl;
+}
+
+// Concatenate file at filepathin onto fileout
+void cat_file(ofstream &fileout, string filepathin){
+	ifstream filein(filepathin);
+	if(filein){
+		string line;
+		while(getline(filein, line))
+			fileout << line << endl;
+		filein.close();
+	}
+}
+
+// Concatenate constituents of a source file into complete source file at fileoutpath
+void concat_source(string fileoutpath, string headerpath, string prototypespath, string macropath, vector<string> funcarr, vector<int> indarr){
+	ofstream fileout(fileoutpath);
+
+	// Output 'header'
+	output_heading(fileout, "Global Declarations");
+	cat_file(fileout, headerpath);
+}
+
 int main(int argc, char ** argv){
 
+	// Parse args
 	if(argc != 4){
 		cout << usage << endl;
 		exit(1);
@@ -75,11 +104,6 @@ int main(int argc, char ** argv){
 	string daa = argv[1]; // Path to Debug+Asserts build
 	int generation_count = atoi(argv[2]); // Number of permutations of source to generate
 	int initial_seed = atoi(argv[3]);
-
-	// Initialize RNG
-	std::mt19937 rng;
-	std::uniform_int_distribution<uint32_t> dist(0, 16777215);
-	rng.seed(initial_seed);
 
 	// Generate common file listing function prototypes
 	generate_prototypes();
@@ -91,14 +115,22 @@ int main(int argc, char ** argv){
 	}
 	cout << "Total number of files: " << funcarr.size() << endl;
 
+	// Construct identity array of the appropriate size
 	vector<int> identity = identity_array(funcarr.size());
 	
+	// Initialize RNG
+	std::mt19937 rng;
+	std::uniform_int_distribution<uint32_t> dist(0, 16777215);
+	rng.seed(initial_seed);
+
 	vector<int> index_array = generate_random_permutation(identity, rng);
 	for(int i = 0; i < index_array.size(); i++){
 		cout << i << ": " << index_array[i] << endl;
 	}
 
-	
+	int version = 0;
+	concat_source(fileoutpath, headerpath, prototypespath, macropath, funcarr, index_array);
+//void concat_source(string fileoutpath, string headerpath, string prototypespath, string macropath, vector<string> funcarr, vector<int> indarr){
 
 	return 0;
 }
