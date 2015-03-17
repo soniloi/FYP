@@ -75,7 +75,8 @@ void output_heading(ofstream &fileout, string label){
 }
 
 // Concatenate file at filepathin onto fileout
-void cat_file(ofstream &fileout, string filepathin){
+void cat_file(ofstream &fileout, string filepathin, string label){
+	output_heading(fileout, label);
 	ifstream filein(filepathin);
 	if(filein){
 		string line;
@@ -90,8 +91,15 @@ void concat_source(string fileoutpath, string headerpath, string prototypespath,
 	ofstream fileout(fileoutpath);
 
 	// Output 'header'
-	output_heading(fileout, "Global Declarations");
-	cat_file(fileout, headerpath);
+	cat_file(fileout, headerpath, "Global Declarations");
+
+	// Concatenate forward declarations
+	cat_file(fileout, prototypespath, "Forward Declarations");
+
+	// Concatenate macros
+	cat_file(fileout, macropath, "Macros");
+
+	fileout.close();
 }
 
 int main(int argc, char ** argv){
