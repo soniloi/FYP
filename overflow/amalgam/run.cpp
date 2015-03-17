@@ -24,6 +24,8 @@ const string protogenopt = "-si";
 const string binname = "./humpty";
 const string fileoutbasepath = "humpty.c";
 
+const int testrun_count = 3; // The number of times each randomization pass is to be run
+
 // Generate file consisting of all prototypes of original C source file
 void generate_prototypes(){
 	// Generate prototypes file
@@ -142,14 +144,21 @@ int main(int argc, char ** argv){
 	// Initialize RNGs 
 	std::mt19937 rng_permutations; // RNG for generating permutations
 	rng_permutations.seed(initial_seed_permutations);
+	vector<int> permutation_seeds = get_seed_array(generation_count, rng_permutations);
+	for(int i = 0; i < permutation_seeds.size(); i++)
+		cout << "perm seed " << i << ": " << permutation_seeds[i] << endl;
 
 	std::mt19937 rng_runs; // RNG for generating seeds to be passed to compiler randomization runs
 	rng_runs.seed(initial_seed_runs);
-	vector<int> seeds = get_seed_array(generation_count, rng_runs);
-	//for(int i = 0; i < seeds.size(); i++)
-	//	cout << "seed " << i << ": " << seeds[i] << endl;
+	vector<int> run_seeds = get_seed_array(testrun_count, rng_runs);
+	for(int i = 0; i < run_seeds.size(); i++)
+		cout << "run seed " << i << ": " << run_seeds[i] << endl;
 
+	//#pragma omp parallel for
 	for(int version = 0; version < generation_count; version++){
+		std::mt19937 rng_permutations_local;
+		rng_permutations_local.seed(permutation_seeds[version]);
+
 		stringstream dirout;
 		dirout << "./version-" << version;
 
@@ -162,9 +171,12 @@ int main(int argc, char ** argv){
 		cout << fileoutpath.str() << endl;
 
 		vector<int> indexarray(identity);
-		shuffle(indexarray.begin(), indexarray.end(), rng_permutations);
-		//for(int i = 0; i < indexarray.size(); i++)
-		//	cout << i << ": " << indexarray[i] << endl;
+		shuffle(indexarray.begin(), indexarray.end(), rng_permutations_local);
+		for(int i = 0; i < indexarray.size(); i++){
+			stringstream ss;
+			ss << "v" << version << ": " << i << ": " << indexarray[i] << endl;
+			cout << ss.str();
+		}
 
 		concat_source(fileoutpath.str(), headerpath, prototypespath, macropath, funcarr, indexarray);
 	}
