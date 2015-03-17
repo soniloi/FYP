@@ -22,8 +22,14 @@ if ! [[ -x $bin ]]; then
 	exit 1
 fi
 
+bindir=`dirname $bin`
+bin=`basename $bin`
 logfile="run.log"
 
+# Change to appropriate directory
+pushd $bindir > /dev/null
+
+# Attempt to smash stack
 gdb $bin -ex run > $logfile 2>&1 &
 wait
 if $grepnc "$pattern_smash" $logfile; then
@@ -34,6 +40,9 @@ fi
 
 # Clean up
 rm -f $logfile
+
+# Return to original directory
+popd > /dev/null
 
 # Print result
 echo -n $smashed
