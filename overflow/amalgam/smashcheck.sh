@@ -11,7 +11,7 @@ grepnc="grep --color=never -q"
 pattern_smash="process [0-9][0-9]* is executing new program: /bin/bash"
 smashed=0
 
-if [[ "$#" -ne 1 ]]; then
+if [[ "$#" -ne 1 ]] && [[ "$#" -ne 2 ]]; then
 	echo $usage
 	exit 1
 fi

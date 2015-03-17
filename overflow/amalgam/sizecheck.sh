@@ -5,7 +5,7 @@
 usage="Usage: $0 <path-to-binary>"
 sizer="du -b"
 
-if [[ "$#" -ne 1 ]]; then
+if [[ "$#" -ne 1 ]] && [[ "$#" -ne 2 ]]; then
 	echo $usage
 	exit 1
 fi
