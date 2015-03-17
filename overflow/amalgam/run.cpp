@@ -19,12 +19,21 @@ vector<int> generate_random_permutation(vector<int> original, std::mt19937 rng){
 	return result;
 }
 
-void generate_source(){
+// Generate file consisting of all prototypes of original C source file
+void generate_prototypes(){
 	// Generate prototypes file
 	stringstream protocom;
 	protocom << protogen << ' ' << protogenopt << ' ' <<  "-o " << prototypespath << ' ' << original;
 	system(protocom.str().c_str());
-	
+}
+
+// Create array for which every value is the same as its index
+vector<int> identity_array(int len){
+	vector<int> result;
+	for(int i = 0; i < len; i++){
+		result.push_back(i);
+	}
+	return result;
 }
 
 int main(int argc, char ** argv){
@@ -43,17 +52,16 @@ int main(int argc, char ** argv){
 	std::uniform_int_distribution<uint32_t> dist(0, 16777215);
 	rng.seed(initial_seed);
 
-	vector<int> identity;
-	for(int i = 0; i < 1800; i++){
-		identity.push_back(i);
-	}
-
+	vector<int> identity = identity_array(1800);
+	
 	vector<int> index_array = generate_random_permutation(identity, rng);
 	for(int i = 0; i < index_array.size(); i++){
 		cout << i << ": " << index_array[i] << endl;
 	}
 
-	generate_source();
+		generate_prototypes(); // Generate the common file listing function prototypes
+
+	
 
 	return 0;
 }
