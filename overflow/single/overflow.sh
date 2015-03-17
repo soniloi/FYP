@@ -14,10 +14,12 @@ fi
 binname=$1
 libfn=$2
 bufbound=$3
-dat1="data1.dat"
-dat2="data2.dat"
 execfn="execl"
 spawnfn="spawn_shell"
+
+bindir=`dirname $binname`
+dat1="$bindir/data1.dat"
+dat2="$bindir/data2.dat"
 
 # Find address of libc library function to be overwritten
 libaddrline=(`objdump --dynamic-reloc $binname | $grepnc $libfn`)
