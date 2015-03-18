@@ -299,8 +299,8 @@ int main(int argc, char ** argv){
 		system(run_overflow.str().c_str());
 
 		// Run tests on base version
-		ResultBundle results = run_tests(binname.str());
-		cout << version_number.str() << ": " << results.to_string() << endl;
+		ResultBundle base_results = run_tests(binname.str());
+		cout << version_number.str() << ": " << base_results.to_string() << endl;
 
 		map<string, map<int, ResultBundle> > version_results;
 
@@ -357,7 +357,14 @@ int main(int argc, char ** argv){
 			stringstream ss;
 			ss << version_number.str() << optimization << ": smashed: " << version_smashed_count << ' ';
 			for(map<string, map<string, uint> >::iterator jt = version_metric_counts.begin(); jt != version_metric_counts.end(); jt++){
-				ss << jt->first << ": [min: " << jt->second["min"] << " max: " << jt->second["max"] << " avg: " << (jt->second["tot"]/run_seeds.size()) << "] ";
+				string metric = jt->first;
+				uint min = jt->second["min"];
+				uint max = jt->second["max"];
+				double avg = jt->second["tot"]/run_seeds.size();
+				double minrat = (double)min/base_results.get(metric);
+				double maxrat = (double)max/base_results.get(metric);
+				double avgrat = (double)avg/base_results.get(metric);
+				ss << metric << ": [min: " << min << " (" << minrat << ") max: " << max << " (" << maxrat << ") avg: " << avg << " (" << avgrat << ")] ";
 			}
 			ss << endl;
 			cout << ss.str();
