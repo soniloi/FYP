@@ -1,5 +1,6 @@
 #include <algorithm> // shuffle, sort
 #include <assert.h>
+#include <cfloat> // MAX_DBL stuff
 #include <climits> // MAX_INT stuff
 #include <cstdlib>
 #include <dirent.h> // directory operations
@@ -52,6 +53,12 @@ static vector<string> optimizations =
 	{"-alloc-insert",
 	 "-func-reorder",
 	 "-bb-reorder"};
+
+static vector<string> metrics =
+	{"smashed",
+	 "size",
+	 "retired",
+	 "heap"};
 
 class ResultBundle{
 public:
@@ -244,6 +251,18 @@ int main(int argc, char ** argv){
 	//for(int i = 0; i < run_seeds.size(); i++)
 	//	cout << "run seed " << i << ": " << run_seeds[i] << endl;
 
+	// Overall result structure
+	map<string, double> global_smashed_counts;
+	map<string, map<string, map<string, double> > > global_metric_counts;
+	for(vector<string>::iterator optimization = optimizations.begin(); optimization != optimizations.end(); optimization++){
+		global_smashed_counts[(*optimization)] = 0.0;
+		for(vector<string>::iterator metric = metrics.begin(); metric != metrics.end(); metric++){
+			global_metric_counts[(*optimization)][(*metric)]["min"] = DBL_MAX;
+			global_metric_counts[(*optimization)][(*metric)]["max"] = 0;
+			global_metric_counts[(*optimization)][(*metric)]["tot"] = 0;
+		}
+	}
+
 	//#pragma omp parallel for
 	for(int version = 1; version <= generation_count; version++){
 		stringstream version_number;
@@ -304,6 +323,7 @@ int main(int argc, char ** argv){
 		ResultBundle base_results = run_tests(binname.str());
 		cout << version_number.str() << ": " << base_results.to_string() << endl;
 
+		// Result structure for this version
 		map<string, map<int, ResultBundle> > version_results;
 
 		for(vector<int>::iterator it = run_seeds.begin(); it != run_seeds.end(); it++){
@@ -357,7 +377,7 @@ int main(int argc, char ** argv){
 				}
 			}
 			stringstream ss;
-			ss << std::setprecision(2) << version_number.str() << optimization << endl << TAB << ": smashed: " << version_smashed_count << endl;
+			ss << std::setprecision(12) << version_number.str() << optimization << ": " << endl << TAB << "smashed: " << version_smashed_count << endl;
 			for(map<string, map<string, uint> >::iterator jt = version_metric_counts.begin(); jt != version_metric_counts.end(); jt++){
 				string metric = jt->first;
 				uint min = jt->second["min"];
@@ -367,10 +387,34 @@ int main(int argc, char ** argv){
 				double maxrat = (double)max/base_results.get(metric);
 				double avgrat = (double)avg/base_results.get(metric);
 				ss << TAB << metric << ": min: " << min << " (" << minrat << ") max: " << max << " (" << maxrat << ") avg: " << avg << " (" << avgrat << ")" << endl;
+
+				#pragma omp critical
+				{
+					if(minrat < global_metric_counts[optimization][metric]["min"])
+						global_metric_counts[optimization][metric]["min"] = minrat;
+					if(maxrat > global_metric_counts[optimization][metric]["max"])
+						global_metric_counts[optimization][metric]["max"] = maxrat;
+					global_metric_counts[optimization][metric]["tot"] += avgrat;
+				}
 			}
 			cout << ss.str();
 		}
 
+	}
+
+	cout << endl << "[=== Grand summary ===]" << endl;
+	cout << "optimization\tsmashed?\tbin size\t\t\tretired\t\t\theap use" << endl;
+	cout << TAB << "\t\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg" << endl;
+	for(vector<string>::iterator optimization = optimizations.begin(); optimization != optimizations.end(); optimization++){
+		cout << (*optimization) << '\t' << global_smashed_counts[(*optimization)];
+		for(vector<string>::iterator metric = metrics.begin(); metric != metrics.end(); metric++){
+			if((*metric).compare("smashed")){
+				cout << '\t' << global_metric_counts[(*optimization)][(*metric)]["min"] <<
+								'\t' << global_metric_counts[(*optimization)][(*metric)]["max"] <<
+								'\t' << (global_metric_counts[(*optimization)][(*metric)]["tot"]/generation_count);
+			}
+		}
+		cout << endl;
 	}
 
 	return 0;
