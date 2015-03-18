@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <dirent.h> // directory operations
 #include <fstream>
+#include <iomanip> // cout formatting stuff
 #include <iostream>
 #include <map>
 #include <random>
@@ -11,6 +12,7 @@
 #include <vector>
 
 #define MAX_BUFFER 128
+#define TAB "        "
 
 using namespace std;
 
@@ -355,7 +357,7 @@ int main(int argc, char ** argv){
 				}
 			}
 			stringstream ss;
-			ss << version_number.str() << optimization << ": smashed: " << version_smashed_count << ' ';
+			ss << std::setprecision(2) << version_number.str() << optimization << endl << TAB << ": smashed: " << version_smashed_count << endl;
 			for(map<string, map<string, uint> >::iterator jt = version_metric_counts.begin(); jt != version_metric_counts.end(); jt++){
 				string metric = jt->first;
 				uint min = jt->second["min"];
@@ -364,9 +366,8 @@ int main(int argc, char ** argv){
 				double minrat = (double)min/base_results.get(metric);
 				double maxrat = (double)max/base_results.get(metric);
 				double avgrat = (double)avg/base_results.get(metric);
-				ss << metric << ": [min: " << min << " (" << minrat << ") max: " << max << " (" << maxrat << ") avg: " << avg << " (" << avgrat << ")] ";
+				ss << TAB << metric << ": min: " << min << " (" << minrat << ") max: " << max << " (" << maxrat << ") avg: " << avg << " (" << avgrat << ")" << endl;
 			}
-			ss << endl;
 			cout << ss.str();
 		}
 
