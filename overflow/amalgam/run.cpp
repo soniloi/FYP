@@ -1,9 +1,10 @@
 #include <algorithm> // shuffle, sort
 #include <assert.h>
+#include <climits> // MAX_INT stuff
+#include <cstdlib>
 #include <dirent.h> // directory operations
 #include <fstream>
 #include <iostream>
-#include <cstdlib>
 #include <map>
 #include <random>
 #include <sstream>
@@ -37,7 +38,7 @@ const string libfn = "_IO_putc";
 const string bufsize = "2031";
 const string samplein = "sample1.sql"; // Sample file used in testing
 
-const int testrun_count = 1; // The number of times each randomization pass is to be run
+const int testrun_count = 2; // The number of times each randomization pass is to be run
 
 static map<string, string> checkscripts =
 	{{"smashed", "smashcheck.sh"},
@@ -51,25 +52,24 @@ static vector<string> optimizations =
 	 "-bb-reorder"};
 
 class ResultBundle{
-private:
-	std::map<string, int> metrics;
 public:
-	void set(string key, int value);
-	int get(string key);
+	std::map<string, uint> metrics;
+	void set(string key, uint value);
+	uint get(string key);
 	string to_string();
 };
 
-void ResultBundle::set(string key, int value){
+void ResultBundle::set(string key, uint value){
 	this->metrics[key] = value;
 }
 
-int ResultBundle::get(string key){
+uint ResultBundle::get(string key){
 	return this->metrics[key];
 }
 
 string ResultBundle::to_string(){
 	stringstream ss;
-	for(map<string, int>::iterator it = this->metrics.begin(); it != this->metrics.end(); it++){
+	for(map<string, uint>::iterator it = this->metrics.begin(); it != this->metrics.end(); it++){
 		ss << it->first << ": " << it->second << ' ';
 	}
 	return ss.str();
@@ -327,17 +327,40 @@ int main(int argc, char ** argv){
 		}
 
 		for(map<string, map<int, ResultBundle> >::iterator it = version_results.begin(); it != version_results.end(); it++){
-			string randtype = it->first;
+			string optimization = it->first;
 			map<int, ResultBundle> version_bundles = it->second;
-			cout << endl << "[--- Summary for randomization " << randtype << " on version " << version << " ---]" << endl;
-			int version_smashed_count = 0;
-			map<string, map<string, int> > version_metric_counts;
+			cout << endl << "[--- Summary for randomization " << optimization << " on version " << version << " ---]" << endl;
+			uint version_smashed_count = 0;
+			map<string, map<string, uint> > version_metric_counts;
 			for(map<int, ResultBundle>::iterator jt = version_bundles.begin(); jt != version_bundles.end(); jt++){
 				int seed = jt->first;
 				ResultBundle version_bundle = jt->second;
 				cout << "seed: " << seed << " result: " << version_bundle.to_string() << endl;
 				version_smashed_count += version_bundle.get("smashed");
+				for(map<string, uint>::iterator kt = version_bundle.metrics.begin(); kt != version_bundle.metrics.end(); kt++){
+					string metricname = kt->first;
+					if(metricname.compare("smashed")){
+						if(version_metric_counts.find(metricname) == version_metric_counts.end()){
+							version_metric_counts[metricname]["min"] = UINT_MAX;
+							version_metric_counts[metricname]["max"] = 0;
+							version_metric_counts[metricname]["tot"] = 0;
+						}
+						uint metricvalue = version_bundle.get(metricname);
+						if(metricvalue < version_metric_counts[metricname]["min"])
+							version_metric_counts[metricname]["min"] = metricvalue;
+						if(metricvalue > version_metric_counts[metricname]["max"])
+							version_metric_counts[metricname]["max"] = metricvalue;
+						version_metric_counts[metricname]["tot"] += metricvalue;
+					}
+				}
 			}
+			stringstream ss;
+			ss << version_number.str() << optimization << ": smashed: " << version_smashed_count << ' ';
+			for(map<string, map<string, uint> >::iterator jt = version_metric_counts.begin(); jt != version_metric_counts.end(); jt++){
+				ss << jt->first << ": [min: " << jt->second["min"] << " max: " << jt->second["max"] << " avg: " << (jt->second["tot"]/run_seeds.size()) << "] ";
+			}
+			ss << endl;
+			cout << ss.str();
 		}
 
 	}
