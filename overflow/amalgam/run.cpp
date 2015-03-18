@@ -37,7 +37,7 @@ const string libfn = "_IO_putc";
 const string bufsize = "2031";
 const string samplein = "sample1.sql"; // Sample file used in testing
 
-const int testrun_count = 3; // The number of times each randomization pass is to be run
+const int testrun_count = 1; // The number of times each randomization pass is to be run
 
 static map<string, string> checkscripts =
 	{{"smashed", "smashcheck.sh"},
@@ -302,22 +302,42 @@ int main(int argc, char ** argv){
 		ResultBundle results = run_tests(binname.str());
 		cout << version_number.str() << ": " << results.to_string() << endl;
 
+		map<string, map<int, ResultBundle> > version_results;
+
 		for(vector<int>::iterator it = run_seeds.begin(); it != run_seeds.end(); it++){
 			uint seed = (*it);
 			cout << endl << "[--- seed = " << seed << " ---]" << endl;
 			// Compile and test with each randomization technique
 			for(vector<string>::iterator jt = optimizations.begin(); jt != optimizations.end(); jt++){
+				string optimization = (*jt);
+
 				// Clear artefacts from previous optimizer runs
 				stringstream run_clear;
 				run_clear << "rm -f " << fileoutir.str() << ' ' << fileoutasm.str();
 				system(run_clear.str().c_str());
 
-				vector<string> opts = {(*jt)};
+				vector<string> opts = {optimization};
 				compile_pipeline(daa, binname.str(), seed, opts);
 				ResultBundle optresults = run_tests(binname.str());
 				cout << version_number.str() << '-' << seed << ": " << optresults.to_string() << endl;
+
+				version_results[optimization][seed] = optresults;
 			}
 			
+		}
+
+		for(map<string, map<int, ResultBundle> >::iterator it = version_results.begin(); it != version_results.end(); it++){
+			string randtype = it->first;
+			map<int, ResultBundle> version_bundles = it->second;
+			cout << endl << "[--- Summary for randomization " << randtype << " on version " << version << " ---]" << endl;
+			int version_smashed_count = 0;
+			map<string, map<string, int> > version_metric_counts;
+			for(map<int, ResultBundle>::iterator jt = version_bundles.begin(); jt != version_bundles.end(); jt++){
+				int seed = jt->first;
+				ResultBundle version_bundle = jt->second;
+				cout << "seed: " << seed << " result: " << version_bundle.to_string() << endl;
+				version_smashed_count += version_bundle.get("smashed");
+			}
 		}
 
 	}
