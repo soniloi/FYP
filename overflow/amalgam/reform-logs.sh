@@ -24,10 +24,11 @@ logfileout=$3
 rm -f $logfileout
 touch $logfileout
 
+$grepnc "$spattern" $logfilein >> $logfileout
+echo -e "\n\n" >> $logfileout
+
 for i in `seq 1 $versions`; do
 	label="^\[$vprefix$i\]"
 	$grepnc "$label" $logfilein >> $logfileout
 	echo -e "\n\n" >> $logfileout
 done
-
-$grepnc "$spattern" $logfilein >> $logfileout
