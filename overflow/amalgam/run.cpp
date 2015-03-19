@@ -41,6 +41,7 @@ const string libfn = "_IO_putc";
 const string bufsize = "2031";
 const string samplein = "sample1.sql"; // Sample file used in testing
 
+const int baserun_test_count = 3; // The number of times each base version should have tests run; base statistics will be an average of these
 const int testrun_count = 2; // The number of times each randomization pass is to be run
 
 static map<string, string> checkscripts =
@@ -321,7 +322,24 @@ int main(int argc, char ** argv){
 
 		// Run tests on base version
 		ResultBundle base_results = run_tests(binname.str());
-		cout << version_number.str() << ": " << base_results.to_string() << endl;
+		cout << version_number.str() << ": run 1: " << base_results.to_string() << endl;
+		for(int i = 0; i < baserun_test_count-1; i++){
+			ResultBundle run_base_results = run_tests(binname.str());
+			cout << version_number.str() << ": run " << (i+2) << ": " << run_base_results.to_string() << endl;
+
+			for(map<string, uint>::iterator it = base_results.metrics.begin(); it != base_results.metrics.end(); it++){
+				if(it->first.compare("smashed")){
+					it->second += run_base_results.get(it->first);
+				}
+			}
+		}
+
+		for(map<string, uint>::iterator it = base_results.metrics.begin(); it != base_results.metrics.end(); it++){
+			if(it->first.compare("smashed")){
+				it->second /= baserun_test_count;
+			}
+		}
+		cout << version_number.str() << ": average: " << base_results.to_string() << endl;
 
 		// Result structure for this version
 		map<string, map<int, ResultBundle> > version_results;
