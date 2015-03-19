@@ -44,6 +44,8 @@ const string samplein = "sample1.sql"; // Sample file used in testing
 const int baserun_test_count = 3; // The number of times each base version should have tests run; base statistics will be an average of these
 const int testrun_count = 2; // The number of times each randomization pass is to be run
 
+const string label_summary = "[summary] ";
+
 static map<string, string> checkscripts =
 	{{"smashed", "smashcheck.sh"},
 	 {"size", "sizecheck.sh"},
@@ -264,13 +266,15 @@ int main(int argc, char ** argv){
 		}
 	}
 
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for(int version = 1; version <= generation_count; version++){
-		stringstream version_number;
+		stringstream version_number, version_number_ss;
 		version_number << "version-" << version;
+		version_number_ss << "[" << version_number.str() << "] ";
+		string label_version = version_number_ss.str();
 
 		stringstream version_heading;
-		version_heading << endl << "[=== Source " << version_number.str() << " ===]" << endl;
+		version_heading << endl << label_version << endl;
 		cout << version_heading.str();
 
 		std::mt19937 rng_permutations_local;
@@ -305,9 +309,10 @@ int main(int argc, char ** argv){
 		//cout << "base: " << binname.str() << " ir: " << fileoutir.str() << " asm: " << fileoutasm.str() << endl;
 
 		// Compile to IR (needed for both normal and randomized versions)
-		stringstream run_ctoir;
+		stringstream run_ctoir, run_ctoir_ss;
 		run_ctoir << wd << ctoir << ' ' << daa << ' ' << binname.str();
-		cout << run_ctoir.str() << endl;
+		run_ctoir_ss << label_version << endl << label_version << "=== common ===" << endl << label_version << run_ctoir.str() << endl;
+		cout << run_ctoir_ss.str();
 		system(run_ctoir.str().c_str());
 
 		// Compile base version without randomization
@@ -315,38 +320,46 @@ int main(int argc, char ** argv){
 		compile_pipeline(daa, binname.str(), 0, dummy); // Pass a zero seed, because there are no randomization passes
 
 		// Run overflow script on base version
-		stringstream run_overflow;
-		run_overflow << wd << overflow << ' ' << binname.str() << ' ' << libfn << ' ' << bufsize;
-		cout << run_overflow.str() << endl;
-		system(run_overflow.str().c_str());
+		stringstream run_overflow_cmd, run_overflow_ss;
+		run_overflow_cmd << wd << overflow << ' ' << binname.str() << ' ' << libfn << ' ' << bufsize;
+		run_overflow_ss << label_version << run_overflow_cmd.str() << endl;
+		cout << run_overflow_ss.str() << endl;
+		system(run_overflow_cmd.str().c_str());
 
 		// Run tests on base version
 		ResultBundle base_results = run_tests(binname.str());
-		cout << version_number.str() << ": run 1: " << base_results.to_string() << endl;
+		stringstream base_results_ss;
+		base_results_ss << label_version << endl << label_version << "=== base version tests ===" << endl;
+		base_results_ss << label_version << TAB << "run 1: " << base_results.to_string() << endl;
 		for(int i = 0; i < baserun_test_count-1; i++){
 			ResultBundle run_base_results = run_tests(binname.str());
-			cout << version_number.str() << ": run " << (i+2) << ": " << run_base_results.to_string() << endl;
-
+			base_results_ss << label_version << TAB << "run " << (i+2) << ": " << run_base_results.to_string() << endl;
 			for(map<string, uint>::iterator it = base_results.metrics.begin(); it != base_results.metrics.end(); it++){
 				if(it->first.compare("smashed")){
 					it->second += run_base_results.get(it->first);
 				}
 			}
 		}
-
 		for(map<string, uint>::iterator it = base_results.metrics.begin(); it != base_results.metrics.end(); it++){
 			if(it->first.compare("smashed")){
 				it->second /= baserun_test_count;
 			}
 		}
-		cout << version_number.str() << ": average: " << base_results.to_string() << endl;
+		base_results_ss << label_version << "average: " << base_results.to_string() << endl;
+		cout << base_results_ss.str();
+
+		stringstream opt_results_heading_ss;
+		opt_results_heading_ss << label_version << endl << label_version << "=== randomization passes === " << endl;
+		cout << opt_results_heading_ss.str();
 
 		// Result structure for this version
 		map<string, map<int, ResultBundle> > version_results;
 
 		for(vector<int>::iterator it = run_seeds.begin(); it != run_seeds.end(); it++){
 			uint seed = (*it);
-			cout << endl << "[--- seed = " << seed << " ---]" << endl;
+			stringstream seed_ss;
+			seed_ss << label_version << endl;
+			cout << seed_ss.str();
 			// Compile and test with each randomization technique
 			for(vector<string>::iterator jt = optimizations.begin(); jt != optimizations.end(); jt++){
 				string optimization = (*jt);
@@ -359,23 +372,33 @@ int main(int argc, char ** argv){
 				vector<string> opts = {optimization};
 				compile_pipeline(daa, binname.str(), seed, opts);
 				ResultBundle optresults = run_tests(binname.str());
-				cout << version_number.str() << '-' << seed << ": " << optresults.to_string() << endl;
-
+				stringstream opt_ss;
+				opt_ss << label_version << "seed = " << seed << ": " << optresults.to_string() << endl;
+				cout << opt_ss.str();
 				version_results[optimization][seed] = optresults;
 			}
 			
 		}
 
+		stringstream vsummary_ss;
+		vsummary_ss << label_version << endl << label_summary << "=== version summary ===" << endl;
+
 		for(map<string, map<int, ResultBundle> >::iterator it = version_results.begin(); it != version_results.end(); it++){
 			string optimization = it->first;
 			map<int, ResultBundle> version_bundles = it->second;
-			cout << endl << "[--- Summary for randomization " << optimization << " on version " << version << " ---]" << endl;
+			stringstream rand_ss;
+			rand_ss << endl << label_version << endl << label_version << "--- summary for " << optimization << " ---" << endl;
+			cout << rand_ss.str();
+
 			uint version_smashed_count = 0;
 			map<string, map<string, uint> > version_metric_counts;
 			for(map<int, ResultBundle>::iterator jt = version_bundles.begin(); jt != version_bundles.end(); jt++){
 				int seed = jt->first;
 				ResultBundle version_bundle = jt->second;
-				cout << "seed: " << seed << " result: " << version_bundle.to_string() << endl;
+				stringstream seedresult_ss;
+				seedresult_ss << label_version << "seed: " << seed << " result: " << version_bundle.to_string() << endl;
+				cout << seedresult_ss.str();
+
 				version_smashed_count += version_bundle.get("smashed");
 				for(map<string, uint>::iterator kt = version_bundle.metrics.begin(); kt != version_bundle.metrics.end(); kt++){
 					string metricname = kt->first;
@@ -395,7 +418,7 @@ int main(int argc, char ** argv){
 				}
 			}
 			stringstream ss;
-			ss << std::setprecision(12) << version_number.str() << optimization << ": " << endl << TAB << "smashed: " << version_smashed_count << endl;
+			ss << std::setprecision(12) << label_version << "aggregated: " << endl << label_version << TAB << "smashed: " << version_smashed_count << endl;
 			for(map<string, map<string, uint> >::iterator jt = version_metric_counts.begin(); jt != version_metric_counts.end(); jt++){
 				string metric = jt->first;
 				uint min = jt->second["min"];
@@ -404,7 +427,7 @@ int main(int argc, char ** argv){
 				double minrat = (double)min/base_results.get(metric);
 				double maxrat = (double)max/base_results.get(metric);
 				double avgrat = (double)avg/base_results.get(metric);
-				ss << TAB << metric << ": min: " << min << " (" << minrat << ") max: " << max << " (" << maxrat << ") avg: " << avg << " (" << avgrat << ")" << endl;
+				ss << label_version << TAB << metric << ": min: " << min << " (" << minrat << ") max: " << max << " (" << maxrat << ") avg: " << avg << " (" << avgrat << ")" << endl;
 
 				#pragma omp critical
 				{
@@ -420,11 +443,11 @@ int main(int argc, char ** argv){
 
 	}
 
-	cout << endl << "[=== Grand summary ===]" << endl;
-	cout << "optimization\tsmashed?\tbin size\t\t\tretired\t\t\theap use" << endl;
-	cout << TAB << "\t\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg" << endl;
+	cout << label_summary << endl << label_summary << "[=== Grand summary ===]" << endl;
+	cout << label_summary << "optimization\tsmashed?\tbin size\t\t\tretired\t\t\theap use" << endl;
+	cout << label_summary << TAB << "\t\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg" << endl;
 	for(vector<string>::iterator optimization = optimizations.begin(); optimization != optimizations.end(); optimization++){
-		cout << (*optimization) << '\t' << global_smashed_counts[(*optimization)];
+		cout << label_summary << (*optimization) << '\t' << global_smashed_counts[(*optimization)];
 		for(vector<string>::iterator metric = metrics.begin(); metric != metrics.end(); metric++){
 			if((*metric).compare("smashed")){
 				cout << '\t' << global_metric_counts[(*optimization)][(*metric)]["min"] <<

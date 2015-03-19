@@ -4,7 +4,7 @@
 
 usage="$0 <path-to-input-logfile> <number-of-versions> <path-to-output-logfile>"
 vprefix='version-'
-spattern='[summary]'
+spattern='\[summary\]'
 grepnc='grep --color=never'
 
 if [[ "$#" -ne 3 ]]; then
@@ -25,10 +25,9 @@ rm -f $logfileout
 touch $logfileout
 
 for i in `seq 1 $versions`; do
-	echo $i
-	label="$vprefix$i"
-	$grepnc "\<$label\>" $logfilein >> $logfileout
+	label="^\[$vprefix$i\]"
+	$grepnc "$label" $logfilein >> $logfileout
 	echo -e "\n\n" >> $logfileout
 done
 
-$grepnc $spattern $logfilein >> $logfileout
+$grepnc "$spattern" $logfilein >> $logfileout
