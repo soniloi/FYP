@@ -194,6 +194,7 @@ void compile_pipeline(string daa, string binname, int seed, vector<string> optfl
 
 // Run an external command and return its output as a string
 string check_output(string command){
+	command.append(" 2>&1");
 	string result = "";
 	char buffer[MAX_BUFFER];
 	FILE * pipe = popen(command.c_str(), "r");
@@ -373,7 +374,7 @@ int main(int argc, char ** argv){
 				compile_pipeline(daa, binname.str(), seed, opts);
 				ResultBundle optresults = run_tests(binname.str());
 				stringstream opt_ss;
-				opt_ss << label_version << "seed = " << seed << ": " << optresults.to_string() << endl;
+				opt_ss << label_version << "seed = " << seed << ", optimization = " << optimization << ": " << optresults.to_string() << endl;
 				cout << opt_ss.str();
 				version_results[optimization][seed] = optresults;
 			}
@@ -443,7 +444,7 @@ int main(int argc, char ** argv){
 
 	}
 
-	cout << label_summary << endl << label_summary << "[=== Grand summary ===]" << endl;
+	cout << label_summary << endl << label_summary << "=== grand summary ===" << endl;
 	cout << label_summary << "optimization\tsmashed?\tbin size\t\t\tretired\t\t\theap use" << endl;
 	cout << label_summary << TAB << "\t\tmin\tmax\tavg\tmin\tmax\tavg\tmin\tmax\tavg" << endl;
 	for(vector<string>::iterator optimization = optimizations.begin(); optimization != optimizations.end(); optimization++){
