@@ -1,14 +1,21 @@
 #include <algorithm>
 #include <cstdlib>
 #include <dirent.h>
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <vector>
 
 using namespace std;
 
+const string sep = "/*****************************************************************************/";
+
 const string funcdir_prog = "./funcs";
 const string funcdir_smash = "./smashfuncs";
+const string headerpath = "./header.c";
+const string macropath = "./macros.c";
+const string prototypespath = "./prototypes.lst";
+const string fileout_basename = "humpty.c";
 
 // Create array for which every value is the same as its index
 vector<int> identity_array(int len){
@@ -49,11 +56,55 @@ vector<string> get_filenames(string dirpath){
   return filearr;
 }
 
+// Output a formatted heading to file
+void output_heading(ofstream &fileout, string label){
+	fileout << endl << endl << sep << endl << "/** " << label << " **/" << endl << sep << endl << endl;
+}
+
+// Concatenate file at filepathin onto fileout
+void cat_file(ofstream &fileout, string filepathin, string label=""){
+	if(!label.empty())
+		output_heading(fileout, label);
+	else
+		fileout << endl << endl;
+	ifstream filein(filepathin);
+	if(filein){
+		string line;
+		while(getline(filein, line))
+			fileout << line << endl;
+		filein.close();
+	}
+}
+
+// Concatenate constituents of a source file into complete source file at fileoutpath
+void concat_source(string fileoutpath, string headerpath, string prototypespath, string macropath, vector<string> funcarr){
+	ofstream fileout(fileoutpath);
+
+	// Output 'header'
+	cat_file(fileout, headerpath, "Global Declarations");
+
+	// Concatenate forward declarations
+	cat_file(fileout, prototypespath, "Forward Declarations");
+
+	// Concatenate macros
+	cat_file(fileout, macropath, "Macros");
+
+	//Concatenate functions in specified order
+	output_heading(fileout, "Functions");
+	int len = funcarr.size();
+	for(int i = 0; i < len; i++){
+		cat_file(fileout, funcarr[i]);
+	}
+
+	fileout.close();
+}
+
+
 int main(){
 
 	uint initial_seed_choices = 13;
 	uint max_arrangements = 3;
-	uint max_choices = 4;
+	uint max_choices = 2;
 
 	vector<string> funcarr_prog = get_filenames(funcdir_prog);
 	vector<string> funcarr_smash = get_filenames(funcdir_smash);
@@ -67,24 +118,40 @@ int main(){
 		arrangement_choices.push_back(choices);
 	}
 
-	for(int i = 1; i < max_choices; i++){ // i is the number of functions we will be selecting
+	for(int i = 0; i <= max_choices; i++){ // i is the number of functions we will be selecting
 
 		cout << "---" << endl;
 		for(int j = 0; j < max_arrangements; j++){ // j is each test with the i functions
-			for(int k = 0; k < i; k++){
-				cout << arrangement_choices[j][k] << " (" << funcarr_prog[arrangement_choices[j][k]] << ") ";
-			}
-			cout << endl;
-			/*
-				 Select i functions from funcs at random
-						count the number of available funcs
-							list directory (will need this anyway)
-						get a unique unbiased distribution
-			*/
+			// Version numbering
+			stringstream version_ss;
+			version_ss << "version-" << i << '-' << (j+1);
+			string version = version_ss.str();
+			cout << version << endl;
 
-			/* Shuffle i (together with main and spawn_shell)
-						another unique unbiased distribution
-			*/ 
+			// Directory and file paths
+			string dirout(version);
+			dirout.append("/");
+			string command_mkdir("mkdir -p ");
+			command_mkdir.append(dirout);
+			system(command_mkdir.c_str());
+			string fileout(dirout);
+			fileout.append(fileout_basename);
+
+			// Function arrangement
+			vector<string> arrangement;	
+			for(int k = 0; k < i; k++)
+				arrangement.push_back(funcarr_prog[arrangement_choices[j][k]]);
+			for(auto &it : funcarr_smash)
+				arrangement.push_back(it);
+
+			for(auto &it : arrangement)
+				cout << it << ' ';
+
+			// FIXME: shuffle the arrangement
+
+			concat_source(fileout, headerpath, prototypespath, macropath, arrangement);
+
+			cout << endl;
 
 			/*
 				Some linear stuff
