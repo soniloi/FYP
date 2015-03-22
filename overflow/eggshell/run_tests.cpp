@@ -10,6 +10,22 @@ using namespace std;
 const string funcdir_prog = "./funcs";
 const string funcdir_smash = "./smashfuncs";
 
+// Create array for which every value is the same as its index
+vector<int> identity_array(int len){
+	vector<int> result;
+	for(int i = 0; i < len; i++){
+		result.push_back(i);
+	}
+	return result;
+}
+
+// Get a pseudo-random permutation of an identity array of a certain length
+vector<int> get_permutation(int len, std::mt19937 &rng){
+	vector<int> result = identity_array(len);
+	shuffle(result.begin(), result.end(), rng);
+	return result;
+}
+
 // Get sorted relative list of filenames from a directory
 vector<string> get_filenames(string dirpath){
 	vector<string> filearr;
@@ -35,19 +51,30 @@ vector<string> get_filenames(string dirpath){
 
 int main(){
 
+	uint initial_seed_choices = 13;
+	uint max_arrangements = 3;
+	uint max_choices = 4;
+
 	vector<string> funcarr_prog = get_filenames(funcdir_prog);
 	vector<string> funcarr_smash = get_filenames(funcdir_smash);
 
-	for(auto &it : funcarr_prog){
-		cout << it << endl;
+	std::mt19937 rng_choices;
+	rng_choices.seed(initial_seed_choices);
+
+	vector<vector<int> > arrangement_choices;
+	for(int j = 0; j < max_arrangements; j++){
+		vector<int> choices = get_permutation(funcarr_prog.size(), rng_choices);
+		arrangement_choices.push_back(choices);
 	}
 
-	for(auto &it : funcarr_smash){
-		cout << it << endl;
-	}
+	for(int i = 1; i < max_choices; i++){ // i is the number of functions we will be selecting
 
-	for(int i = 1; i < 2; i++){ // i is the number of functions we will be selecting
-		for(int j = 0; j < 1; j++){ // j is each test with the i functions
+		cout << "---" << endl;
+		for(int j = 0; j < max_arrangements; j++){ // j is each test with the i functions
+			for(int k = 0; k < i; k++){
+				cout << arrangement_choices[j][k] << " (" << funcarr_prog[arrangement_choices[j][k]] << ") ";
+			}
+			cout << endl;
 			/*
 				 Select i functions from funcs at random
 						count the number of available funcs
