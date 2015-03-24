@@ -1,27 +1,21 @@
 #include "llvm/IR/Function.h"
-#include "llvm/IR/Instructions.h"
-#include "llvm/IR/LLVMContext.h"
-#include "llvm/IR/ValueSymbolTable.h" // For dumping symbol table values
 #include "llvm/Pass.h"
 #include "llvm/Support/CommandLine.h" // For passing command-line params
 #include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
-#include "llvm/Support/RandomNumberGenerator.h"
 
 #include <random>
-#include <time.h>
 #include <vector>
 
 using namespace llvm;
 
 #define DEBUG_TYPE "bb-reorder"
 
+static std::mt19937 rng;
+static bool set = false;
+
 static cl::opt<unsigned>
 RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
-
-static std::mt19937 rng;
-static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
-static bool set = false;
 
 namespace {
 
@@ -29,16 +23,23 @@ namespace {
 		static char ID; // Pass identification, replacement for typeid
 		BBReorder() : FunctionPass(ID) {}
 
+		// Return a random integer from a uniformly-distributed interval start, end
+		int uniform(uint start, uint end, std::mt19937 &rng){
+			std::uniform_int_distribution<uint32_t> dist(start, end);
+			return dist(rng);
+		}
+
 		bool runOnFunction(Function &F) override {
 			bool modified = false;
 
+			// Initialize RNG
 			if(!set){
 				unsigned int sd = RandomSeed;
 				rng.seed(sd);
 				set = true;
 			}
 
-			DEBUG(errs() << "BBReorder: ");
+			DEBUG(errs() << "BBReorder seed: " << RandomSeed);
 			DEBUG(errs().write_escaped(F.getName()) << '\n');
 
 			iplist<BasicBlock> &blocks = F.getBasicBlockList();
@@ -59,8 +60,7 @@ namespace {
 
 			// Insert blocks back into list in random order
 			while(blocks_tmp.size() > 0){
-				std::uniform_int_distribution<uint32_t> dist(0, blocks_tmp.size()-1);
-				int index = dist(rng);
+				int index = uniform(0, blocks_tmp.size()-1, rng);
 				BasicBlock * BB = blocks_tmp[index];
 				blocks_tmp.erase(blocks_tmp.begin() + index);
 				blocks.push_back(BB);

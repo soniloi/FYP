@@ -4,21 +4,21 @@
 #include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
 
-#include <vector>
 #include <random>
-#include <time.h>
+#include <vector>
 
 using namespace llvm;
 
+#define DEBUG_TYPE "func-reorder"
+
 static std::mt19937 rng;
 static bool set = false;
-
-#define DEBUG_TYPE "func-reorder"
 
 static cl::opt<unsigned>
 RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
 
 namespace {
+
 	struct FuncReorder : public ModulePass {
 		static char ID; // Pass identification, replacement for typeid
 		FuncReorder() : ModulePass(ID) {}
