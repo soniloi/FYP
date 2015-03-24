@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <random>
+#include <time.h>
 
 using namespace llvm;
 
@@ -22,6 +23,12 @@ namespace {
 		static char ID; // Pass identification, replacement for typeid
 		FuncReorder() : ModulePass(ID) {}
 
+		// Return a random integer from a uniformly-distributed interval start, end
+		int uniform(uint start, uint end, std::mt19937 &rng){
+			std::uniform_int_distribution<uint32_t> dist(start, end);
+			return dist(rng);
+		}
+
 		bool runOnModule(Module &M) override {
 			bool modified = false;
 
@@ -32,8 +39,7 @@ namespace {
 				set = true;
 			}
 
-			DEBUG(errs() << "FuncReorder: ");
-			//DEBUG(errs().write_escaped(M.getName()) << '\n');
+			DEBUG(errs() << "FuncReorder seed: " << RandomSeed << '\n');
 
 			iplist<Function> &funcs = M.getFunctionList();
 			std::vector<Function*> funcs_tmp;
@@ -49,10 +55,9 @@ namespace {
 				funcs_tmp.push_back(F);
 			}
 
-			// Insert functions back into list in random order
+			// Insert functions back into list in randomized order
 			while(funcs_tmp.size() > 0){
-				std::uniform_int_distribution<uint32_t> dist(0, funcs_tmp.size()-1);
-				int index = dist(rng);
+				int index = uniform(0, funcs_tmp.size()-1, rng); // Choose one at random from the remaining list
 				Function * F = funcs_tmp[index];
 				funcs_tmp.erase(funcs_tmp.begin() + index);
 				funcs.push_back(F);
@@ -61,7 +66,7 @@ namespace {
 				if(index > 0)
 					modified = true;
 			}
-			
+		
 			DEBUG(errs() << "-------\n");
 
 			return modified;
