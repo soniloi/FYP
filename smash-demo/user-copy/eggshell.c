@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 #define SIZE_MAX 48 // Maximum size of item's data buffer
-#define SIZE_BUFFER 64 // Maximum size of the string buffer to be entered
+#define SIZE_BUFFER 56 // Maximum size of the string buffer to be entered
 
 struct item{
 	char data[SIZE_MAX];
