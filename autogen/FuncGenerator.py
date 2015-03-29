@@ -1,9 +1,10 @@
 #!/usr/bin/env/python
 import random
 
-max_statements = 8 # Maximum number of statements in a basic block
+max_statements = 6 # Maximum number of statements in a basic block
 new_block_chance = 2 # Starting at one in this many statements, a new basic block will be opened
 elsepart_chance = 4 # One in this many if-statements will not be followed by an else-part
+max_depth = 6 # Cannot nest any deeper than this
 
 operators_arith = ['+', '-', '*']
 operators_bool = ['==', '!=', '<', '>', '<=', '>=']
@@ -45,7 +46,7 @@ def get_basic_block(statements_sofar, depth):
 	for i in range(0, random.randint(1, max_statements)):
 		statement = get_statement(depth)
 		statements_sofar.append(statement)
-		if random.randint(0, depth*new_block_chance-1) == 0:
+		if depth < max_depth and random.randint(0, depth*new_block_chance-1) == 0:
 			statements_sofar.append('')
 			statements_sofar.append(get_condition(depth))
 			get_basic_block(statements_sofar, depth+1)
@@ -65,6 +66,7 @@ def generate_function(funcname, seed):
 
 	get_basic_block(lines, 1)
 
+	lines.append('')
 	lines.append('\tprintf("%d", z);')
 	lines.append(get_closing(0))
 
