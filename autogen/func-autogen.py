@@ -22,9 +22,6 @@ def main():
 
     random.seed(15485863)
     seeds = random.sample(xrange(10000000), quantity)
-    for seed in seeds:
-        print str(seed) + ' ',
-    print
 
     for funcindex in range(0, quantity):
         funcname = 'f' + str(funcindex+1)
