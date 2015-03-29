@@ -1,27 +1,37 @@
 #!/usr/bin/env/python
+import random
 
-lines_main_begin = [
-	'int main(int argc, char ** argv)',
-	'{',
-	'',
-	'\tif(argc == 3)',
-	'\t{',
-	'\t\tint x = atoi(argv[1]);',
-	'\t\tint y = atoi(argv[2]);',
-	''
-]
+max_statements = 20 # Maximum number of statements in a basic block
+operators = ['+', '-', '*']
+operands = ['z', 'y', 'x']
 
-lines_main_end = [
-	'\t}',
-	'}'
-]
+def get_spacing(depth):
+	spacing = ''
+	for i in range(0, depth):
+		spacing += '\t'
+	return spacing
 
-def write_main(fileout, funcnames):
-	for line in lines_main_begin:
-		fileout.write(line + '\n')
+def get_random_statement():
+	stat = ''
+	stat += operands[random.randint(0, len(operands)-1)] + ' = '
+	stat += operands[random.randint(0, len(operands)-1)] + ' '
+	stat += operators[random.randint(0, len(operators)-1)] + ' '
+	stat += operands[random.randint(0, len(operands)-1)] + ';'
+	return stat
 
-	for funcname in funcnames:
-		fileout.write('\t\t' + funcname + '(x, y);\n')
+def get_basic_block(statements_sofar, depth):
+	for i in range(0, random.randint(0, max_statements)):
+		statement = get_spacing(depth) + get_random_statement()
+		statements_sofar.append(statement)
 
-	for line in lines_main_end:
-		fileout.write(line + '\n')
+def generate_function(funcname, seed):
+	random.seed(seed)
+	lines = []
+	lines.append('void ' + funcname + '(int x, int y){')
+	lines.append('\tint z = 0;')
+
+	get_basic_block(lines, 1)
+
+	lines.append('}')
+
+	return lines
