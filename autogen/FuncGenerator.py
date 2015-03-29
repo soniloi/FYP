@@ -3,6 +3,8 @@ import random
 
 max_statements = 8 # Maximum number of statements in a basic block
 new_block_chance = 2 # Starting at one in this many statements, a new basic block will be opened
+elsepart_chance = 4 # One in this many if-statements will not be followed by an else-part
+
 operators_arith = ['+', '-', '*']
 operators_bool = ['==', '!=', '<', '>', '<=', '>=']
 operands = ['z', 'y', 'x']
@@ -34,6 +36,11 @@ def get_condition(depth):
 	cond += operands[random.randint(0, len(operands)-1)] + '){'
 	return cond
 
+def get_else(depth):
+	els = get_spacing(depth)
+	els += 'else{'
+	return els
+
 def get_basic_block(statements_sofar, depth):
 	for i in range(0, random.randint(0, max_statements)):
 		statement = get_statement(depth)
@@ -41,8 +48,12 @@ def get_basic_block(statements_sofar, depth):
 		if random.randint(0, depth*new_block_chance-1) == 0:
 			statements_sofar.append('')
 			statements_sofar.append(get_condition(depth))
-			get_basic_block(statements_sofar, depth + 1)
+			get_basic_block(statements_sofar, depth+1)
 			statements_sofar.append(get_closing(depth))
+			if(random.randint(0, elsepart_chance-1) != 0):
+				statements_sofar.append(get_else(depth))
+				get_basic_block(statements_sofar, depth+1)
+				statements_sofar.append(get_closing(depth))
 			statements_sofar.append('')
 
 def generate_function(funcname, seed):
