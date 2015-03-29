@@ -42,7 +42,7 @@ def get_else(depth):
 	return els
 
 def get_basic_block(statements_sofar, depth):
-	for i in range(0, random.randint(0, max_statements)):
+	for i in range(0, random.randint(1, max_statements)):
 		statement = get_statement(depth)
 		statements_sofar.append(statement)
 		if random.randint(0, depth*new_block_chance-1) == 0:
