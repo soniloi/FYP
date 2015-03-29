@@ -59,6 +59,7 @@ def get_basic_block(statements_sofar, depth):
 def generate_function(funcname, seed):
 	random.seed(seed)
 	lines = []
+	lines.append('/* function auto-generated using seed: ' + str(seed) + ' */')
 	lines.append('void ' + funcname + '(int x, int y){')
 	lines.append('\tint z = 1;')
 
