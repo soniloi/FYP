@@ -1,0 +1,181 @@
+/* function auto-generated using seed: 4488889 */
+void f398(int x, int y){
+	int z = 1;
+	x = y * z;
+
+	if(x != y){
+		z = x * y;
+		x = z + x;
+
+		if(z >= x){
+			y = x * x;
+
+			if(z <= x){
+				z = y + y;
+				y = x + z;
+
+				if(z > z){
+					z = y + y;
+					y = z * x;
+					y = x + z;
+					y = y - y;
+				}
+
+				y = x + y;
+				z = x * y;
+				x = x * z;
+				x = z * z;
+
+				if(x == x){
+					z = y - z;
+					x = z + y;
+				}
+
+			}
+
+			x = z - z;
+			z = z - z;
+
+			if(x > y){
+				z = y + y;
+				y = z - x;
+				z = x * x;
+				y = y + x;
+
+				if(y != y){
+					z = y + y;
+
+					if(y <= y){
+						x = y + z;
+						z = y - y;
+					}
+					else{
+						y = x * x;
+						z = z * x;
+						y = z + x;
+						y = y + z;
+						x = z - y;
+					}
+
+					y = x * x;
+					x = z * z;
+				}
+
+				x = x - y;
+				z = z * x;
+
+				if(y < z){
+					z = z + x;
+					z = z - z;
+
+					if(y != x){
+						y = z - x;
+						x = x + x;
+						x = y + y;
+						y = y * x;
+						z = y + z;
+						x = z - y;
+					}
+					else{
+						x = x + z;
+					}
+
+					z = z * y;
+				}
+
+			}
+
+			z = x - x;
+			y = y + x;
+			y = y + x;
+		}
+		else{
+			z = x - y;
+
+			if(x <= z){
+				y = z + x;
+
+				if(z >= z){
+					z = x * z;
+					z = y - y;
+					y = x * x;
+					x = y - y;
+				}
+
+				y = y - x;
+			}
+			else{
+				x = z * y;
+				z = y - y;
+				z = x * y;
+				x = z + z;
+			}
+
+			z = y * x;
+			x = y * y;
+
+			if(x == y){
+				y = y + z;
+				y = x + x;
+				y = z - x;
+				z = z + x;
+				y = x + y;
+
+				if(z <= y){
+					y = y * x;
+					z = y * x;
+					z = x * z;
+				}
+				else{
+					z = y * x;
+
+					if(z != x){
+						y = y - y;
+						z = z + x;
+						z = z - y;
+					}
+
+					z = x + x;
+					x = x + z;
+
+					if(x <= x){
+						z = y + z;
+						x = x + x;
+					}
+					else{
+						y = y - x;
+					}
+
+					z = x + y;
+					x = x + z;
+				}
+
+			}
+			else{
+				y = x * y;
+				z = y + y;
+				y = x + y;
+				x = y - x;
+
+				if(x <= z){
+					z = x + y;
+					x = z * z;
+				}
+				else{
+					z = z * x;
+					x = y * y;
+					y = z + y;
+					y = x * z;
+					z = x + z;
+				}
+
+			}
+
+			z = y + x;
+		}
+
+	}
+
+
+	printf("%d", z);
+}

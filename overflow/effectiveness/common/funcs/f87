@@ -1,0 +1,29 @@
+/* function auto-generated using seed: 9891616 */
+void f87(int x, int y){
+	int z = 1;
+	x = y - x;
+
+	if(y <= x){
+		z = y * z;
+
+		if(y != y){
+			y = y + x;
+			z = z * y;
+		}
+		else{
+			z = y + z;
+			y = x * y;
+		}
+
+		z = z * y;
+
+		if(y > z){
+			x = x * y;
+			y = z - y;
+		}
+
+	}
+
+
+	printf("%d", z);
+}

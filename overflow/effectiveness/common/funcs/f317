@@ -1,0 +1,81 @@
+/* function auto-generated using seed: 721141 */
+void f317(int x, int y){
+	int z = 1;
+	x = y + y;
+
+	if(x <= x){
+		y = y - z;
+
+		if(z >= y){
+			z = z - z;
+			z = x * z;
+			x = z * x;
+
+			if(y == x){
+				z = y - z;
+				z = y * y;
+				y = y + x;
+				x = x * x;
+
+				if(y > y){
+					x = z + z;
+					z = x * y;
+					x = x * y;
+					z = z * x;
+					x = z + y;
+					z = z * x;
+				}
+				else{
+					x = x * y;
+
+					if(z <= y){
+						y = z + x;
+						z = x - y;
+						y = x + z;
+					}
+					else{
+						y = y - y;
+						z = y * y;
+						x = y - y;
+						x = x - x;
+						z = z * z;
+						x = z * x;
+					}
+
+				}
+
+				y = y + z;
+			}
+			else{
+				z = z - z;
+
+				if(y < x){
+					x = x - y;
+					z = z - x;
+
+					if(y >= x){
+						z = z + z;
+						z = z * x;
+					}
+
+				}
+				else{
+					y = x * y;
+					x = y * z;
+					y = x - z;
+					x = y + y;
+					x = x - y;
+					z = y * y;
+				}
+
+			}
+
+		}
+
+		x = x * x;
+		z = x + z;
+	}
+
+
+	printf("%d", z);
+}

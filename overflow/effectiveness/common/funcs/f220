@@ -1,0 +1,101 @@
+/* function auto-generated using seed: 1663352 */
+void f220(int x, int y){
+	int z = 1;
+	z = y * z;
+
+	if(y >= z){
+		x = z * x;
+	}
+	else{
+		z = z * x;
+
+		if(y <= z){
+			x = z * x;
+			x = x - z;
+
+			if(z < x){
+				x = z + x;
+			}
+
+			y = x + y;
+		}
+		else{
+			z = y - z;
+
+			if(x >= x){
+				x = y - y;
+				y = x * z;
+			}
+			else{
+				z = y * x;
+
+				if(y == y){
+					y = z - y;
+					y = x * y;
+					x = z - z;
+					x = y + z;
+					x = y + y;
+					z = z - y;
+				}
+
+				x = x - z;
+
+				if(x != y){
+					x = z * x;
+				}
+
+				y = x - y;
+
+				if(y > y){
+					y = y * x;
+					x = x * x;
+					z = x + y;
+					z = z + z;
+				}
+				else{
+					x = x + y;
+					z = z + y;
+
+					if(x >= x){
+						y = y + x;
+					}
+					else{
+						z = y * z;
+						z = y - y;
+						x = y + z;
+						z = y + y;
+					}
+
+					x = z - z;
+					y = y * y;
+					y = y * z;
+					x = z - x;
+				}
+
+				z = z + x;
+
+				if(x > y){
+					x = y + z;
+					y = x + x;
+					z = y + y;
+					z = z * x;
+					x = y - x;
+					z = z - x;
+				}
+
+			}
+
+		}
+
+		x = x + y;
+
+		if(z != y){
+			x = z - z;
+			z = z + x;
+		}
+
+	}
+
+
+	printf("%d", z);
+}

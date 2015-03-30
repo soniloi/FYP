@@ -1,0 +1,30 @@
+/* function auto-generated using seed: 6206823 */
+void f131(int x, int y){
+	int z = 1;
+	x = x + y;
+
+	if(x > y){
+		y = z + y;
+
+		if(y > y){
+			x = y + y;
+			x = x - z;
+
+			if(z < z){
+				x = z * z;
+			}
+
+			y = z * y;
+			z = y + x;
+		}
+
+		z = z - x;
+		y = z - x;
+		y = z + y;
+		x = z - x;
+		y = x - x;
+	}
+
+
+	printf("%d", z);
+}
