@@ -3,62 +3,64 @@
 import os
 import random
 
-includespath = './includes.txt'
-mainbeginpath = './main_begin.txt'
-mainendpath = './main_end.txt'
-spawnpath = './spawn.func'
-outputdir = './output'
-mainpath = outputdir + os.sep + 'main.func'
+commondir = './common'
+scriptdir = '../scripts'
+includespath = commondir + os.sep + 'includes.txt'
+mainbeginpath = commondir + os.sep + 'main_begin.txt'
+mainendpath = commondir + os.sep + 'main_end.txt'
+spawnpath = commondir + os.sep + 'spawn.func'
+calc_payloads = scriptdir + os.sep + 'calculate_payloads.sh'
+ctoir = scriptdir + os.sep + 'CToIR.sh'
+irtobin = scriptdir + os.sep + 'IRToBin.sh'
 
-def write_file(funcdirpath, funcnames, targetpath):
-	# Write main function
-	filemain = open(mainpath, 'w')
-	with open(mainbeginpath) as mainbeginfile:
-		for line in mainbeginfile:
-			filemain.write(line)
-	for funcname in funcnames:
-		filemain.write('\t\t' + funcname + '(x, y);\n');
-	with open(mainendpath) as mainendfile:
-		for line in mainendfile:
-			filemain.write(line)
-	filemain.close()
+def write_file(funcdirpath, funcnames, versiondir, targetpath):
+    mainpath = versiondir + os.sep + 'main.func'
 
-	fileout = open(targetpath, 'w')
+    # Write main function
+    filemain = open(mainpath, 'w')
+    with open(mainbeginpath) as mainbeginfile:
+        for line in mainbeginfile:
+            filemain.write(line)
+    for funcname in funcnames:
+        filemain.write('\t\t' + funcname + '(x, y);\n');
+    with open(mainendpath) as mainendfile:
+        for line in mainendfile:
+            filemain.write(line)
+    filemain.close()
 
-	# Concatenate preprocessor and struct declarations onto the source
-	with open(includespath) as includesfile:
-		for line in includesfile:
-			fileout.write(line)
+    fileout = open(targetpath, 'w')
 
-	# Concatenate forward declarations onto the source
-	fileout.write('\n')
-	for funcname in funcnames:
-		fileout.write('void ' + funcname + '(int x, int y);\n')
-	fileout.write('void spawn_shell();\n')
-	fileout.write('int main(int argc, char ** argv);\n')
-	fileout.write('\n')
+    # Concatenate preprocessor and struct declarations onto the source
+    with open(includespath) as includesfile:
+        for line in includesfile:
+            fileout.write(line)
 
-	# Construct list of filepaths to functions we will be including FIXME: shuffle this list
-	funcpaths = []
-	for funcname in funcnames:
-		funcpaths.append(funcdirpath + os.sep + funcname)
-	funcpaths.append(spawnpath)
-	funcpaths.append(mainpath)
-	print funcpaths
+    # Concatenate forward declarations onto the source
+    fileout.write('\n')
+    for funcname in funcnames:
+        fileout.write('void ' + funcname + '(int x, int y);\n')
+    fileout.write('void spawn_shell();\n')
+    fileout.write('int main(int argc, char ** argv);\n')
+    fileout.write('\n')
 
-	for funcpath in funcpaths:
-		with open(funcpath, 'r') as funcfile:
-			for line in funcfile:
-				fileout.write(line)
-		fileout.write('\n\n')
+    # Construct list of filepaths to functions we will be including FIXME: shuffle this list
+    funcpaths = []
+    for funcname in funcnames:
+        funcpaths.append(funcdirpath + os.sep + funcname)
+    funcpaths.append(spawnpath)
+    funcpaths.append(mainpath)
+    #print funcpaths
 
-	fileout.close()
+    for funcpath in funcpaths:
+        with open(funcpath, 'r') as funcfile:
+            for line in funcfile:
+                fileout.write(line)
+        fileout.write('\n\n')
 
-def run_single(seed, funcdirpath, funcnames, targetpath):
+    fileout.close()
+
+def run_single(daa, seed, funcdirpath, funcnames, versiondir, target_basename):
+    print daa
     random.seed(seed)
-    write_file(funcdirpath, funcnames, targetpath)
+    write_file(funcdirpath, funcnames, versiondir, target_basename + '.c')
 
-if not os.path.exists('./output'):
-    os.makedirs('./output')
-
-run_single(13, './funcs', ['f1', 'f575'], './output/v1.c')
