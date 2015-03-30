@@ -2,6 +2,7 @@
 
 import os
 import random
+import subprocess
 
 commondir = './common'
 scriptdir = '../scripts'
@@ -12,6 +13,7 @@ spawnpath = commondir + os.sep + 'spawn.func'
 calc_payloads = scriptdir + os.sep + 'calculate_payloads.sh'
 ctoir = scriptdir + os.sep + 'CToIR.sh'
 irtobin = scriptdir + os.sep + 'IRToBin.sh'
+link = '' # Any linker flags that need to be passed
 
 def write_file(funcdirpath, funcnames, versiondir, targetpath):
     mainpath = versiondir + os.sep + 'main.func'
@@ -64,3 +66,17 @@ def run_single(daa, seed, funcdirpath, funcnames, versiondir, target_basename):
     random.seed(seed)
     write_file(funcdirpath, funcnames, versiondir, target_basename + '.c')
 
+    # Compile to IR (needed for both normal and randomized versions)
+    run_ctoir = subprocess.Popen([ctoir, daa, target_basename], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    stdout, stderr = run_ctoir.communicate()
+    print stdout
+
+    # Compile base version without randomization
+    run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    stdout, stderr = run_irtobin.communicate()
+    print stdout
+
+    # Calculate payloads to smash stack on base version
+    run_overflow = subprocess.Popen([calc_payloads, target_basename], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    stdout, stderr = run_overflow.communicate()
+    print stdout
