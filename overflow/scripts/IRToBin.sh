@@ -30,19 +30,20 @@ if ! [[ -f $progir ]]; then
 	exit 1
 fi
 
-progirunopt=$progir.unoptimized
-progiropt=$progir.optimized
-progs=$progname.s
+progrand="$progname-rand"
+prograndir="$progrand.ll"
+#progirunopt=$progir.unoptimized
+#progiropt=$progir.optimized
+#progs=$progname.s
 irflag='-S'
 
 # Run optimizer, if requested
 if [[ "$#" > $args_mandatory ]]; then
-	cp $progir $progirunopt
 	let pos_first=$((args_mandatory+1))
 	optso=""
 	for optflag in ${@:$pos_first}; do
 		if [[ $optflag == "-alloc-insert" ]]; then
-			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=$seed"
+			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=$seed -debug"
 		elif [[ $optflag == "-func-reorder" ]]; then
 			optso="$baseaddr/lib/FuncReorder.so -rnd-seed=$seed"
 		elif [[ $optflag == "-bb-reorder" ]]; then
@@ -51,16 +52,19 @@ if [[ "$#" > $args_mandatory ]]; then
 			echo "Unknown pass: $optflag"
 			exit 1
 		fi
-		$local_opt $irflag -load $optso $optflag < $progir -o $progir
-		if ! [[ -f $progir ]]; then
+		$local_opt $irflag -load $optso $optflag < $progir -o $prograndir
+		if ! [[ -f $prograndir ]]; then
 			echo "Optimization failed, exiting."
 			exit 1
 		fi
+		progir=$prograndir
+		progname=$progrand
 		echo "optimized ($optflag) -> $progir"
 	done
 fi
 
 # Compile to target assembly
+progs=$progname.s
 $local_llc $progir -o $progs
 if ! [[ -f $progs ]]; then
 	echo "Compilation failed, exiting."
@@ -75,10 +79,4 @@ if ! [[ -x $progname ]]; then
 	exit 1
 fi
 echo "assembled and linked -> $progname"
-
-# Some tidying
-if [[ -f $progirunopt ]]; then
-	mv $progir $progiropt
-	mv $progirunopt $progir
-fi
 

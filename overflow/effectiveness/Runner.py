@@ -4,12 +4,15 @@ import os
 import random
 import subprocess
 
+runs_per_optimization = 1 # How many times to re-compile with each optimization
+
 commondir = './common'
 
 includespath = commondir + os.sep + 'includes.txt'
 mainbeginpath = commondir + os.sep + 'main_begin.txt'
 mainendpath = commondir + os.sep + 'main_end.txt'
 spawnpath = commondir + os.sep + 'spawn.func'
+funcdirpath = commondir + os.sep + 'funcs'
 
 scriptdir = '../scripts'
 calc_payloads = scriptdir + os.sep + 'calculate_payloads.sh'
@@ -22,7 +25,9 @@ data2_basepath = 'data2.dat'
 
 link = '' # Any linker flags that need to be passed
 
-def write_file(funcdirpath, funcnames, versiondir, targetpath):
+optimizations = ['-alloc-insert']#, '-func-reorder', '-bb-reorder']
+
+def write_file(funcnames, versiondir, targetpath):
     mainpath = versiondir + os.sep + 'main.func'
 
     # Write main function
@@ -68,13 +73,19 @@ def write_file(funcdirpath, funcnames, versiondir, targetpath):
 
     fileout.close()
 
-def run_single(daa, seed, funcdirpath, funcnames, versiondir, target_basename):
+def run_single(daa, seed_initial, funcnames, versiondir, target_basename):
     print daa
-    random.seed(seed)
+    random.seed(seed_initial)
+    seeds = random.sample(xrange(0, 10000000), runs_per_optimization)
+    print seeds
+
     data1 = versiondir + os.sep + data1_basepath
     data2 = versiondir + os.sep + data2_basepath
+    target_sourcename = target_basename + '.c'
+    target_irname_opt = target_basename + '.ll.optimized'
+    target_asmname = target_basename + '.s'
 
-    write_file(funcdirpath, funcnames, versiondir, target_basename + '.c')
+    write_file(funcnames, versiondir, target_sourcename)
 
     # Compile to IR (needed for both normal and randomized versions)
     run_ctoir = subprocess.Popen([ctoir, daa, target_basename], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -82,7 +93,7 @@ def run_single(daa, seed, funcdirpath, funcnames, versiondir, target_basename):
     print stdout
 
     # Compile base version without randomization
-    run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    run_irtobin = subprocess.Popen([irtobin, daa, target_basename, '0', link], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_irtobin.communicate()
     print stdout
 
@@ -92,5 +103,26 @@ def run_single(daa, seed, funcdirpath, funcnames, versiondir, target_basename):
     print stdout
 
     # Ensure that the base version is smashable
-    smashed = bool(int(subprocess.check_output([smashcheck, target_basename, data1, data2])))
-    print smashed
+    smashed = int(subprocess.check_output([smashcheck, target_basename, data1, data2]))
+    print "Base version smashed: " + str(smashed)
+    if smashed == 0: # The base version really should be smashable
+        print "Warning: failure to smash base version!"
+
+    smash_counts = {}
+
+    for optimization in optimizations:
+        smash_counts[optimization] = 0
+
+        for seed in seeds:
+            #subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
+
+            print '\n >>> optimization ' + optimization + ' with seed = ' + str(seed) + ': ',
+            process_list = [irtobin, daa, target_basename, str(seed), link, optimization]
+            print process_list
+            run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            stdout, stderr = run_irtobin.communicate()
+            print stdout
+
+            smashed = int(subprocess.check_output([smashcheck, target_basename, data1, data2]))
+            print "Randomized version smashed: " + str(smashed)
+
