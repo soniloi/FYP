@@ -76,7 +76,9 @@ def write_file(funcnames, versiondir, targetpath):
 def run_single(daa, seed_initial, funcnames, versiondir, target_basename):
     print daa
     random.seed(seed_initial)
-    seeds = random.sample(xrange(0, 10000000), runs_per_optimization)
+    target_basename_rand = target_basename + '-rand'
+    #seeds = random.sample(xrange(0, 10000000), runs_per_optimization)
+    seeds = [13]
     print seeds
 
     data1 = versiondir + os.sep + data1_basepath
@@ -123,6 +125,6 @@ def run_single(daa, seed_initial, funcnames, versiondir, target_basename):
             stdout, stderr = run_irtobin.communicate()
             print stdout
 
-            smashed = int(subprocess.check_output([smashcheck, target_basename, data1, data2]))
+            smashed = int(subprocess.check_output([smashcheck, target_basename_rand, data1, data2]))
             print "Randomized version smashed: " + str(smashed)
 
