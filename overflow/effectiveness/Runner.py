@@ -5,14 +5,21 @@ import random
 import subprocess
 
 commondir = './common'
-scriptdir = '../scripts'
+
 includespath = commondir + os.sep + 'includes.txt'
 mainbeginpath = commondir + os.sep + 'main_begin.txt'
 mainendpath = commondir + os.sep + 'main_end.txt'
 spawnpath = commondir + os.sep + 'spawn.func'
+
+scriptdir = '../scripts'
 calc_payloads = scriptdir + os.sep + 'calculate_payloads.sh'
 ctoir = scriptdir + os.sep + 'CToIR.sh'
 irtobin = scriptdir + os.sep + 'IRToBin.sh'
+smashcheck = scriptdir + os.sep + 'smashcheck.sh'
+
+data1_basepath = 'data1.dat'
+data2_basepath = 'data2.dat'
+
 link = '' # Any linker flags that need to be passed
 
 def write_file(funcdirpath, funcnames, versiondir, targetpath):
@@ -64,6 +71,9 @@ def write_file(funcdirpath, funcnames, versiondir, targetpath):
 def run_single(daa, seed, funcdirpath, funcnames, versiondir, target_basename):
     print daa
     random.seed(seed)
+    data1 = versiondir + os.sep + data1_basepath
+    data2 = versiondir + os.sep + data2_basepath
+
     write_file(funcdirpath, funcnames, versiondir, target_basename + '.c')
 
     # Compile to IR (needed for both normal and randomized versions)
@@ -80,3 +90,7 @@ def run_single(daa, seed, funcdirpath, funcnames, versiondir, target_basename):
     run_overflow = subprocess.Popen([calc_payloads, target_basename], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_overflow.communicate()
     print stdout
+
+    # Ensure that the base version is smashable
+    smashed = bool(int(subprocess.check_output([smashcheck, target_basename, data1, data2])))
+    print smashed
