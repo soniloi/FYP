@@ -1,0 +1,26 @@
+	}
+
+	FILE * file;
+	char buffer1[SIZE_BUFFER], buffer2[SIZE_BUFFER];
+
+	file = fopen(filename1, "r");
+	if(file){
+		fread(buffer1, 1, SIZE_BUFFER, file);
+		fclose(file);
+	}
+
+	file = fopen(filename2, "r");
+	if(file){
+		fread(buffer2, 1, SIZE_BUFFER, file);
+		fclose(file);
+	}
+
+	struct item item1, item2;
+	item1.next = &item2;
+	item2.next = &item1;
+
+	memcpy(item1.data, buffer1, SIZE_BUFFER); // Potential for overflow!!
+	memcpy(item1.next, buffer2, SIZE_MAX); // This is the correct size
+
+	_IO_putc('*', stdout);
+}
