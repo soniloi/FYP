@@ -1,0 +1,141 @@
+/* function auto-generated using seed: 4328132 */
+void f81(int x, int y){
+	int z = 1;
+	z = y * z;
+
+	if(z < y){
+		y = y - x;
+
+		if(z > y){
+			y = z + z;
+
+			if(y > y){
+				y = z * x;
+			}
+
+			x = y * z;
+			y = z + x;
+
+			if(x == x){
+				x = x - z;
+				x = z * x;
+				z = z + y;
+				y = z - y;
+				z = y - x;
+				x = z * y;
+
+				if(z > x){
+					y = x * z;
+					x = z + y;
+					y = y + z;
+					x = z - y;
+
+					if(y != x){
+						z = x - y;
+						x = z + y;
+						z = x * z;
+						y = y - z;
+						x = z - z;
+						y = z - y;
+					}
+
+					z = y * z;
+				}
+
+			}
+			else{
+				x = x - z;
+				z = y + z;
+
+				if(y != z){
+					z = z * x;
+					y = y - z;
+					y = y - x;
+					z = x - y;
+				}
+
+				x = z + y;
+				x = z * y;
+				y = y * x;
+				y = x - y;
+			}
+
+			y = z * y;
+
+			if(x > x){
+				x = z * z;
+				z = z - z;
+
+				if(y == x){
+					z = y - y;
+
+					if(x <= x){
+						x = z * y;
+						x = y - y;
+						x = x - y;
+						x = z - z;
+						y = z * z;
+						z = x * y;
+					}
+
+					x = z + z;
+					x = z * y;
+					y = x + y;
+					x = y - y;
+				}
+
+				y = z + z;
+
+				if(z <= x){
+					x = x * y;
+					x = z * z;
+					x = y - z;
+					x = y - z;
+
+					if(z >= z){
+						y = y + z;
+						y = z + y;
+					}
+
+				}
+				else{
+					z = z + z;
+
+					if(y >= y){
+						y = z - z;
+					}
+
+					z = z - z;
+
+					if(y <= y){
+						x = x + x;
+						y = y - z;
+						x = z + z;
+						x = x + x;
+					}
+					else{
+						y = z - y;
+						y = z + z;
+					}
+
+				}
+
+				z = x + z;
+			}
+
+		}
+		else{
+			y = y - z;
+			x = y - y;
+			y = y + y;
+		}
+
+		z = x - x;
+		y = z * x;
+		z = x + y;
+		z = y * x;
+	}
+
+
+	printf("%d", z);
+}

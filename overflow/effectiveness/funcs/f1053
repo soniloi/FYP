@@ -1,0 +1,13 @@
+/* function auto-generated using seed: 974995 */
+void f1053(int x, int y){
+	int z = 1;
+	x = x - z;
+
+	if(x > z){
+		z = z - y;
+		x = x * y;
+	}
+
+
+	printf("%d", z);
+}

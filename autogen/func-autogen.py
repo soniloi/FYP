@@ -6,7 +6,7 @@ import sys
 
 import FuncGenerator
 
-funcext = '.func'
+funcext = ''
 
 def main():
 

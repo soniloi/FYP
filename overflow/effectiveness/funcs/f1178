@@ -1,0 +1,51 @@
+/* function auto-generated using seed: 6005571 */
+void f1178(int x, int y){
+	int z = 1;
+	z = z * z;
+
+	if(z >= z){
+		z = z - y;
+
+		if(z <= y){
+			x = x * z;
+		}
+
+		z = z + z;
+
+		if(x <= z){
+			z = z + x;
+
+			if(y == x){
+				y = z - z;
+			}
+			else{
+				y = z - x;
+				z = y * z;
+				x = x * x;
+				x = z + z;
+			}
+
+			z = y * y;
+		}
+
+		y = y + x;
+
+		if(z > z){
+			y = z - x;
+
+			if(y != z){
+				y = y * x;
+				z = y * y;
+				x = y * x;
+				z = y + x;
+			}
+
+		}
+
+		z = z + y;
+		y = z + z;
+	}
+
+
+	printf("%d", z);
+}

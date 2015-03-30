@@ -1,0 +1,48 @@
+/* function auto-generated using seed: 1823274 */
+void f1065(int x, int y){
+	int z = 1;
+	y = y + x;
+
+	if(z <= x){
+		x = y * y;
+		x = x * y;
+		y = y - z;
+		x = x + z;
+	}
+	else{
+		z = x + x;
+		y = y - z;
+		x = y + x;
+		y = z + x;
+	}
+
+	y = x + z;
+
+	if(z < x){
+		y = x - x;
+		y = x - x;
+
+		if(y != x){
+			x = x - z;
+			x = y * y;
+			x = y + z;
+			y = z + x;
+		}
+		else{
+			x = x + x;
+			x = z + x;
+
+			if(y == z){
+				z = z + z;
+			}
+
+		}
+
+		z = z + x;
+		z = x + x;
+		x = y * x;
+	}
+
+
+	printf("%d", z);
+}

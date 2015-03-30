@@ -1,0 +1,79 @@
+/* function auto-generated using seed: 2242502 */
+void f949(int x, int y){
+	int z = 1;
+	x = z - y;
+
+	if(z <= y){
+		z = x * y;
+		y = y - y;
+
+		if(z < z){
+			y = y - y;
+			z = x * y;
+
+			if(y > z){
+				x = z * y;
+				y = z + y;
+			}
+			else{
+				z = z + y;
+				x = z + y;
+
+				if(y <= y){
+					z = y - y;
+					x = y * y;
+					y = x + y;
+
+					if(z <= z){
+						z = y * y;
+						y = y - z;
+						z = y + z;
+					}
+					else{
+						x = x - x;
+						y = y * y;
+						x = z + z;
+						y = z - x;
+						y = y - x;
+						x = z + z;
+					}
+
+					x = y + z;
+					y = z - x;
+					z = x - z;
+
+					if(x == y){
+						z = y + x;
+						z = z - x;
+						z = y + y;
+						x = x + z;
+					}
+					else{
+						z = x + z;
+						z = x * z;
+						z = z - z;
+						y = y + z;
+					}
+
+				}
+
+				y = x + y;
+				x = y * z;
+				x = y - x;
+				z = y - x;
+			}
+
+			x = y * y;
+			z = z * y;
+		}
+		else{
+			x = x + z;
+			z = y - y;
+			x = z - z;
+		}
+
+	}
+
+
+	printf("%d", z);
+}

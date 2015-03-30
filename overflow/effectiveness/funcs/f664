@@ -1,0 +1,27 @@
+/* function auto-generated using seed: 1166185 */
+void f664(int x, int y){
+	int z = 1;
+	z = y + z;
+
+	if(x > y){
+		z = y - x;
+
+		if(z >= y){
+			z = y - z;
+		}
+
+	}
+	else{
+		x = x * x;
+
+		if(x == y){
+			z = z - x;
+		}
+
+		y = y + y;
+		y = y * y;
+	}
+
+
+	printf("%d", z);
+}

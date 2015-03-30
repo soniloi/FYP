@@ -1,0 +1,14 @@
+/* function auto-generated using seed: 1285570 */
+void f726(int x, int y){
+	int z = 1;
+	y = z + x;
+
+	if(y > z){
+		y = x * y;
+		x = z - y;
+		y = z + x;
+	}
+
+
+	printf("%d", z);
+}

@@ -1,0 +1,12 @@
+/* function auto-generated using seed: 4622673 */
+void f1012(int x, int y){
+	int z = 1;
+	z = z * y;
+
+	if(y != y){
+		z = z + z;
+	}
+
+
+	printf("%d", z);
+}

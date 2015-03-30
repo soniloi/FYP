@@ -1,0 +1,16 @@
+/* function auto-generated using seed: 1706133 */
+void f1101(int x, int y){
+	int z = 1;
+	z = x - z;
+
+	if(z >= z){
+		z = z * x;
+		y = z - x;
+	}
+	else{
+		y = x - z;
+	}
+
+
+	printf("%d", z);
+}

@@ -1,0 +1,12 @@
+/* function auto-generated using seed: 580645 */
+void f462(int x, int y){
+	int z = 1;
+	x = x * y;
+
+	if(z > x){
+		x = z * y;
+	}
+
+
+	printf("%d", z);
+}

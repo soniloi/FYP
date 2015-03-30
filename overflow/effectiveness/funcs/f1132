@@ -1,0 +1,36 @@
+/* function auto-generated using seed: 6635984 */
+void f1132(int x, int y){
+	int z = 1;
+	x = y * x;
+
+	if(x != y){
+		y = y + z;
+
+		if(z == z){
+			y = z - x;
+		}
+
+		z = x * y;
+		z = z + x;
+		z = z + z;
+
+		if(z <= y){
+			z = z + z;
+			z = y + y;
+			z = x * z;
+			x = z - x;
+		}
+
+	}
+
+	y = z - x;
+
+	if(z > z){
+		z = y - x;
+		y = x * x;
+		z = y - x;
+	}
+
+
+	printf("%d", z);
+}

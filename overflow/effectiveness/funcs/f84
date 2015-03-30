@@ -1,0 +1,68 @@
+/* function auto-generated using seed: 2323849 */
+void f84(int x, int y){
+	int z = 1;
+	y = z + x;
+
+	if(y < x){
+		y = x + y;
+		z = z * y;
+		z = x * x;
+
+		if(y != y){
+			z = z - z;
+			y = y + z;
+
+			if(z == z){
+				z = y * y;
+				z = y * y;
+			}
+
+			y = y + y;
+			y = y - x;
+		}
+
+	}
+	else{
+		z = x + x;
+
+		if(y > z){
+			x = z - z;
+			x = x * x;
+			y = x + x;
+			x = z + y;
+			y = z - x;
+			z = x * x;
+		}
+
+		x = z + x;
+
+		if(y > x){
+			z = y - z;
+			z = y - z;
+			y = x + z;
+			y = y * x;
+
+			if(x > x){
+				x = z * y;
+				y = x + z;
+
+				if(y != z){
+					x = z - x;
+				}
+
+				x = x * z;
+				y = z + z;
+				z = z * z;
+			}
+
+			y = z * y;
+		}
+
+		x = x * y;
+		y = z + y;
+		y = z + z;
+	}
+
+
+	printf("%d", z);
+}
