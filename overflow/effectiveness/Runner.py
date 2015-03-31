@@ -4,7 +4,7 @@ import os
 import random
 import subprocess
 
-runs_per_optimization = 1 # How many times to re-compile with each optimization
+runs_per_optimization = 100 # How many times to re-compile with each optimization
 
 commondir = './common'
 
@@ -25,7 +25,7 @@ data2_basepath = 'data2.dat'
 
 link = '' # Any linker flags that need to be passed
 
-optimizations = ['-alloc-insert']#, '-func-reorder', '-bb-reorder']
+optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
 
 def write_file(funcnames, versiondir, targetpath):
     mainpath = versiondir + os.sep + 'main.func'
@@ -77,8 +77,8 @@ def run_single(daa, seed_initial, funcnames, versiondir, target_basename):
     print daa
     random.seed(seed_initial)
     target_basename_rand = target_basename + '-rand'
-    #seeds = random.sample(xrange(0, 10000000), runs_per_optimization)
-    seeds = [13]
+    seeds = random.sample(xrange(0, 10000000), runs_per_optimization)
+    #seeds = [13]
     print seeds
 
     data1 = versiondir + os.sep + data1_basepath
@@ -115,16 +115,21 @@ def run_single(daa, seed_initial, funcnames, versiondir, target_basename):
     for optimization in optimizations:
         smash_counts[optimization] = 0
 
+        print
         for seed in seeds:
             #subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
 
-            print '\n >>> optimization ' + optimization + ' with seed = ' + str(seed) + ': ',
+            print optimization + ' with seed = ' + str(seed) + ': ',
             process_list = [irtobin, daa, target_basename, str(seed), link, optimization]
-            print process_list
+            #print process_list
             run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             stdout, stderr = run_irtobin.communicate()
-            print stdout
+            #print stdout
 
             smashed = int(subprocess.check_output([smashcheck, target_basename_rand, data1, data2]))
-            print "Randomized version smashed: " + str(smashed)
+            smash_counts[optimization] += smashed
+            print ' smashed?: ' + str(smashed)
 
+    print
+    for optimization, count in smash_counts.iteritems():
+        print "randomization: " + optimization + "\tsmashed: " + str(count)
