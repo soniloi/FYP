@@ -12,7 +12,6 @@ daa=$1
 set -x
 
 bindir=$daa/bin
-libdir=$daa/lib
 
 $bindir/clang -emit-llvm -S -c eggshell.c
 $bindir/llc eggshell.ll -o eggshell.s

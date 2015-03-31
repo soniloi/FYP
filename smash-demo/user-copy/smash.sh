@@ -4,5 +4,5 @@
 
 set -x
 
-echo $$
+ps -o ppid=
 ./eggshell data1.dat data2.dat
