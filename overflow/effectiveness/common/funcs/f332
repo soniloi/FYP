@@ -10,59 +10,54 @@ void f332(int x, int y){
 			x = z + y;
 			x = x - x;
 		}
-		else{
-			z = z * y;
-		}
 
-		z = y - z;
-		z = z - x;
+		z = z + x;
 
-		if(z == z){
-			z = y * y;
-			z = z + x;
-		}
+		if(y == y){
+			z = x + z;
+			x = y + z;
 
-	}
-	else{
-		z = x * x;
-		x = x + z;
-		z = z - z;
-
-		if(x > z){
-			z = x + x;
-		}
-
-	}
-
-	x = y - z;
-
-	if(x <= x){
-		x = x + x;
-
-		if(x != y){
-			y = x - x;
-
-			if(z == x){
-				z = z * z;
-				y = x - y;
+			if(y != y){
+				y = y + z;
+				z = x * z;
+				y = x + x;
+			}
+			else{
+				x = x * z;
+				z = x + z;
+				y = z + x;
 			}
 
-			x = y + y;
-			x = y + y;
 		}
 		else{
-			x = z - y;
-			y = y + z;
+			z = z * z;
 		}
 
+		x = z * y;
+
+		if(z >= x){
+			x = x * x;
+
+			if(x != x){
+				y = x - x;
+			}
+			else{
+				z = z + x;
+				y = z + x;
+				z = x - x;
+			}
+
+			y = y * z;
+			y = z - x;
+		}
+
+	}
+
+	y = x - y;
+
+	if(z < y){
+		y = y + z;
 		y = x + z;
-		y = z * y;
-
-		if(y > z){
-			z = z - z;
-			x = z + x;
-		}
-
 	}
 
 

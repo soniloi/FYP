@@ -12,61 +12,24 @@ void f153(int x, int y){
 
 			if(y != z){
 				y = z + x;
-				y = y + z;
-				z = z * y;
-
-				if(x > y){
-					y = y + z;
-					z = z - x;
-
-					if(z >= z){
-						z = x + x;
-						y = y * x;
-					}
-
-				}
-				else{
-					z = y - z;
-				}
-
+				x = y - z;
+				z = y + z;
 			}
 			else{
-				z = x - x;
+				z = x - y;
+				y = y - z;
 			}
 
-			x = z - x;
-
-			if(x <= y){
-				z = z + z;
-
-				if(y <= z){
-					x = x * y;
-					y = z - z;
-
-					if(y != x){
-						z = z * x;
-						x = x - x;
-					}
-
-					y = y * y;
-				}
-				else{
-					z = z - y;
-					z = z + y;
-				}
-
-				z = y * y;
-				z = z + z;
-			}
-			else{
-				z = y + y;
-				x = y + z;
-			}
-
+			z = x + z;
 		}
 		else{
-			x = x - x;
-			y = z + z;
+			z = x + y;
+
+			if(x != x){
+				y = x * z;
+				x = z + y;
+			}
+
 		}
 
 	}

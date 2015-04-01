@@ -15,15 +15,44 @@ void f317(int x, int y){
 
 			if(x <= z){
 				y = z + z;
-				x = y - y;
+				y = x - y;
 			}
 
 		}
 
-		x = y * x;
+		y = z * y;
 	}
 	else{
-		y = y - x;
+		x = z - y;
+		x = x + z;
+
+		if(x == x){
+			y = y * x;
+			y = x + z;
+			x = y * z;
+
+			if(y >= z){
+				x = x - y;
+			}
+
+		}
+		else{
+			x = y + z;
+			y = y - z;
+
+			if(x != x){
+				y = y * z;
+				z = y * y;
+			}
+			else{
+				y = z - x;
+				y = x - y;
+			}
+
+			y = x * y;
+		}
+
+		z = z * z;
 	}
 
 

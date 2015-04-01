@@ -28,61 +28,25 @@ void f108(int x, int y){
 
 			if(x >= z){
 				z = z + y;
-				z = x + y;
-			}
-			else{
-				y = x - x;
+				x = z * z;
 			}
 
-			x = z * z;
-		}
-
-	}
-	else{
-		z = y * y;
-
-		if(y <= x){
-			z = z + y;
-
-			if(y == x){
-				z = y * z;
-				x = z + y;
-				x = x - x;
-			}
-			else{
-				x = y + z;
-			}
-
-			y = y - y;
-
-			if(y != x){
-				x = y * y;
-			}
-			else{
-				z = x * y;
-
-				if(y != z){
-					y = y + z;
-
-					if(y != z){
-						y = x * z;
-						z = z + z;
-					}
-
-					z = z * x;
-				}
-				else{
-					x = y + z;
-					x = y * z;
-					x = y - z;
-				}
-
-			}
-
+			z = x + y;
 		}
 		else{
-			x = z + x;
-			y = z * x;
+			x = x + x;
+
+			if(y != x){
+				z = y * y;
+			}
+
+			y = x * y;
+
+			if(z == y){
+				y = z * x;
+			}
+
+			y = x + x;
 		}
 
 	}

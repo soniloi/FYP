@@ -23,98 +23,63 @@ void f86(int x, int y){
 
 			if(y >= z){
 				z = x + z;
-				x = y - y;
-
-				if(x <= x){
-					x = y * z;
-				}
-
-				z = y + x;
-			}
-
-			z = z - z;
-
-			if(z <= x){
-				x = y + y;
-				y = y + z;
-				y = x + y;
+				z = x - y;
+				y = z * x;
 			}
 			else{
-				y = z * y;
+				x = y * z;
+			}
 
-				if(y <= z){
-					y = y * y;
+			y = z + y;
 
-					if(z < y){
-						y = z * z;
-						y = z + z;
-					}
-					else{
-						x = x * y;
-					}
+			if(x > z){
+				z = y + z;
+			}
 
-					z = x - x;
-					z = x - x;
+		}
+		else{
+			x = x - z;
+			y = y - z;
 
-					if(y == x){
-						x = y * x;
-						x = z + y;
-					}
+			if(x < x){
+				y = x - z;
+			}
+			else{
+				x = y + y;
+			}
 
-				}
-				else{
-					x = x * x;
-					y = x - z;
-					y = y + y;
-				}
+			x = z * y;
+		}
 
+		x = y + z;
+
+		if(y < y){
+			x = z - z;
+
+			if(z >= z){
+				x = x - z;
+				x = y * y;
+				z = x - x;
 			}
 
 		}
 
-		z = x - z;
+	}
+
+	x = y * y;
+
+	if(x >= z){
+		y = z - x;
 	}
 	else{
-		z = x - z;
-		x = y - z;
-	}
-
-	z = z - z;
-
-	if(z <= y){
-		x = x + y;
-		y = y + x;
-
-		if(y >= x){
-			x = y - y;
-		}
-
-		y = z + z;
-	}
-	else{
-		y = z + y;
-
-		if(y < z){
-			x = y + y;
-			y = y * x;
-		}
-		else{
-			y = y * y;
-			y = y + y;
-			y = z * z;
-		}
-
+		x = x - x;
 		z = x - y;
 
-		if(z >= y){
-			x = y - z;
-			z = y - y;
-			y = x * x;
-		}
-		else{
-			z = z - z;
+		if(y < z){
+			x = y + x;
 		}
 
+		z = x - z;
 	}
 
 

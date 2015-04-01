@@ -27,52 +27,37 @@ void f92(int x, int y){
 
 			if(y == x){
 				z = y * z;
-
-				if(x >= z){
-					z = y * x;
-				}
-				else{
-					x = x - z;
-					y = z * z;
-					z = z + z;
-				}
-
-				y = z + z;
-				z = y + y;
-			}
-			else{
-				z = z - y;
-				z = y - y;
-				z = y - x;
-			}
-
-			y = z - z;
-		}
-		else{
-			z = y - x;
-
-			if(x < x){
 				z = x * z;
-
-				if(x != y){
-					z = y + y;
-				}
-
+				z = z - x;
 			}
 			else{
-				y = x - x;
+				x = x * x;
+				y = z * y;
 			}
 
-			y = z * z;
-			z = y * x;
+			z = x + x;
+
+			if(z != z){
+				y = z + z;
+			}
+			else{
+				y = z - x;
+			}
+
 		}
 
 	}
 
-	y = z + z;
+	x = z + y;
 
-	if(z != x){
-		z = x - x;
+	if(z == y){
+		y = z + y;
+
+		if(x > y){
+			y = z - y;
+		}
+
+		y = y * z;
 	}
 
 

@@ -18,31 +18,8 @@ void f209(int x, int y){
 
 			if(z < x){
 				z = x + x;
-
-				if(y >= x){
-					y = y + y;
-				}
-				else{
-					x = x + y;
-					x = z + z;
-
-					if(x < x){
-						y = y + y;
-						x = y + z;
-					}
-
-					y = x - x;
-				}
-
-			}
-			else{
-				x = y * x;
-				z = x + x;
 			}
 
-		}
-		else{
-			z = x - z;
 		}
 
 	}

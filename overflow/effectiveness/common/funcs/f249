@@ -24,98 +24,19 @@ void f249(int x, int y){
 
 			if(y > y){
 				y = z - y;
-
-				if(x == z){
-					z = x + z;
-					y = y * x;
-					x = z * x;
-				}
-
-				y = z - y;
+				z = x + z;
 			}
 			else{
-				y = z - z;
-			}
-
-			y = z - x;
-		}
-
-		x = x - x;
-
-		if(x >= y){
-			z = x * z;
-			y = y + y;
-
-			if(z > x){
-				z = y - y;
-
-				if(z == z){
-					y = x + y;
-
-					if(y > y){
-						x = y - y;
-						x = x * y;
-					}
-					else{
-						y = x + z;
-						z = x + z;
-						y = x + x;
-					}
-
-				}
-				else{
-					x = x - y;
-				}
-
-				z = x * z;
-			}
-			else{
-				x = y * z;
-
-				if(z != x){
-					y = y * y;
-					x = x * x;
-					x = x * y;
-
-					if(z != z){
-						x = x * x;
-					}
-					else{
-						y = x * x;
-					}
-
-				}
-
-				y = y * y;
-				y = y * x;
-			}
-
-			y = x - z;
-
-			if(z >= y){
-				x = x - y;
-				x = x * z;
 				x = z + x;
 			}
-			else{
-				z = x * y;
-				x = x - z;
-				z = x - z;
 
-				if(x <= y){
-					y = x * y;
-					y = z - y;
-					z = z - z;
-				}
-				else{
-					x = y + y;
-					z = y - x;
-				}
-
-			}
-
+			y = y * x;
+		}
+		else{
+			x = x * z;
 		}
 
+		z = y - z;
 	}
 
 

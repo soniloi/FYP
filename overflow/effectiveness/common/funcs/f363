@@ -12,71 +12,24 @@ void f363(int x, int y){
 
 			if(x <= z){
 				y = x + y;
-				x = x + x;
-				z = y + y;
+				y = x * z;
+				x = x + y;
 			}
 
-			y = y - y;
-
-			if(y <= y){
-				y = x - z;
-				y = z + y;
-				y = y - y;
-			}
-
+			y = y + y;
 		}
 
-		y = x + z;
-	}
-	else{
-		y = z + y;
-	}
-
-	x = x * z;
-
-	if(x >= z){
-		z = x + y;
-
-		if(y == y){
-			y = z - x;
-			z = y - z;
-		}
-		else{
-			z = z + x;
-		}
-
-		z = x + y;
 		y = z - x;
 	}
 	else{
-		y = x - z;
+		x = y + y;
+		z = z - z;
+	}
 
-		if(x > y){
-			y = z * x;
+	y = y - z;
 
-			if(z <= z){
-				y = z + x;
-
-				if(z <= z){
-					x = z - y;
-					x = y - y;
-				}
-				else{
-					y = y * z;
-					x = y - x;
-					z = z * x;
-				}
-
-				y = y - z;
-			}
-			else{
-				z = x + x;
-				z = z * x;
-				z = z - y;
-			}
-
-		}
-
+	if(z < x){
+		z = x * z;
 	}
 
 

@@ -49,17 +49,14 @@ void f333(int x, int y){
 
 			if(x >= z){
 				z = z * y;
-				x = x - y;
-				x = y + x;
-			}
-			else{
-				x = y * z;
+				y = x * y;
+				y = x * y;
 			}
 
-			y = x - y;
+			x = y - z;
 		}
 
-		x = z - y;
+		x = z * y;
 	}
 
 

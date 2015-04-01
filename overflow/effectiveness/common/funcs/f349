@@ -30,10 +30,37 @@ void f349(int x, int y){
 			if(z <= y){
 				x = x + x;
 			}
+			else{
+				x = z - y;
+			}
 
 		}
 		else{
-			y = y - x;
+			y = x * x;
+
+			if(x != z){
+				x = y + y;
+				y = z - z;
+				z = x - y;
+			}
+			else{
+				x = x + x;
+				y = x + x;
+				x = y - y;
+			}
+
+			x = x + z;
+			y = z + y;
+
+			if(y <= z){
+				y = z * x;
+				x = x - x;
+			}
+			else{
+				z = x + x;
+				z = z - y;
+			}
+
 		}
 
 	}

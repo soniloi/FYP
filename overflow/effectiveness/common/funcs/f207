@@ -32,31 +32,16 @@ void f207(int x, int y){
 
 			if(y > y){
 				y = x + x;
-				z = x + x;
-
-				if(x > x){
-					y = y * y;
-					y = z - y;
-
-					if(y == x){
-						x = y + z;
-						z = x - z;
-					}
-
-					z = x * x;
-				}
-
+				y = z * z;
+			}
+			else{
+				x = y * x;
 			}
 
-			y = y * z;
-
-			if(y > z){
-				x = z - y;
-			}
-
+			y = y * y;
 		}
 
-		z = x + z;
+		z = y - z;
 	}
 
 

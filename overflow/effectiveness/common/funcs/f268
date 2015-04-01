@@ -33,13 +33,27 @@ void f268(int x, int y){
 
 			if(x != z){
 				x = x - x;
-				z = z + y;
-				y = z * y;
+				x = z + z;
+				y = x - z;
+			}
+			else{
+				x = z + x;
+				z = y * x;
 			}
 
 		}
 
-		z = x + y;
+		y = x + y;
+
+		if(x >= x){
+			z = x + x;
+
+			if(z < x){
+				y = y - x;
+			}
+
+		}
+
 	}
 
 

@@ -18,69 +18,35 @@ void f356(int x, int y){
 
 			if(z != x){
 				y = x * x;
-
-				if(z == x){
-					y = y * x;
-				}
-				else{
-					z = z * y;
-					x = x + y;
-				}
-
 			}
 
 			z = z * z;
 		}
-		else{
-			z = y + x;
-			y = x * y;
-			z = x - x;
-		}
 
-		z = z + y;
+		x = x - x;
 
-		if(x >= y){
-			z = z + x;
-
-			if(x > y){
-				y = z + x;
-
-				if(z < z){
-					z = y - y;
-					z = x + x;
-					x = y - x;
-				}
-
-				x = x - y;
-				z = x * y;
-
-				if(x == z){
-					z = z - x;
-				}
-
-			}
-			else{
-				y = y * z;
-				z = x + x;
-			}
-
-		}
-		else{
-			z = z - x;
-			x = z - z;
+		if(z == x){
+			x = x * z;
+			y = z + z;
 		}
 
 	}
 	else{
-		z = x - z;
-		z = x - z;
+		x = z - z;
+		x = y * x;
 
-		if(z >= x){
-			y = x + y;
-			x = z - y;
+		if(y != x){
+			x = y + z;
+
+			if(y != x){
+				y = z + z;
+				z = x + x;
+				y = y * y;
+			}
+
+			z = x + z;
 		}
 
-		x = z * y;
 	}
 
 

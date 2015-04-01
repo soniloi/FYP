@@ -19,142 +19,49 @@ void f194(int x, int y){
 
 			if(z != z){
 				x = y * z;
-
-				if(z == y){
-					x = x * z;
-					z = z - y;
-				}
-
 			}
 
 		}
 
 	}
 
-	y = z + y;
+	y = y * x;
 
-	if(z < z){
+	if(z != z){
+		y = y * z;
+
+		if(z != y){
+			z = y + z;
+		}
+
+	}
+
+	x = z + z;
+
+	if(z == z){
 		x = z + z;
-	}
 
-	z = z + x;
+		if(y > y){
+			x = z - y;
 
-	if(z != y){
-		y = y - x;
-
-		if(y > z){
-			x = y * y;
-			z = z - x;
-
-			if(y <= x){
-				y = x + x;
-				x = y + z;
-				x = z * x;
-			}
-			else{
-				z = y + z;
-			}
-
-		}
-
-		y = y - y;
-
-		if(y == y){
-			y = x - y;
-
-			if(x == y){
-				y = y - z;
+			if(y <= y){
+				y = x + z;
 				y = x + y;
-
-				if(x == z){
-					y = x * z;
-				}
-
+				x = x * y;
 			}
 			else{
-				y = z - z;
-
-				if(y != x){
-					x = x * z;
-
-					if(z == x){
-						z = y + y;
-					}
-					else{
-						z = y * z;
-						x = y + z;
-						y = z * y;
-					}
-
-					x = z + z;
-					z = y + y;
-
-					if(y <= y){
-						z = x * x;
-						y = z * y;
-					}
-					else{
-						x = x * y;
-						y = z + z;
-					}
-
-				}
-
+				x = x * y;
 			}
 
-			z = z * z;
-			x = x + y;
+			z = z * x;
 
-			if(x > x){
-				z = z - y;
-
-				if(x == x){
-					y = x * x;
-					z = x - y;
-
-					if(x == x){
-						z = y * x;
-						y = y * z;
-						y = y + y;
-					}
-					else{
-						x = z + x;
-					}
-
-					z = z + y;
-				}
-				else{
-					x = z * y;
-					z = y + y;
-				}
-
+			if(x >= y){
+				z = z - z;
+				z = y + y;
+				y = y - y;
 			}
 			else{
-				x = z * z;
-				x = y * y;
-				y = x + x;
-			}
-
-		}
-
-	}
-	else{
-		z = x * z;
-
-		if(y < x){
-			y = x + z;
-			z = x * z;
-		}
-		else{
-			x = x - y;
-
-			if(z < z){
-				z = x - y;
-			}
-			else{
-				y = y + y;
-				y = x * y;
-				z = z + y;
+				y = x - x;
 			}
 
 		}

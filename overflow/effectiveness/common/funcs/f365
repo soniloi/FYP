@@ -11,102 +11,41 @@ void f365(int x, int y){
 
 			if(x == z){
 				x = x * z;
-				y = x * z;
-			}
-			else{
-				x = y - x;
 				x = y * x;
-
-				if(x == y){
-					x = x + z;
-					y = x - y;
-				}
-				else{
-					x = z - z;
-					z = z * y;
-				}
-
-				z = x - y;
 			}
 
 		}
 
 	}
 	else{
-		y = x * y;
+		x = y - x;
+		x = y * x;
 
-		if(y == y){
-			z = x + y;
+		if(x == y){
+			x = x + z;
+			y = x - y;
 		}
 		else{
-			z = z + y;
-
-			if(z > x){
-				z = x - z;
-
-				if(y != z){
-					x = x + z;
-					z = y - y;
-				}
-
-				x = z - x;
-			}
-			else{
-				x = y - x;
-				x = x - z;
-
-				if(y < x){
-					y = y * x;
-				}
-				else{
-					y = y - y;
-					x = y * x;
-				}
-
-				y = y * z;
-
-				if(z != z){
-					x = z * x;
-					z = y * z;
-				}
-
-			}
-
+			x = z - z;
+			z = z * y;
 		}
 
-		x = z * y;
+		z = x - y;
 	}
 
-	x = z * z;
+	z = y - y;
 
-	if(z > x){
-		y = z * x;
+	if(x < z){
+		z = y + z;
+		z = y * y;
 
 		if(z == z){
 			z = z - x;
-		}
-		else{
-			y = x * x;
-			x = z * x;
+			z = x - z;
 
-			if(x <= y){
-				y = x * z;
-				x = x - x;
-			}
-			else{
-				z = z - z;
-				x = x + y;
-			}
-
-			z = x * z;
-
-			if(z < x){
+			if(y != z){
+				x = x + z;
 				y = z - y;
-				x = y + z;
-				y = x + x;
-			}
-			else{
-				z = x + x;
 			}
 
 		}

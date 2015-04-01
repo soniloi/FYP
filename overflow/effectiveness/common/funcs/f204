@@ -12,78 +12,73 @@ void f204(int x, int y){
 
 			if(x < x){
 				z = y + y;
-				y = y - x;
-				x = x - y;
-
-				if(x == y){
-					z = x - y;
-				}
-
-			}
-			else{
-				z = z + z;
-				x = z - z;
-				z = y * z;
-
-				if(x < y){
-					x = z - x;
-				}
-
+				z = y - y;
+				x = z * x;
 			}
 
 		}
 		else{
-			z = x + z;
+			x = z - z;
 
-			if(y <= x){
-				z = x + y;
-				z = y + x;
-			}
-			else{
-				z = x + y;
-				x = z - y;
-				x = y - x;
+			if(x < y){
+				z = x * z;
 			}
 
 		}
 
-		z = y * z;
-		x = y * x;
+		z = z * x;
 
-		if(x == x){
+		if(y != x){
+			y = x + z;
+		}
+
+		y = z * z;
+
+		if(x >= z){
+			z = z * z;
+
+			if(z > x){
+				y = z * z;
+				y = x + y;
+				z = x * y;
+			}
+			else{
+				x = z - y;
+			}
+
+			x = z - y;
+
+			if(x < y){
+				x = z - x;
+				z = y * y;
+				x = x - x;
+			}
+
+		}
+		else{
 			z = x - z;
 
 			if(z <= y){
 				y = z + y;
 			}
-			else{
-				z = x - x;
 
-				if(z > y){
-					y = z + y;
-				}
-
-				x = z * x;
-				z = x + z;
-			}
-
-			y = x * x;
+			x = x + x;
 		}
 
 	}
 	else{
-		y = x - z;
-		z = y + z;
-		x = z * x;
+		z = y - z;
 
-		if(y != y){
-			z = y * z;
-			z = y - z;
-			y = x - z;
-		}
-		else{
-			y = z - y;
-			y = x + z;
+		if(z == y){
+			z = x + x;
+			y = z * z;
+
+			if(y > x){
+				x = x + y;
+				x = y * y;
+				z = x + y;
+			}
+
 		}
 
 	}

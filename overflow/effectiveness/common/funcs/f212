@@ -6,9 +6,6 @@ void f212(int x, int y){
 	if(z == y){
 		y = z + x;
 	}
-	else{
-		y = x + x;
-	}
 
 
 	printf("%d", z);

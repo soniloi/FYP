@@ -6,36 +6,55 @@ void f283(int x, int y){
 	if(z == y){
 		x = z * z;
 	}
-	else{
-		y = z * y;
-	}
 
-	z = z * z;
+	z = y + x;
 
-	if(y != x){
-		z = z * x;
+	if(y != z){
+		z = x - z;
+		x = z + x;
+		y = z * z;
 
-		if(z <= z){
-			x = z + x;
-		}
+		if(x == z){
+			y = z + y;
 
-		z = y + x;
-		z = z * y;
+			if(x <= z){
+				x = y - z;
+			}
+			else{
+				z = x - x;
+				x = x * x;
+			}
 
-		if(z <= y){
-			x = y * x;
-		}
-		else{
 			x = y - x;
 
 			if(z >= z){
 				z = y - x;
 			}
+			else{
+				z = x * y;
+			}
+
+			y = x + z;
+
+			if(x != y){
+				y = x * y;
+			}
+
+		}
+		else{
+			x = z + y;
+
+			if(z < z){
+				z = y * y;
+			}
 
 			z = x * y;
-			x = z + z;
 		}
 
+	}
+	else{
+		y = x * z;
+		y = z * x;
 	}
 
 

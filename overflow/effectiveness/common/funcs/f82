@@ -24,14 +24,26 @@ void f82(int x, int y){
 				x = x + y;
 			}
 			else{
-				x = x + x;
+				z = x * z;
+				x = y * x;
+				y = z - z;
 			}
 
-			x = x - z;
+			y = z + z;
+		}
+		else{
+			z = y * y;
+			y = y - x;
 		}
 
-		y = z + z;
-		x = y + y;
+		x = z + z;
+
+		if(z <= z){
+			x = y - z;
+			z = x * x;
+		}
+
+		z = x - x;
 	}
 
 

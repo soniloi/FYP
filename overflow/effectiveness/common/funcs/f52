@@ -11,83 +11,36 @@ void f52(int x, int y){
 
 			if(z == z){
 				z = y * x;
-
-				if(y > x){
-					y = z + x;
-					z = y - x;
-					z = x * y;
-				}
-				else{
-					y = y + x;
-
-					if(y >= x){
-						z = y - z;
-						x = y - z;
-					}
-
-				}
-
-				x = z * z;
-				z = z + z;
+				z = y - x;
+				x = y + z;
 			}
 			else{
-				y = y * y;
-
-				if(z == z){
-					z = x + y;
-					y = z * x;
-				}
-
-				y = z - y;
-				y = x * z;
+				z = y - x;
+				x = z * x;
+				y = y - z;
 			}
 
-			z = x + y;
+			y = y + x;
 
-			if(y != z){
-				x = x * y;
-
-				if(x > x){
-					z = x + y;
-				}
-				else{
-					z = z + x;
-				}
-
-				y = z * y;
-				z = z * x;
-
-				if(y != x){
-					y = z - z;
-					z = y + y;
-					y = z - x;
-				}
-				else{
-					y = z - y;
-
-					if(y >= z){
-						x = y + y;
-						y = y - x;
-					}
-
-					z = y - x;
-				}
-
-			}
-			else{
-				z = z * z;
+			if(y >= x){
+				z = y - z;
+				x = y - z;
 			}
 
 		}
 		else{
-			y = y * x;
-			z = x * y;
+			x = z - z;
+
+			if(z == y){
+				x = y - x;
+				y = z + z;
+			}
+
 		}
 
 	}
 	else{
-		z = x - x;
-		x = y + z;
+		x = z - y;
 	}
 
 

@@ -27,50 +27,66 @@ void f151(int x, int y){
 			if(x == y){
 				x = z * x;
 			}
-			else{
-				x = x * z;
+
+			x = z * x;
+			z = x * y;
+
+			if(x < z){
+				x = z * y;
+				z = y - y;
+				y = z + z;
 			}
 
-			x = y + x;
-			z = x * z;
 		}
 		else{
-			y = y - y;
+			y = x + y;
+			z = z + z;
+		}
 
-			if(z != z){
-				y = y * z;
-				x = z + z;
-				y = x - y;
+		x = y - z;
 
-				if(y == z){
-					z = z + x;
-					z = y * y;
-				}
+		if(z != y){
+			z = z * x;
 
+			if(y >= y){
+				z = x * z;
+			}
+
+		}
+		else{
+			z = y + z;
+
+			if(y >= x){
+				y = z * x;
+				z = x + z;
+				x = y + x;
 			}
 			else{
-				z = z * z;
-
-				if(y != z){
-					y = x * x;
-				}
-
-				x = x + x;
-
-				if(z <= y){
-					x = y + y;
-				}
-				else{
-					x = z * z;
-				}
-
-				z = z - z;
+				y = y - z;
 			}
 
 		}
 
-		y = x - z;
-		y = y * y;
+		x = z * z;
+
+		if(z == y){
+			x = y * y;
+
+			if(x > y){
+				y = x - z;
+				y = x + z;
+				x = z - x;
+			}
+			else{
+				y = y * z;
+			}
+
+		}
+		else{
+			y = z + x;
+			x = x + x;
+		}
+
 	}
 
 

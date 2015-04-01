@@ -11,68 +11,23 @@ void f19(int x, int y){
 
 			if(y <= x){
 				z = y * y;
-				z = z * y;
-				y = y * x;
+				z = z + x;
+				y = x - y;
 			}
 			else{
-				x = x - x;
-
-				if(x <= z){
-					x = x + y;
-				}
-				else{
-					z = x + y;
-				}
-
-				z = y + y;
-
-				if(x == x){
-					z = y * y;
-
-					if(x != y){
-						y = x * z;
-						y = y * x;
-						z = y - z;
-					}
-
-				}
-
-				z = y * y;
+				y = y * x;
+				x = y * z;
+				x = x + z;
 			}
 
-			y = x - z;
+			x = x + y;
 		}
 		else{
-			x = x * z;
-			x = y + z;
-		}
+			z = x + y;
 
-	}
-	else{
-		y = z - z;
-		x = z * z;
-
-		if(y < z){
-			x = x * y;
-			y = y * z;
-			y = z * y;
-
-			if(x == y){
-				x = x * z;
-				y = z * x;
-
-				if(y >= x){
-					z = x - y;
-				}
-				else{
-					z = y * x;
-				}
-
-			}
-			else{
-				y = z - x;
-				y = x * x;
-				y = y + z;
+			if(z < z){
+				z = x + x;
+				z = z - x;
 			}
 
 		}

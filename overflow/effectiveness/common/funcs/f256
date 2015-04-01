@@ -24,23 +24,27 @@ void f256(int x, int y){
 			if(y >= x){
 				x = z - y;
 			}
+			else{
+				z = z + y;
+			}
 
 		}
 
 	}
 
-	z = z - y;
+	z = z - x;
 
-	if(z < x){
-		y = y + z;
-		x = y + z;
+	if(y < z){
+		x = x - z;
 
-		if(z >= x){
+		if(z == x){
+			y = y + x;
 			y = z * x;
-			z = x * x;
+			y = x + z;
 		}
 		else{
-			z = x * y;
+			y = z * z;
+			x = z * y;
 		}
 
 	}

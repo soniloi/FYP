@@ -39,58 +39,66 @@ void f229(int x, int y){
 
 			if(y == y){
 				z = x - z;
-				x = y * z;
-				y = y - y;
+				x = x - x;
+				z = x - y;
 			}
 			else{
-				y = x + x;
-
-				if(z <= x){
-					z = y - x;
-					z = x * y;
-				}
-				else{
-					z = y - z;
-					x = x - z;
-					y = y * y;
-
-					if(y != y){
-						x = x + x;
-						z = y + z;
-					}
-					else{
-						x = z + y;
-						z = z + x;
-						x = y + z;
-					}
-
-				}
-
-				x = z + z;
+				y = y - y;
+				x = z * z;
 			}
 
-			y = x * y;
+			z = x * y;
 
-			if(z <= z){
-				z = y - x;
+			if(y < x){
+				z = x * y;
+				x = y * z;
+				y = y + y;
+			}
+			else{
+				y = z * y;
+				y = x - z;
+				y = z - y;
 			}
 
-			y = z + z;
+			x = x + x;
+
+			if(y == z){
+				x = x + z;
+				y = z + z;
+				x = x - z;
+			}
+
 		}
 		else{
-			z = x * y;
+			z = z - y;
 		}
 
-		x = z - x;
-	}
-	else{
-		y = z + z;
+		x = y + z;
 	}
 
-	x = x - y;
+	z = z - y;
 
-	if(x < z){
-		y = z + y;
+	if(z == y){
+		z = z - y;
+
+		if(z <= x){
+			y = x + y;
+			x = x + y;
+
+			if(z != x){
+				x = y - y;
+				x = y + z;
+				y = z + y;
+			}
+			else{
+				z = x + y;
+			}
+
+		}
+		else{
+			z = y * y;
+		}
+
 	}
 
 

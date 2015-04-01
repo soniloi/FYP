@@ -34,16 +34,6 @@ void f66(int x, int y){
 		z = z + y;
 		y = x + z;
 	}
-	else{
-		z = z - y;
-
-		if(z != z){
-			x = x + x;
-			z = y + z;
-		}
-
-		z = z * z;
-	}
 
 
 	printf("%d", z);

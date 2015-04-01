@@ -11,92 +11,78 @@ void f16(int x, int y){
 
 			if(x == y){
 				y = x + x;
-				x = y * z;
-				z = y + y;
-			}
-			else{
-				y = x - y;
-				y = z * y;
-
-				if(z > y){
-					x = z * y;
-
-					if(x <= z){
-						y = x * z;
-						x = y + x;
-						x = z * y;
-					}
-					else{
-						x = z - x;
-					}
-
-				}
-				else{
-					x = y - z;
-				}
-
+				x = x - x;
+				z = x + y;
 			}
 
 		}
 
-		x = x + y;
+		y = y - y;
+	}
+	else{
+		y = y + x;
 
-		if(x >= x){
-			z = x - x;
+		if(z == y){
+			z = x + x;
+			z = x * z;
 		}
 		else{
-			x = x - z;
+			x = z * y;
 
-			if(z >= x){
-				x = y + x;
-				z = y * y;
+			if(x >= z){
+				y = y + x;
+				z = y * x;
+				z = x - y;
+			}
 
-				if(x <= y){
-					z = x * z;
+			y = z * x;
 
-					if(x <= z){
-						z = y * x;
-						z = y + x;
-						x = z + z;
-					}
-					else{
-						z = y * x;
-					}
+			if(y == x){
+				x = z + x;
+				y = x - y;
+				x = x * y;
+			}
 
-				}
-				else{
-					z = y * z;
-				}
+			z = z * x;
+		}
 
+		x = y + x;
+	}
+
+	z = y * y;
+
+	if(x <= y){
+		z = x * z;
+
+		if(x <= z){
+			z = y * x;
+
+			if(y != x){
+				z = z + y;
+				z = z - x;
+				x = y + z;
 			}
 			else{
 				z = x * y;
-				x = x * z;
+				z = x * y;
+				x = x * x;
 			}
 
-			y = y - y;
+			z = y - y;
+			y = z - y;
 
-			if(y < z){
-				y = z + z;
-
-				if(z <= x){
-					y = z - z;
-				}
-
+			if(z < z){
+				z = z + x;
 			}
 			else{
 				y = z - z;
 			}
 
-			z = z + z;
+		}
+		else{
+			x = z - z;
 		}
 
-	}
-
-	x = z - y;
-
-	if(z >= y){
-		z = y + z;
 	}
 
 

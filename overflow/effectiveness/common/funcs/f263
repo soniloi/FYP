@@ -13,18 +13,33 @@ void f263(int x, int y){
 				z = z * z;
 			}
 			else{
-				x = y - z;
-				x = z + x;
-				y = x - y;
+				x = x - y;
+				z = x * z;
+				z = x * y;
 			}
 
-			y = z + x;
+			x = y - y;
 		}
 
-		z = x * y;
+		z = x - z;
+
+		if(x <= y){
+			y = z + y;
+			y = y + y;
+
+			if(x >= z){
+				x = y - y;
+				z = x - y;
+				y = z - y;
+			}
+
+			x = x * z;
+		}
+
 	}
 	else{
-		z = y - y;
+		y = x + z;
+		x = x + x;
 	}
 
 

@@ -19,225 +19,109 @@ void f234(int x, int y){
 
 			if(y == z){
 				x = y * y;
-				z = x + x;
-
-				if(x != y){
-					y = x * y;
-
-					if(z > y){
-						y = y - z;
-					}
-					else{
-						y = x * y;
-					}
-
-				}
-
+				x = z * z;
 			}
 			else{
+				x = z - z;
+			}
+
+			y = x * y;
+
+			if(z > y){
+				y = y - z;
+			}
+
+			z = y * x;
+		}
+
+	}
+	else{
+		z = y - x;
+	}
+
+	y = y + z;
+
+	if(y == z){
+		z = z * x;
+
+		if(z != y){
+			y = y * z;
+
+			if(y >= y){
+				z = y * z;
+				x = y + y;
+				x = y + z;
+			}
+
+			z = z + z;
+		}
+
+		x = x + x;
+
+		if(y > z){
+			x = x * x;
+			x = z - y;
+			x = z - y;
+		}
+
+	}
+
+	y = x + x;
+
+	if(z >= x){
+		x = x + x;
+
+		if(x >= x){
+			x = z + z;
+
+			if(x > y){
+				y = z + x;
 				z = y - x;
-			}
-
-			y = y + z;
-
-			if(y == z){
-				z = z * x;
-				z = z - y;
-			}
-			else{
-				z = z - x;
-				x = z - x;
-
-				if(x < z){
-					x = y + z;
-					z = z + z;
-				}
-				else{
-					x = z * z;
-					y = z * x;
-					x = x - x;
-				}
-
-				y = y * x;
-
-				if(y > x){
-					z = y * z;
-					z = z * x;
-
-					if(x >= z){
-						z = x * x;
-						x = x + z;
-						z = z * y;
-					}
-					else{
-						y = z + x;
-						z = y - x;
-						y = x - y;
-					}
-
-				}
-
+				y = x - y;
 			}
 
 			x = z + x;
-		}
-		else{
-			y = x + x;
-			y = x + x;
-			x = y - z;
-
-			if(z < z){
-				z = x + z;
-				x = y + z;
-				x = x - x;
-			}
-
-		}
-
-	}
-
-	x = y + z;
-
-	if(z > x){
-		x = z + y;
-		y = x * z;
-		y = z - x;
-	}
-	else{
-		x = y + x;
-		z = z + y;
-		z = z - y;
-
-		if(z > z){
-			y = z + x;
-			x = x * x;
-
-			if(z < x){
-				z = y * z;
-				x = x - x;
-				z = z * x;
-			}
-			else{
-				y = x * z;
-			}
-
-			y = x - y;
-		}
-		else{
-			z = z * x;
-			x = y - z;
-		}
-
-	}
-
-	y = z - z;
-
-	if(x >= y){
-		z = x - y;
-
-		if(x == z){
-			z = x - x;
-
-			if(y < y){
-				z = y * z;
-				x = x - y;
-			}
-			else{
-				y = z * y;
-				z = z - y;
-
-				if(x > z){
-					z = x + y;
-				}
-				else{
-					x = z + x;
-
-					if(y >= z){
-						z = z * y;
-					}
-					else{
-						y = y * z;
-						y = z * z;
-						x = z - z;
-					}
-
-				}
-
-			}
-
-			y = z - y;
-			y = z * y;
-		}
-		else{
-			y = x * x;
-			z = x * y;
-			x = y + y;
-		}
-
-		z = z * z;
-
-		if(y == z){
-			z = x + x;
-		}
-
-	}
-	else{
-		y = x + x;
-
-		if(x == z){
-			z = x + x;
-
-			if(x >= y){
-				z = x - x;
-				x = z + x;
-			}
-
-			x = x + z;
-		}
-		else{
-			x = x + x;
 			y = x - x;
 
-			if(z == z){
-				x = y + x;
-			}
-			else{
-				z = y * y;
-
-				if(y < x){
-					y = y * z;
-
-					if(z == x){
-						x = z - x;
-						x = y * y;
-					}
-					else{
-						x = y * y;
-						y = x + y;
-					}
-
-					x = z - z;
-				}
-				else{
-					z = y * z;
-				}
-
-				x = x * x;
+			if(x <= y){
+				z = x - x;
+				y = y + z;
 				z = y + x;
 			}
 
 		}
-
-		y = z + y;
-
-		if(z <= x){
-			z = z + x;
-		}
 		else{
-			y = z + x;
+			z = x * y;
+
+			if(z < x){
+				y = x + z;
+				z = x - z;
+				z = z + y;
+			}
+			else{
+				x = z + y;
+				y = y * x;
+				z = x - z;
+			}
+
 		}
 
-		x = y - y;
+	}
+	else{
+		y = x * x;
+		z = x - z;
+
+		if(z < y){
+			z = y - y;
+
+			if(y != x){
+				z = z * x;
+				x = x * x;
+			}
+
+		}
+
+		y = x * z;
 	}
 
 

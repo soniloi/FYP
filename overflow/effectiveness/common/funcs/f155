@@ -9,129 +9,28 @@ void f155(int x, int y){
 		if(y == z){
 			x = x * x;
 		}
-		else{
-			x = y + y;
 
-			if(z >= x){
-				z = y + y;
-			}
-			else{
-				z = x * y;
+		x = x - z;
 
-				if(x == z){
-					x = z - y;
-				}
-				else{
-					y = y - z;
-					z = z * y;
-				}
+		if(z != x){
+			z = z - z;
+			y = x - z;
+			x = y + x;
 
-				y = z + z;
-			}
-
-			y = y - z;
-			y = y - y;
-
-			if(y <= z){
-				x = z + x;
-			}
-			else{
-				z = y - z;
-
-				if(y != x){
-					z = x * y;
-					z = x + x;
-
-					if(y < x){
-						y = x - y;
-					}
-					else{
-						y = x - y;
-						z = x * z;
-					}
-
-				}
-				else{
-					z = z + x;
-
-					if(z < y){
-						z = z + x;
-					}
-
-				}
-
-				y = y - y;
-				x = x + x;
+			if(z == x){
+				y = y * x;
 			}
 
 		}
 
-		z = z - y;
+	}
+	else{
+		z = x + z;
+		y = z - z;
 
-		if(z != y){
-			z = x * z;
-
-			if(y == z){
-				z = y - x;
-			}
-			else{
-				z = z + y;
-				z = y - z;
-
-				if(x < z){
-					z = x + z;
-				}
-				else{
-					z = z * y;
-
-					if(z >= z){
-						z = x - y;
-						x = z - x;
-						x = x * z;
-					}
-
-				}
-
-				y = x + z;
-
-				if(y == y){
-					z = y * x;
-					y = y * y;
-					y = y - z;
-				}
-
-			}
-
-			x = y + x;
-
-			if(y != x){
-				y = x + x;
-				z = z - x;
-
-				if(x != z){
-					x = y - y;
-
-					if(z <= z){
-						x = x - y;
-						z = y - y;
-					}
-
-				}
-
-			}
-
-			z = y * y;
-
-			if(x < y){
-				x = y * z;
-				z = z * x;
-				x = z * z;
-			}
-			else{
-				y = y - z;
-				x = y * x;
-			}
-
+		if(z <= y){
+			y = z * y;
+			y = y + y;
 		}
 
 	}

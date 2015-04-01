@@ -15,11 +15,12 @@ void f83(int x, int y){
 
 			if(y < z){
 				x = z + y;
-				y = y + y;
+				y = y - z;
 			}
 			else{
-				z = z - x;
-				x = y - z;
+				y = y + z;
+				y = x * x;
+				y = y + x;
 			}
 
 			z = y + y;

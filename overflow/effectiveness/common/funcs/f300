@@ -12,42 +12,56 @@ void f300(int x, int y){
 
 			if(x >= z){
 				x = y * x;
-				y = x * x;
-				z = y + z;
+				y = y * x;
+				x = x + y;
 			}
 
-			y = z + x;
-			y = z + y;
-		}
+			z = y + y;
 
-		z = y * z;
-	}
-	else{
-		y = x + y;
-		z = x * y;
-	}
-
-	y = z + x;
-
-	if(y <= x){
-		y = z - z;
-
-		if(z < x){
-			y = x + x;
-			y = x + z;
-			z = x * y;
-
-			if(x > y){
-				x = x * x;
-				z = y * x;
+			if(z <= y){
+				z = z - y;
+				z = z - x;
 			}
 
-		}
-		else{
-			z = z + y;
 			x = y - y;
 		}
 
+		y = x + x;
+	}
+
+	y = y + z;
+
+	if(z > x){
+		z = y + y;
+
+		if(z == y){
+			x = y * z;
+			y = y * z;
+
+			if(y != x){
+				y = z * y;
+				y = y * x;
+				x = x * z;
+			}
+			else{
+				x = x + x;
+				y = z + z;
+				y = y * y;
+			}
+
+			y = y - z;
+		}
+
+		y = z + x;
+
+		if(z != x){
+			y = y - y;
+		}
+		else{
+			z = x - x;
+		}
+
+		y = z - x;
 	}
 
 

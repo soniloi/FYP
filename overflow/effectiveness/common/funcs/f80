@@ -13,72 +13,25 @@ void f80(int x, int y){
 				z = y * x;
 			}
 			else{
-				x = x + z;
-				y = y - z;
-
-				if(z >= z){
-					z = x * x;
-				}
-				else{
-					y = x - y;
-				}
-
-				x = x - y;
-
-				if(x != z){
-					z = x + x;
-					x = z + y;
-				}
-				else{
-					x = z * x;
-
-					if(x >= z){
-						x = z * y;
-					}
-					else{
-						x = z + y;
-					}
-
-				}
-
+				x = x * z;
+				z = x - y;
+				y = z + z;
 			}
 
-			z = x - x;
-			z = y + y;
+			x = z + z;
+			x = x * y;
+
+			if(y <= y){
+				y = x * y;
+				y = z * z;
+			}
+
 		}
 		else{
-			x = y - y;
+			x = z * y;
 		}
 
-		y = y + z;
-
-		if(x <= x){
-			y = z + x;
-		}
-
-	}
-	else{
-		z = x + y;
-
-		if(x < z){
-			x = y - z;
-		}
-		else{
-			z = y + z;
-			x = z - z;
-
-			if(z < x){
-				z = z * y;
-				y = x * x;
-				x = z + z;
-			}
-			else{
-				x = x * x;
-			}
-
-			z = z * z;
-		}
-
+		z = z - z;
 	}
 
 

@@ -12,15 +12,59 @@ void f309(int x, int y){
 
 			if(y != y){
 				z = y - x;
-				y = y + x;
+				x = y - z;
+			}
+			else{
+				z = z - x;
+				y = x - x;
 			}
 
 		}
 
-		y = x - x;
+		z = y - x;
 	}
 	else{
-		z = y - x;
+		x = y + x;
+
+		if(y > y){
+			x = x + x;
+
+			if(y != y){
+				x = z + y;
+				y = x + z;
+				y = x * y;
+			}
+			else{
+				y = y + y;
+			}
+
+			y = y - x;
+			y = z - y;
+
+			if(z != x){
+				y = z + z;
+			}
+
+		}
+
+		x = z + x;
+
+		if(x < x){
+			z = z * x;
+
+			if(z != y){
+				x = z + z;
+			}
+
+		}
+
+		y = y - x;
+
+		if(x < z){
+			y = z - y;
+			x = x * y;
+		}
+
 	}
 
 

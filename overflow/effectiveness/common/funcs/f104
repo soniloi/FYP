@@ -12,11 +12,16 @@ void f104(int x, int y){
 
 			if(x >= x){
 				z = y + x;
-				z = x + y;
-				x = z + y;
+				x = z * z;
+				y = z * z;
 			}
 
-			y = z - x;
+			y = x + y;
+
+			if(y >= y){
+				z = z * y;
+			}
+
 		}
 
 	}

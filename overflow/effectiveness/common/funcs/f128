@@ -8,22 +8,38 @@ void f128(int x, int y){
 		y = y + y;
 		x = y + x;
 	}
-	else{
-		z = y + x;
-	}
 
-	y = y + z;
+	z = z - z;
 
-	if(z == z){
-		x = z * x;
-	}
-	else{
-		z = z - z;
-		x = y + y;
-		y = x * x;
+	if(x > y){
+		z = z + z;
 
-		if(x < y){
-			x = z * z;
+		if(z >= z){
+			x = x * x;
+
+			if(z < z){
+				x = y + y;
+				y = y * x;
+				x = z * y;
+			}
+
+			z = x + x;
+
+			if(x != x){
+				x = y * y;
+			}
+			else{
+				z = y - x;
+				x = x + x;
+				y = y - z;
+			}
+
+			z = x + z;
+
+			if(z <= y){
+				x = z * z;
+			}
+
 		}
 
 	}

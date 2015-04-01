@@ -2,15 +2,17 @@
 
 import os
 import random
+import sys
 
 import Runner
 
 funcdir = './common/funcs'
 versionbasedir = './versions'
 
-max_funcs = 2
-versions_per_size = 3
-runs_per_technique = 10
+min_funcs = 0
+max_funcs = 20
+versions_per_size = 4
+runs_per_technique = 100
 
 seed_initial = 13
 
@@ -21,7 +23,7 @@ def run_selections(daa):
     print 'seeds: ',
     print seeds
 
-    for i in range(1, max_funcs+1):
+    for i in range(min_funcs, max_funcs+1):
 
         aggregate_smash_counts = {}
 
@@ -49,3 +51,5 @@ def run_selections(daa):
 
         for technique, count in aggregate_smash_counts.iteritems():
             print '[Selector] ' + str(i) + '\t' + technique + '\t' + str(count) + '\t' + str(float(count)/float(versions_per_size*runs_per_technique))
+
+        sys.stdout.flush()

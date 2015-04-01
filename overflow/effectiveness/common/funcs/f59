@@ -44,50 +44,29 @@ void f59(int x, int y){
 
 			if(z <= y){
 				x = x - y;
-
-				if(x < y){
-					x = z + y;
-					x = x + y;
-
-					if(z >= y){
-						x = y * z;
-						z = x + x;
-					}
-
-					x = y + y;
-				}
-
-				y = z + x;
-				x = y + z;
+				z = x - y;
+				x = x + z;
 			}
 
-			x = z - y;
-
-			if(y != y){
-				y = y - y;
-				x = z + x;
-				x = y + z;
-			}
-
-			x = z - z;
+			x = x * z;
+			z = z * y;
 		}
 
-		y = x + y;
+		x = y * z;
 
-		if(y >= z){
-			x = x + z;
-			x = z - y;
-			y = x - x;
-		}
-
-		z = x - y;
-
-		if(z < y){
-			y = x + z;
+		if(x == x){
 			x = y + y;
 		}
-		else{
-			y = z - z;
+
+		y = z + x;
+	}
+	else{
+		z = z + z;
+		z = y - z;
+
+		if(z > x){
+			y = y - x;
+			z = z * y;
 		}
 
 	}

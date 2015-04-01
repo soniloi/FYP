@@ -11,103 +11,23 @@ void f319(int x, int y){
 
 			if(z != z){
 				z = z + y;
-				y = y * z;
-			}
-			else{
-				y = x - z;
-
-				if(y == x){
-					z = y + y;
-				}
-
+				y = y - x;
 			}
 
 		}
+		else{
+			z = y * y;
 
-		z = z - x;
-
-		if(z > z){
-			y = y * y;
-			y = y - z;
-
-			if(y <= x){
+			if(z > z){
 				z = z - z;
-				x = x + z;
-				z = y - x;
-
-				if(x > y){
-					z = y + y;
-
-					if(x != x){
-						x = z + z;
-						x = y - z;
-					}
-					else{
-						z = x + y;
-						y = x - y;
-						z = x * y;
-					}
-
-					z = x + y;
-
-					if(y < y){
-						x = y * x;
-						z = x * y;
-					}
-					else{
-						z = y * z;
-						x = z * y;
-						z = z + z;
-					}
-
-					x = y * x;
-				}
-
-			}
-			else{
-				z = x + z;
-				x = z * x;
-				x = y + z;
+				y = y + z;
+				z = z - x;
 			}
 
-			y = y - z;
-
-			if(y > z){
-				x = z + z;
-			}
-			else{
-				x = y * z;
-
-				if(x < x){
-					y = y + x;
-					x = z + z;
-				}
-				else{
-					x = x - z;
-				}
-
-				z = y * z;
-			}
-
-		}
-		else{
-			z = x * y;
-			y = y + x;
+			z = y + x;
 		}
 
-	}
-	else{
-		z = y - y;
-		z = y - x;
-
-		if(z <= x){
-			y = y + y;
-		}
-		else{
-			y = z * y;
-			z = x - y;
-		}
-
+		y = x - x;
 	}
 
 

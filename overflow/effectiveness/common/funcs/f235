@@ -32,82 +32,39 @@ void f235(int x, int y){
 		if(x == y){
 			y = y * y;
 		}
+
+		y = x * x;
+	}
+
+	z = y + x;
+
+	if(x < z){
+		z = y + z;
+
+		if(y < z){
+			z = y * z;
+			x = x + y;
+			y = y * x;
+		}
 		else{
-			x = x * x;
-
-			if(y != x){
-				x = y + z;
-
-				if(y == z){
-					y = y + x;
-
-					if(y <= z){
-						x = x + y;
-						x = y - x;
-					}
-					else{
-						x = y + x;
-						y = z * y;
-					}
-
-				}
-				else{
-					z = x - x;
-					y = z + y;
-				}
-
-			}
-			else{
-				z = x - x;
-			}
-
+			z = x - z;
 			y = y - z;
 		}
 
-		y = y * z;
 	}
 
-	x = y + x;
+	x = z - z;
 
-	if(z != z){
-		y = y + y;
-	}
-	else{
-		z = y * x;
-
-		if(x >= x){
-			y = x + z;
-		}
-		else{
-			y = x + z;
-
-			if(x >= y){
-				x = y - x;
-				x = x + x;
-				x = z + y;
-			}
-			else{
-				y = x + y;
-			}
-
-			x = y + y;
-		}
-
-	}
-
-	z = z + x;
-
-	if(x >= z){
+	if(y != y){
 		z = x - x;
-		y = x - x;
 
-		if(y < x){
-			z = z - x;
-		}
-		else{
-			z = y + y;
-			y = y * z;
-			x = y + z;
+		if(y > y){
+			x = y - x;
+
+			if(y >= y){
+				x = x + z;
+			}
+
 		}
 
 	}

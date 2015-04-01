@@ -12,87 +12,15 @@ void f81(int x, int y){
 			if(y > y){
 				y = z * x;
 			}
-
-			x = y * z;
-		}
-		else{
-			z = x + x;
-
-			if(x >= x){
-				y = z * x;
-
-				if(x >= y){
-					z = z - x;
-				}
-
-				y = y * z;
-				y = x * x;
-			}
 			else{
-				z = z - x;
-				y = x * z;
+				x = y * z;
 			}
 
+			x = y + z;
 		}
 
-		x = z + y;
-
-		if(y > z){
-			z = x + y;
-		}
-
-		y = z * x;
-
-		if(x < y){
-			z = z - z;
-			x = z - y;
-			z = x + y;
-
-			if(y != y){
-				z = z - x;
-
-				if(y < x){
-					x = x - z;
-					z = y + z;
-
-					if(y != z){
-						z = z * x;
-						x = y - y;
-					}
-
-					x = y - y;
-				}
-				else{
-					x = y - x;
-				}
-
-				x = z + y;
-			}
-			else{
-				x = y * y;
-			}
-
-		}
-		else{
-			x = y * y;
-			x = y + x;
-			z = x - x;
-		}
-
-	}
-	else{
-		x = z - z;
-
-		if(y != z){
-			z = x * z;
-			y = y + x;
-		}
-		else{
-			x = z * y;
-			y = y - x;
-			y = y * z;
-		}
-
+		x = z * x;
+		x = y + x;
 	}
 
 

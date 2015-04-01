@@ -11,80 +11,22 @@ void f134(int x, int y){
 
 			if(y <= z){
 				x = z - y;
-
-				if(z <= y){
-					x = z * x;
-					y = x - y;
-				}
-				else{
-					y = x * y;
-					x = y * y;
-					y = x + x;
-				}
-
-			}
-			else{
-				y = y + y;
-
-				if(x < x){
-					x = z - z;
-					x = z + z;
-					x = z - z;
-				}
-				else{
-					x = z + y;
-				}
-
-				z = z * y;
 			}
 
-			y = y + z;
-
-			if(y <= z){
-				y = z + x;
-
-				if(x != z){
-					x = y + z;
-					x = x + z;
-
-					if(z > y){
-						y = y * y;
-					}
-					else{
-						z = y - z;
-						y = x + x;
-					}
-
-					z = z - y;
-				}
-				else{
-					y = x - z;
-					y = x * y;
-					x = x - x;
-				}
-
-				y = y + x;
-				z = y * z;
-			}
-			else{
-				x = y * z;
-				x = y - y;
-			}
-
-		}
-		else{
-			z = y + z;
-
-			if(x > z){
-				z = x - y;
-			}
-
+			z = x - y;
 		}
 
 	}
 	else{
-		y = z + x;
-		x = z * y;
+		x = y * y;
+		x = y * y;
+		x = y - x;
+
+		if(x < z){
+			x = z * y;
+			y = y - z;
+		}
+
 	}
 
 

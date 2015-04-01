@@ -16,57 +16,21 @@ void f58(int x, int y){
 			y = z + z;
 			x = x * y;
 		}
+
+		y = x - x;
+
+		if(z != z){
+			x = z - x;
+			x = z + x;
+			y = z - z;
+		}
 		else{
-			x = y * y;
-
-			if(z == x){
-				z = y * x;
-				z = z * x;
-				z = y + y;
-			}
-
 			y = z + x;
 
 			if(y < x){
 				y = z * y;
 			}
-			else{
-				z = y - y;
 
-				if(x == x){
-					y = x + x;
-					z = x - x;
-				}
-				else{
-					z = z - z;
-				}
-
-				z = z - y;
-				y = y * x;
-
-				if(x == y){
-					x = y - y;
-				}
-				else{
-					x = z * x;
-					x = y + y;
-				}
-
-			}
-
-		}
-
-		z = y + y;
-	}
-	else{
-		y = y * y;
-
-		if(z > z){
-			x = z - x;
-			z = x * z;
-		}
-		else{
-			y = z + y;
 		}
 
 	}

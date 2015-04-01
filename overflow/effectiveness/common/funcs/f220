@@ -16,68 +16,8 @@ void f220(int x, int y){
 			if(z < x){
 				x = z + x;
 			}
-
-		}
-		else{
-			z = y - y;
-
-			if(z < y){
-				z = x * x;
-
-				if(x < y){
-					y = y * x;
-					y = x - z;
-				}
-				else{
-					z = y + y;
-					y = z - y;
-					y = x * y;
-				}
-
-			}
 			else{
-				y = z * x;
-			}
-
-			z = z - x;
-			z = y - z;
-
-			if(y > y){
-				x = x - z;
-
-				if(x != y){
-					x = z * x;
-				}
-
-				y = x - y;
-
-				if(y > y){
-					y = y * x;
-					x = x * x;
-				}
-
-			}
-			else{
-				y = y + z;
-
-				if(z > x){
-					x = x + y;
-					z = z + y;
-
-					if(x >= x){
-						y = y + x;
-					}
-					else{
-						z = y * z;
-						z = y - y;
-					}
-
-					x = y + z;
-				}
-				else{
-					y = x + y;
-				}
-
+				y = x + y;
 			}
 
 		}

@@ -28,57 +28,13 @@ void f270(int x, int y){
 
 			if(y != z){
 				z = y - z;
-
-				if(y > y){
-					x = y - y;
-					y = z - y;
-					y = x - y;
-				}
-
-			}
-			else{
-				y = z - y;
 			}
 
-			z = z + z;
-
-			if(x < z){
-				x = y - y;
-				x = z - z;
-				y = x * x;
-
-				if(y != x){
-					z = y + y;
-					x = z + z;
-				}
-				else{
-					y = y + z;
-					y = z - y;
-					x = x - y;
-				}
-
-			}
-
+			y = y - x;
 		}
 		else{
+			y = y - z;
 			y = y - x;
-
-			if(z < y){
-				y = y + z;
-				x = z - z;
-			}
-			else{
-				z = z + x;
-
-				if(x != x){
-					y = x * z;
-					y = z - x;
-					z = z + y;
-				}
-
-				z = x - x;
-			}
-
 		}
 
 	}

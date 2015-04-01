@@ -12,109 +12,39 @@ void f285(int x, int y){
 
 			if(z == x){
 				x = y * z;
-				z = y * x;
-				y = x + x;
-
-				if(z < y){
-					x = x * x;
-
-					if(y == y){
-						y = x + z;
-					}
-					else{
-						x = z - x;
-					}
-
-					z = y * z;
-				}
-				else{
-					y = y + y;
-				}
-
-			}
-			else{
-				z = z + z;
-				y = y * z;
-			}
-
-			x = y + y;
-		}
-		else{
-			y = z + y;
-			z = y - x;
-			z = y - y;
-
-			if(x < x){
-				x = z - z;
-				z = z + x;
-				x = z * x;
-			}
-			else{
-				z = y - x;
-			}
-
-		}
-
-		z = x + x;
-
-		if(y == x){
-			z = z - z;
-			z = x * z;
-			y = z * z;
-		}
-
-		z = z - y;
-
-		if(z <= z){
-			z = y + z;
-			x = z + y;
-			z = y - z;
-		}
-		else{
-			y = y - x;
-
-			if(z < z){
-				z = y * z;
-
-				if(x >= y){
-					x = z + x;
-
-					if(z < y){
-						y = y - z;
-						y = y * x;
-						x = z - x;
-					}
-					else{
-						y = y - z;
-						x = y * z;
-						z = x + z;
-					}
-
-					z = y * x;
-				}
-
-				x = z - z;
-			}
-			else{
 				x = z - x;
-				x = x - z;
-				y = x - x;
-
-				if(y <= y){
-					z = y - z;
-					z = z * z;
-				}
-				else{
-					z = x + z;
-				}
-
+				x = y - x;
 			}
 
+			x = z + y;
+		}
+		else{
+			x = x * z;
+			z = y + y;
+			z = z - z;
+		}
+
+		z = y * z;
+		x = z * y;
+
+		if(y < z){
+			x = x - z;
+
+			if(z != y){
+				y = x + x;
+				x = y + y;
+			}
+			else{
+				x = y + z;
+				y = y + y;
+			}
+
+			y = x * z;
 		}
 
 	}
 	else{
-		x = x + x;
+		x = y * x;
 	}
 
 

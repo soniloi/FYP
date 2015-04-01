@@ -26,17 +26,6 @@ void f188(int x, int y){
 	if(x < z){
 		x = y + z;
 	}
-	else{
-		x = y - x;
-
-		if(y <= y){
-			z = y - y;
-			x = x - x;
-		}
-
-		x = x - x;
-		y = z * y;
-	}
 
 
 	printf("%d", z);

@@ -13,34 +13,33 @@ void f137(int x, int y){
 				y = y * y;
 			}
 			else{
-				x = z + x;
-				z = x + y;
-				y = y + x;
+				x = x + z;
+				x = y + x;
 			}
 
-			x = y - z;
-			x = x * z;
-
-			if(y != z){
-				y = x - z;
-			}
-
+			z = y * y;
+			z = x * x;
 		}
 		else{
-			y = y * x;
+			x = x * x;
 
-			if(y >= y){
-				z = x * y;
-			}
-			else{
-				y = y - x;
+			if(z > z){
+				z = y * y;
 			}
 
-			y = x * y;
 		}
 
-		y = x + z;
-		z = y * x;
+		y = z * y;
+		y = x * z;
+
+		if(x > z){
+			x = x - x;
+		}
+
+	}
+	else{
+		y = x - y;
+		x = y - y;
 	}
 
 

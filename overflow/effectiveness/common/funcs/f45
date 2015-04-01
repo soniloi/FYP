@@ -51,26 +51,37 @@ void f45(int x, int y){
 
 			if(y == z){
 				z = x + x;
-				x = y + y;
-				y = z - z;
-			}
-			else{
-				x = x + x;
-				y = y - x;
-
-				if(x >= z){
-					x = z * z;
-				}
-
-				z = z * z;
+				x = x - z;
+				y = y - z;
 			}
 
-			z = x - y;
-			y = x + x;
+			z = x - x;
+			x = z * x;
 		}
 
-		x = y + x;
+		y = y * z;
+		x = z + x;
+
+		if(x == z){
+			z = z * z;
+		}
+
+	}
+	else{
 		y = y - x;
+
+		if(x < x){
+			z = x * y;
+			y = x * z;
+
+			if(y == z){
+				y = y * y;
+				y = x * y;
+			}
+
+		}
+
+		y = y - z;
 	}
 
 

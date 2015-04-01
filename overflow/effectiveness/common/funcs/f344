@@ -29,32 +29,25 @@ void f344(int x, int y){
 
 			if(x <= x){
 				y = y + y;
-				z = x * y;
-			}
-			else{
-				x = y * x;
-				y = z - z;
-				z = y - z;
-
-				if(z != z){
-					x = z * x;
-
-					if(y <= y){
-						z = x - x;
-					}
-					else{
-						x = y * y;
-						z = y + z;
-						y = x - y;
-					}
-
-				}
-
+				y = z * x;
 			}
 
 		}
 		else{
-			z = y - x;
+			x = x - x;
+			x = y + y;
+
+			if(z != y){
+				z = z + z;
+				z = z * z;
+			}
+			else{
+				z = y * y;
+				z = z * y;
+				x = y * x;
+			}
+
+			y = x - z;
 		}
 
 	}

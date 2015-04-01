@@ -27,50 +27,73 @@ void f208(int x, int y){
 
 			if(x == z){
 				x = y - z;
-				y = x - z;
-
-				if(z > y){
-					z = x - z;
-					z = x * y;
-					z = z * y;
-				}
-				else{
-					x = x - x;
-					z = y * y;
-					x = z + z;
-				}
-
-				z = y - z;
-
-				if(z <= y){
-					y = x * y;
-					y = z + z;
-				}
-				else{
-					x = x + y;
-				}
-
+				x = y * y;
+				z = z + y;
 			}
 			else{
-				y = x - x;
-				z = y * x;
-
-				if(x < z){
-					z = x + x;
-				}
-
-				z = y - z;
+				z = x - z;
+				x = z * x;
+				y = x + z;
 			}
 
-			y = z * x;
+			x = y * x;
 		}
 		else{
-			y = y - x;
+			y = x * z;
+			x = y + x;
+
+			if(z != y){
+				y = y + z;
+			}
+
+			x = y - y;
 		}
 
 	}
 	else{
-		z = z - x;
+		x = y + z;
+
+		if(y > z){
+			x = z - y;
+			x = y * y;
+			x = z - x;
+		}
+
+		x = y + z;
+
+		if(x != x){
+			z = z - y;
+
+			if(y > z){
+				x = x - z;
+				y = y - x;
+				y = y + z;
+			}
+
+			y = x * z;
+		}
+		else{
+			x = z - x;
+
+			if(z == z){
+				x = y - x;
+			}
+
+			y = z * z;
+
+			if(x != x){
+				z = y * y;
+			}
+
+			x = x + y;
+
+			if(z <= y){
+				z = x + z;
+				z = x - y;
+			}
+
+		}
+
 	}
 
 

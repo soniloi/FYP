@@ -33,7 +33,10 @@ void f243(int x, int y){
 
 			if(z == y){
 				z = x * x;
-				x = x + x;
+				y = x * z;
+			}
+			else{
+				z = y + y;
 			}
 
 		}
@@ -42,18 +45,59 @@ void f243(int x, int y){
 		}
 
 	}
-
-	y = x - y;
-
-	if(z < z){
+	else{
+		y = z - z;
 		z = z + y;
-		x = z - z;
+	}
 
-		if(y > x){
-			y = y * z;
-			x = y + x;
+	x = z - z;
+
+	if(y > x){
+		y = y * z;
+		x = y + x;
+
+		if(z == x){
+			x = y * x;
 		}
 
+	}
+	else{
+		x = z + y;
+		z = z + y;
+
+		if(y < z){
+			x = z + y;
+
+			if(x > z){
+				y = z * x;
+				z = z - z;
+			}
+
+		}
+		else{
+			y = x * y;
+			z = x * z;
+
+			if(y < y){
+				x = z * x;
+				x = x + y;
+				y = z + z;
+			}
+			else{
+				y = x * x;
+				y = y * x;
+			}
+
+			x = x + z;
+
+			if(z >= x){
+				x = x + x;
+				y = x - z;
+			}
+
+		}
+
+		x = y - x;
 	}
 
 

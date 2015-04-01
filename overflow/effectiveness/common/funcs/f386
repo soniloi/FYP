@@ -40,17 +40,12 @@ void f386(int x, int y){
 			x = y - z;
 			z = x + z;
 		}
-		else{
-			x = z * x;
 
-			if(x < x){
-				x = y + z;
-				z = y + y;
-			}
-
-			y = z * x;
-		}
-
+	}
+	else{
+		z = x * z;
+		y = x - x;
+		z = z * z;
 	}
 
 

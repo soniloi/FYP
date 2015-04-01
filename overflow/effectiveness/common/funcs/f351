@@ -13,70 +13,23 @@ void f351(int x, int y){
 
 			if(z <= x){
 				z = z * z;
-				z = z - z;
-			}
-			else{
-				x = y + x;
-				y = y * y;
+				z = z + y;
 			}
 
-			y = y - y;
+			x = y - x;
 		}
 
 	}
 	else{
-		x = z - z;
+		y = y * y;
+		y = y - y;
+		z = x * x;
 
-		if(y <= y){
-			x = x * y;
-			z = x - y;
-
-			if(x != x){
-				x = z + y;
-
-				if(x <= z){
-					x = z - y;
-					x = y * x;
-
-					if(y <= z){
-						y = y - y;
-						x = z * x;
-						y = z + y;
-					}
-
-					z = y * x;
-				}
-				else{
-					y = x - y;
-				}
-
-				x = y + x;
-
-				if(z > z){
-					z = x - z;
-				}
-
-			}
-			else{
-				z = z * y;
-				z = y * x;
-				z = z + y;
-			}
-
-			z = z * z;
-
-			if(x < z){
-				x = y + x;
-				z = y + z;
-			}
-
-		}
-		else{
-			y = z - y;
+		if(y != z){
+			x = y * x;
+			x = y - z;
 		}
 
-		x = y * y;
-		y = y + x;
 	}
 
 

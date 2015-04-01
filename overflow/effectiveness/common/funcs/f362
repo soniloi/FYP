@@ -30,9 +30,6 @@ void f362(int x, int y){
 		}
 
 	}
-	else{
-		z = x + x;
-	}
 
 
 	printf("%d", z);

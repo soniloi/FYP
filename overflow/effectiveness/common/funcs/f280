@@ -9,128 +9,32 @@ void f280(int x, int y){
 		if(y > y){
 			y = x + x;
 		}
-		else{
-			x = y * x;
-			y = x + x;
-			z = y - z;
-		}
 
 	}
 	else{
-		z = x - x;
-
-		if(z >= z){
-			x = y + y;
-		}
-		else{
-			z = x + x;
-			y = x - z;
-			x = z * z;
-		}
-
-		x = z - z;
-
-		if(y == x){
-			z = y * z;
-
-			if(z >= y){
-				y = x - z;
-				y = x - x;
-			}
-			else{
-				z = x * x;
-				y = y + y;
-			}
-
-		}
-
-		x = z * z;
-
-		if(x >= y){
-			y = y - x;
-		}
-		else{
-			x = x - x;
-
-			if(y <= y){
-				y = x * z;
-				y = x - y;
-
-				if(x <= z){
-					z = x * z;
-				}
-
-			}
-			else{
-				z = y * x;
-				y = z - x;
-
-				if(y >= z){
-					z = z + x;
-					y = y + z;
-
-					if(y > z){
-						z = y - y;
-					}
-
-				}
-				else{
-					y = y + y;
-				}
-
-			}
-
-			z = z + x;
-
-			if(z != y){
-				x = z * z;
-				z = z * x;
-			}
-
-			x = y - y;
-		}
-
-	}
-
-	x = x + z;
-
-	if(y <= y){
-		y = z - x;
-
-		if(z > y){
-			x = y - z;
-
-			if(x == x){
-				x = z * x;
-				z = x * y;
-			}
-			else{
-				y = z - z;
-				z = z - x;
-			}
-
-			x = x - z;
-		}
-		else{
-			x = z + z;
-		}
-
+		y = x * y;
 		x = z * y;
 
-		if(x >= y){
-			z = y - z;
+		if(y > z){
+			y = x + x;
+			x = z + x;
 
-			if(y > y){
-				y = y + z;
-			}
-			else{
-				y = x + z;
-				y = z * y;
+			if(z >= y){
+				y = y - x;
 			}
 
 		}
+		else{
+			x = y - x;
+		}
 
-		x = z - z;
+		z = y * z;
+	}
+
+	z = y * z;
+
+	if(z != y){
+		x = z + y;
 	}
 
 

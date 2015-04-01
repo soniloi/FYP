@@ -12,30 +12,42 @@ void f184(int x, int y){
 
 			if(y > z){
 				y = x + y;
-
-				if(x != z){
-					z = y + z;
-					y = z + x;
-					z = z + z;
-				}
-
 			}
 
-			y = z * z;
+			x = z + x;
 
-			if(z != y){
-				y = y + y;
+			if(y != z){
 				y = z + x;
+				z = z + z;
+			}
 
-				if(x != y){
-					x = x * z;
-				}
+		}
+		else{
+			z = y + x;
 
+			if(z != z){
+				y = y - z;
+				y = y - z;
 			}
 
 		}
 
-		x = x - z;
+		x = z * z;
+
+		if(z >= x){
+			z = x + z;
+
+			if(x >= y){
+				y = z - x;
+			}
+			else{
+				x = x + x;
+			}
+
+			z = z - z;
+			z = y + y;
+		}
+
 	}
 
 

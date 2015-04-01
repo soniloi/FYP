@@ -12,12 +12,62 @@ void f313(int x, int y){
 			if(z > x){
 				y = x - z;
 			}
+			else{
+				y = y + x;
+			}
 
-			y = y + x;
+			y = y - x;
 		}
 		else{
-			x = x * z;
-			x = y * z;
+			x = x - x;
+
+			if(y == x){
+				x = x - y;
+				x = y - x;
+				z = z * z;
+			}
+
+		}
+
+	}
+	else{
+		x = y + z;
+
+		if(x == z){
+			x = z - y;
+		}
+		else{
+			x = x + y;
+			x = y + x;
+			z = y * z;
+		}
+
+		z = x * z;
+
+		if(x != z){
+			x = y - x;
+		}
+		else{
+			x = x + y;
+
+			if(x <= y){
+				x = y - z;
+				y = x - z;
+			}
+			else{
+				y = y * y;
+			}
+
+			z = y * y;
+
+			if(z < x){
+				z = z * z;
+				z = y * z;
+			}
+			else{
+				x = y * z;
+			}
+
 		}
 
 	}

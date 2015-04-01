@@ -10,56 +10,65 @@ void f202(int x, int y){
 			y = y * z;
 			y = z * x;
 		}
-		else{
-			y = y * z;
-		}
 
-		y = y * z;
+		z = y - x;
 
-		if(x > x){
-			z = y * y;
-			z = y - y;
+		if(x > y){
+			z = z * y;
+			y = z - x;
+			x = z - y;
 		}
 		else{
-			x = y * z;
-		}
+			z = x - x;
 
-		z = y - z;
-
-		if(x >= x){
-			z = y - z;
-			z = z + x;
-			x = x - x;
-		}
-		else{
-			y = y + y;
-			x = z + y;
-
-			if(y != z){
-				x = z + z;
-				y = z * z;
-			}
-			else{
-				z = y * y;
-
-				if(y != y){
-					z = y * x;
-				}
-				else{
-					y = y * y;
-					z = z * y;
-					y = z * z;
-				}
-
-				z = y + x;
+			if(y != y){
+				z = y * x;
+				x = x + y;
 			}
 
+			z = x + z;
+
+			if(x <= x){
+				y = x - y;
+				y = y - z;
+				y = y * z;
+			}
+
+		}
+
+		y = z - z;
+
+		if(y <= z){
+			z = x - z;
 		}
 
 	}
 	else{
-		x = z * x;
-		y = z + z;
+		y = z - x;
+		z = y + y;
+
+		if(z > x){
+			x = y * y;
+			x = y - z;
+
+			if(x > y){
+				z = x + z;
+				z = y + x;
+			}
+			else{
+				y = x + x;
+				x = x - z;
+				z = z * y;
+			}
+
+			z = x * y;
+		}
+		else{
+			z = z * z;
+			y = z * z;
+		}
+
+		z = z * y;
 	}
 
 

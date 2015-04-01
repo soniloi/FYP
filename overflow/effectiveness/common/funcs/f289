@@ -16,35 +16,10 @@ void f289(int x, int y){
 			if(z < z){
 				z = y - z;
 			}
-			else{
-				x = x - z;
-				x = x * x;
-				y = x * z;
-
-				if(x <= z){
-					y = z * y;
-					x = y - y;
-				}
-				else{
-					z = z + x;
-					z = z - x;
-
-					if(x == y){
-						x = y + y;
-						x = x + x;
-					}
-					else{
-						z = y - x;
-					}
-
-					x = z - x;
-				}
-
-			}
 
 		}
 
-		z = x * z;
+		y = x * x;
 	}
 
 

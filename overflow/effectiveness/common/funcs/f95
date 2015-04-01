@@ -13,82 +13,61 @@ void f95(int x, int y){
 
 			if(y != z){
 				x = y * z;
-				y = y + y;
-			}
-
-			y = z + x;
-
-			if(z > x){
-				y = x - y;
+				x = y - z;
 			}
 			else{
-				z = x + x;
-				x = z + z;
-
-				if(x <= z){
-					y = z * z;
-					z = x * y;
-				}
-				else{
-					y = z * z;
-					z = y * y;
-				}
-
+				z = y + z;
+				x = z + y;
+				x = z - x;
 			}
 
+			y = y * x;
+			z = x + x;
+		}
+		else{
+			z = z + x;
+		}
+
+	}
+
+	y = y + x;
+
+	if(x != x){
+		y = x - y;
+
+		if(z <= z){
+			z = y * y;
 			y = z + z;
 		}
 		else{
 			z = x * x;
 		}
 
-	}
-	else{
-		x = x + z;
-		y = x + z;
-	}
+		y = y * x;
 
-	z = x * y;
-
-	if(x != z){
-		y = x - y;
-
-		if(y <= x){
-			z = y * y;
+		if(z <= y){
+			z = z * z;
 			x = y * x;
-		}
 
-		x = y * z;
-
-		if(x < x){
-			y = x + x;
-			x = y + z;
-		}
-		else{
-			x = z * y;
-			y = z * z;
-			z = z + y;
-		}
-
-		z = y + z;
-
-		if(z == y){
-			z = x - x;
-
-			if(x >= z){
+			if(z <= y){
+				y = y + y;
 				x = x - z;
-
-				if(x <= z){
-					z = z + x;
-				}
-
-				x = y + x;
-				y = z - x;
+				y = x - y;
+			}
+			else{
+				x = x * z;
+				x = y * z;
 			}
 
-			y = y - x;
+			y = x - x;
+		}
+		else{
+			z = x - x;
+			z = z * x;
+			x = z * y;
 		}
 
+		y = z * z;
 	}
 
 

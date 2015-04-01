@@ -62,7 +62,7 @@ def write_file(funcnames, versiondir, targetpath):
     funcpaths.append(spawnpath)
     funcpaths.append(mainpath)
     random.shuffle(funcpaths)
-    print
+    #print
     print funcpaths
     
     for funcpath in funcpaths:
@@ -107,7 +107,7 @@ def run_single(daa, seed_initial, funcnames, versiondir, target_basename, runs_p
 
     # Ensure that the base version is smashable
     smashed = int(subprocess.check_output([smashcheck, target_basename, data1, data2]))
-    print "Base version smashed: " + str(smashed)
+    #print "Base version smashed: " + str(smashed)
     if smashed == 0: # The base version really should be smashable
         print "Warning: failure to smash base version!"
 
@@ -119,14 +119,14 @@ def run_single(daa, seed_initial, funcnames, versiondir, target_basename, runs_p
         for seed in seeds:
             #subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
 
-            #print optimization + ' with seed = ' + str(seed) + ': ',
+            print optimization + ' with seed = ' + str(seed) + ': ',
             run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             stdout, stderr = run_irtobin.communicate()
             #print stdout
 
             smashed = int(subprocess.check_output([smashcheck, target_basename_rand, data1, data2]))
             smash_counts[optimization] += smashed
-            #print ' smashed?: ' + str(smashed)
+            print ' smashed?: ' + str(smashed)
 
     return smash_counts
 

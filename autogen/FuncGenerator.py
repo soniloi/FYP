@@ -3,8 +3,8 @@ import random
 
 max_statements = 3 # Maximum number of statements in a basic block
 new_block_chance = 1 # Starting at one in this many statements, a new basic block will be opened
-elsepart_chance = 3 # One in this many if-statements will not be followed by an else-part
-max_depth = 6 # Cannot nest any deeper than this
+elsepart_chance = 2 # One in this many if-statements will not be followed by an else-part
+max_depth = 4 # Cannot nest any deeper than this
 
 operators_arith = ['+', '-', '*']
 operators_bool = ['==', '!=', '<', '>', '<=', '>=']

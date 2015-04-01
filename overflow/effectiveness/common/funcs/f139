@@ -14,37 +14,36 @@ void f139(int x, int y){
 			if(z != z){
 				x = x + y;
 			}
+
+		}
+		else{
+			z = x * z;
+			z = x - y;
+
+			if(y < z){
+				x = x + y;
+			}
 			else{
-				z = x * z;
-				z = x - y;
+				y = x * y;
+				z = x - x;
+			}
 
-				if(y < z){
-					x = x + y;
-				}
-				else{
-					x = x - z;
-					y = x - x;
-				}
+			y = x - x;
+		}
 
-				x = y * z;
+		x = z + z;
+		y = z * x;
+	}
+	else{
+		x = x + x;
 
-				if(z >= y){
-					x = x - x;
-				}
-				else{
-					z = x - z;
-					y = z * z;
+		if(z > y){
+			x = z + x;
 
-					if(x != x){
-						z = x - z;
-					}
-					else{
-						x = z - y;
-					}
-
-					z = z * x;
-				}
-
+			if(x == z){
+				y = z * z;
+				x = z - y;
+				z = z * x;
 			}
 
 		}
@@ -54,9 +53,6 @@ void f139(int x, int y){
 
 		y = x * z;
 		y = z - z;
-	}
-	else{
-		z = x - z;
 	}
 
 

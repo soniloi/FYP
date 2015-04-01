@@ -20,11 +20,6 @@ void f228(int x, int y){
 	if(x <= z){
 		x = z * x;
 	}
-	else{
-		z = x * x;
-		z = z - z;
-		y = x * y;
-	}
 
 
 	printf("%d", z);

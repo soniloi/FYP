@@ -15,88 +15,69 @@ void f150(int x, int y){
 				x = z * x;
 			}
 			else{
-				z = z * y;
-				y = x * z;
-
-				if(y < y){
-					x = y + y;
-
-					if(y <= x){
-						x = y - x;
-						x = x - x;
-						y = y * z;
-					}
-					else{
-						y = y + x;
-						x = z * y;
-						y = z - x;
-					}
-
-					x = y - x;
-					x = y - y;
-				}
-				else{
-					y = z + x;
-				}
-
+				y = z + x;
+				y = y - x;
+				x = z + y;
 			}
 
+		}
+
+	}
+
+	x = x - z;
+
+	if(z > x){
+		x = x - y;
+		x = x - x;
+
+		if(y <= z){
+			x = y - z;
+			x = z * y;
+		}
+
+		y = x * y;
+
+		if(x <= x){
+			y = y + x;
+
+			if(y == z){
+				x = z - z;
+				y = y * x;
+				y = x + x;
+			}
+
+			z = y * z;
+		}
+		else{
+			y = y * x;
+
+			if(y < z){
+				z = y * x;
+			}
+
+			y = x + x;
+			y = y * z;
 		}
 
 	}
 	else{
-		y = y * x;
-	}
-
-	x = z * y;
-
-	if(y >= z){
-		y = x - y;
 		x = z - y;
+		y = x - x;
 
-		if(z == y){
-			x = z - x;
-
-			if(x >= y){
-				x = z - x;
-				x = z - y;
-			}
-			else{
-				y = x - x;
-				y = y + z;
-				x = x - x;
-			}
-
-			z = x * z;
-			x = x + z;
+		if(x >= y){
+			z = z + x;
+			y = x * z;
 		}
 		else{
-			z = y - x;
+			y = x * z;
 
-			if(x <= z){
-				z = x - y;
-
-				if(z != y){
-					y = z + x;
-					y = x * y;
-				}
-				else{
-					y = y * y;
-					y = y - z;
-				}
-
-				x = y * x;
-				x = z + z;
+			if(x < y){
+				y = y * z;
 			}
 			else{
-				z = x * x;
-				z = x - z;
-			}
-
-			x = y + z;
-
-			if(z == z){
-				z = x * y;
+				z = x + x;
+				y = y + z;
+				z = y - y;
 			}
 
 		}

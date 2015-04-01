@@ -28,56 +28,24 @@ void f254(int x, int y){
 
 		y = z * x;
 	}
-	else{
-		y = y - x;
 
-		if(x <= z){
-			y = z - z;
-		}
-		else{
-			z = z * y;
-			z = x + z;
+	z = y - y;
 
-			if(y >= y){
-				x = z + x;
-				x = y + y;
+	if(z <= x){
+		z = y + y;
+
+		if(y > x){
+			z = x - x;
+
+			if(x == z){
+				y = x - y;
 			}
-
-			y = z * x;
-
-			if(y == x){
-				y = y * x;
-
-				if(y != z){
-					y = y * x;
-
-					if(y > z){
-						y = z * y;
-					}
-					else{
-						y = y + y;
-					}
-
-					z = y * x;
-				}
-
-				z = x * y;
-				y = x + x;
+			else{
+				z = x - x;
 			}
 
 		}
 
-	}
-
-	y = z * x;
-
-	if(x == y){
-		y = x - x;
-		x = y * z;
-	}
-	else{
-		y = y - y;
-		z = z + z;
 	}
 
 

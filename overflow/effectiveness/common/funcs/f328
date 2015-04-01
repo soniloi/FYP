@@ -22,25 +22,7 @@ void f328(int x, int y){
 				z = z * x;
 			}
 
-			z = z * x;
-
-			if(z > z){
-				y = y * z;
-			}
-			else{
-				z = x + x;
-				z = z - y;
-			}
-
-		}
-		else{
-			y = x - y;
-
-			if(z >= z){
-				z = x - x;
-			}
-
-			x = y + y;
+			z = z + x;
 		}
 
 	}

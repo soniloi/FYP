@@ -12,37 +12,37 @@ void f323(int x, int y){
 
 			if(x == x){
 				x = x + y;
-				y = y + z;
+				x = y - z;
+			}
 
-				if(y == y){
-					x = x - x;
-					z = z + z;
+			z = y + y;
+		}
+		else{
+			y = x * z;
 
-					if(x <= y){
-						x = z * z;
-						x = y * x;
-						y = y - y;
-					}
-					else{
-						y = x * z;
-						z = y * x;
-					}
-
-				}
-
+			if(z != z){
+				x = y * x;
+				z = x + x;
+				y = x * y;
 			}
 			else{
-				z = z + z;
-				y = x + x;
-				y = y * y;
+				y = x - y;
+				x = x + z;
 			}
 
-			z = x * x;
+			y = x * z;
+			x = z + z;
+
+			if(x > x){
+				x = x - y;
+			}
+			else{
+				x = z * x;
+				x = x + x;
+			}
+
 		}
 
-	}
-	else{
-		y = z - x;
 	}
 
 

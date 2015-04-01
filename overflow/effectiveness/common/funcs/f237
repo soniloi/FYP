@@ -26,13 +26,12 @@ void f237(int x, int y){
 
 			if(y == y){
 				z = z + x;
-
-				if(z <= y){
-					z = x - x;
-				}
-
-				x = z + y;
-				z = y + y;
+				z = z * y;
+				z = z * y;
+			}
+			else{
+				z = x + z;
+				y = y + y;
 			}
 
 		}

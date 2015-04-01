@@ -29,40 +29,15 @@ void f331(int x, int y){
 
 			if(z <= x){
 				x = y + x;
-				x = z * x;
 				y = x + x;
-
-				if(y >= x){
-					y = x + y;
-				}
-
+				x = y - x;
 			}
 
-			x = z - z;
-			z = x * y;
-
-			if(y > y){
-				x = z * x;
-				x = y - z;
-			}
-
+			x = z - x;
+			z = y * z;
 		}
 
-		z = x + y;
-	}
-	else{
-		y = z * y;
-
-		if(x == z){
-			z = x * x;
-			y = x * z;
-		}
-		else{
-			y = y - y;
-			y = x * x;
-			y = z + y;
-		}
-
+		z = z * z;
 	}
 
 

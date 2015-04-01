@@ -12,27 +12,25 @@ void f342(int x, int y){
 
 			if(z != z){
 				y = y * z;
-				x = x * z;
-
-				if(x < x){
-					y = z + x;
-					y = y + z;
-				}
-				else{
-					x = y + z;
-					x = y - y;
-					z = z + x;
-				}
-
+				y = x * x;
 			}
 
-			y = z * x;
+			z = x - x;
 		}
 		else{
-			x = z * x;
+			z = x - y;
 		}
 
-		x = y * x;
+		z = z + y;
+	}
+	else{
+		z = z + x;
+		y = y * z;
+
+		if(z >= x){
+			y = z * x;
+		}
+
 	}
 
 

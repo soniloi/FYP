@@ -13,33 +13,12 @@ void f242(int x, int y){
 
 			if(x != z){
 				z = y * z;
-				y = x * y;
-
-				if(x <= y){
-					y = x + z;
-				}
-				else{
-					x = y * x;
-					x = x + x;
-
-					if(y >= z){
-						x = x + x;
-					}
-					else{
-						y = z + z;
-					}
-
-				}
-
-				z = x - x;
+				x = y * x;
+				y = z * x;
 			}
 
 		}
 
-	}
-	else{
-		z = y * x;
-		z = x - y;
 	}
 
 

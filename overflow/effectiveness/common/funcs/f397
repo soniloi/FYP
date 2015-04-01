@@ -13,105 +13,75 @@ void f397(int x, int y){
 
 			if(z >= z){
 				z = x + z;
-				x = x - x;
-				y = z + z;
+				x = x * y;
+				x = x - z;
 			}
 
 		}
-		else{
-			y = y + x;
+
+		y = z * x;
+
+		if(y == x){
 			x = x * y;
 			z = y - y;
 
 			if(x > x){
 				y = z - x;
-				z = z + x;
-
-				if(z <= z){
-					y = y * y;
-					x = x + z;
-
-					if(y >= y){
-						z = z * y;
-						x = y + y;
-						z = y - x;
-					}
-
-					z = y * x;
-				}
-
-				y = x - x;
+				y = z + z;
+				x = z + x;
 			}
-			else{
-				z = y * y;
 
-				if(y >= z){
-					z = z + x;
-					y = y * x;
+			x = y - x;
+		}
 
-					if(z >= x){
-						x = y * z;
-					}
-					else{
-						y = z - y;
-						z = x + y;
-						z = x - x;
-					}
+	}
+	else{
+		z = z + y;
+		y = x + z;
+		y = x - z;
 
-					x = z * x;
-				}
+		if(z < y){
+			z = z - x;
+			y = z - x;
+			x = x * y;
 
-				z = x * y;
+			if(y <= y){
+				y = x + x;
 			}
 
 		}
 
-		z = z - y;
+	}
 
-		if(z <= x){
+	z = x + y;
+
+	if(x <= z){
+		x = x + x;
+
+		if(x != y){
+			y = z - y;
+
+			if(x != y){
+				x = y * x;
+			}
+
+			x = x - z;
+
+			if(x <= y){
+				z = z - y;
+				z = z * x;
+			}
+
 			z = z - y;
 
 			if(z < z){
 				z = x + y;
-
-				if(y > y){
-					x = y - y;
-					z = y + y;
-				}
-				else{
-					y = y + y;
-				}
-
-				y = x + y;
-				y = z * z;
+				z = y - y;
+				y = x - y;
 			}
 
-			y = y * x;
-		}
-		else{
-			x = z + x;
 		}
 
-	}
-
-	y = z - y;
-
-	if(y < x){
-		z = x - x;
-		x = x + y;
-		y = x - z;
-	}
-	else{
-		y = y - y;
-
-		if(z <= x){
-			z = y + z;
-			y = z - y;
-			x = z + z;
-		}
-
-		z = z * z;
-		y = z * x;
 	}
 
 

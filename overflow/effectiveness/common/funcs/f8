@@ -13,41 +13,20 @@ void f8(int x, int y){
 				y = z * z;
 			}
 			else{
-				z = y * y;
-
-				if(y < y){
-					x = z - z;
-
-					if(y >= y){
-						y = y + x;
-						x = z + x;
-					}
-					else{
-						y = z + y;
-						z = x * x;
-					}
-
-				}
-
+				z = z - x;
+				y = z - y;
+				y = z * z;
 			}
 
-			z = x * z;
-			x = x * y;
+			y = z + y;
+			y = y - y;
 
-			if(y == z){
-				z = y + x;
-				y = y - x;
+			if(x <= z){
+				x = x - y;
 			}
 
 		}
-		else{
-			y = z - x;
-		}
 
-	}
-	else{
-		y = y + y;
-		x = x + x;
 	}
 
 

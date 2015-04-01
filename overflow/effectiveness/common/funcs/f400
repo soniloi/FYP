@@ -13,66 +13,12 @@ void f400(int x, int y){
 				y = x * x;
 			}
 			else{
-				z = y + x;
+				z = z - z;
+				x = x + z;
 			}
 
-			z = z + y;
-			z = y + x;
-		}
-
-	}
-	else{
-		z = y * y;
-
-		if(z <= z){
-			y = z * x;
-			y = x - z;
-		}
-		else{
-			x = y * x;
-			y = x + x;
-
-			if(z >= x){
-				z = z * y;
-				x = y * x;
-				x = y + x;
-			}
-			else{
-				y = z * x;
-
-				if(z > x){
-					x = x - y;
-
-					if(y <= x){
-						z = x * x;
-						z = x - y;
-						x = z * z;
-					}
-					else{
-						y = z - y;
-						y = x * x;
-					}
-
-				}
-				else{
-					x = y + y;
-					y = y - z;
-
-					if(x != y){
-						x = x - z;
-					}
-					else{
-						y = z * x;
-						x = x + z;
-						z = y * z;
-					}
-
-				}
-
-				x = x * z;
-			}
-
-			x = y - z;
+			z = y - z;
+			z = x - z;
 		}
 
 	}

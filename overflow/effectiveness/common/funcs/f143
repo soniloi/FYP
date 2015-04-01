@@ -11,32 +11,88 @@ void f143(int x, int y){
 
 			if(y >= y){
 				y = y * y;
+			}
 
-				if(x <= z){
-					z = y - x;
-				}
+			x = x + z;
 
+			if(y > x){
+				z = x + y;
+				x = x + y;
 			}
 			else{
-				y = x * z;
+				y = z - z;
+				x = y * x;
+				x = y * x;
 			}
 
-			x = x - z;
+		}
+		else{
+			z = x - z;
+			z = z - y;
+			x = y * z;
 		}
 
-		x = y * x;
+		y = x + z;
+
+		if(y == x){
+			x = x + z;
+			y = x * x;
+
+			if(z == x){
+				z = z - y;
+				z = x - x;
+				y = z * z;
+			}
+			else{
+				z = y * x;
+			}
+
+		}
+		else{
+			y = x * y;
+
+			if(z >= z){
+				x = y * z;
+			}
+
+			z = z * y;
+
+			if(x >= y){
+				y = y + z;
+				z = y - x;
+				x = y * z;
+			}
+			else{
+				x = y - x;
+				y = z - z;
+			}
+
+			z = z * x;
+
+			if(x < y){
+				y = x * x;
+				z = x - y;
+			}
+
+		}
+
 	}
 	else{
-		x = y * z;
-		y = z * z;
+		x = z - x;
 
-		if(y < x){
-			y = x + x;
-			x = z + z;
+		if(y <= z){
+			z = x * x;
 			z = x - x;
+
+			if(x >= y){
+				x = y + y;
+				z = z - y;
+			}
+
 		}
 
-		z = y - x;
+		x = x - y;
+		x = y - y;
 	}
 
 

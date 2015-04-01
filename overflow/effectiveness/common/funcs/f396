@@ -13,67 +13,28 @@ void f396(int x, int y){
 
 			if(x >= x){
 				y = x - z;
-				z = z - z;
-
-				if(z == x){
-					y = z * x;
-				}
-				else{
-					x = x * z;
-
-					if(x != y){
-						z = x + x;
-						z = x + y;
-						x = x - z;
-					}
-					else{
-						x = x + y;
-						y = x - x;
-					}
-
-				}
-
 				z = z + y;
-
-				if(z >= y){
-					x = y + z;
-					x = z + x;
-					x = x + x;
-				}
-
+				z = z + z;
 			}
 			else{
-				z = y * y;
-
-				if(z == z){
-					y = x - z;
-
-					if(x <= z){
-						z = z * y;
-						y = z - z;
-						x = x * x;
-					}
-					else{
-						x = z * z;
-						z = x + y;
-						z = z * y;
-					}
-
-					y = z + z;
-					z = z + x;
-
-					if(z != y){
-						x = y - z;
-					}
-					else{
-						y = z - y;
-						z = x + z;
-					}
-
-				}
-
+				y = z * x;
 			}
 
+		}
+		else{
+			z = x * x;
+
+			if(z <= z){
+				x = z * z;
+				x = z * z;
+			}
+			else{
+				x = y + x;
+				y = x * z;
+				y = y * y;
+			}
+
+			x = z + z;
 		}
 
 	}

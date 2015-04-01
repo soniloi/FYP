@@ -14,93 +14,12 @@ void f158(int x, int y){
 				x = y * z;
 			}
 			else{
-				y = x - x;
-			}
-
-			x = y - z;
-		}
-		else{
-			z = x - x;
-
-			if(y <= y){
-				x = y - x;
-
-				if(z > x){
-					y = z * y;
-					z = y * x;
-					z = y * z;
-				}
-				else{
-					z = z - x;
-					x = y + x;
-					y = z * x;
-				}
-
-				y = z + z;
-				y = y * x;
-			}
-			else{
-				z = x - z;
-				z = z + z;
-			}
-
-			x = x * y;
-			y = z - y;
-
-			if(x == z){
-				y = x + y;
-				z = y * z;
-
-				if(x > y){
-					y = x * z;
-					y = y * y;
-					y = y + y;
-				}
-				else{
-					x = x + x;
-				}
-
 				z = y * y;
-			}
-			else{
-				z = y * y;
-				z = x * z;
-				x = x * y;
-
-				if(x > y){
-					x = x + x;
-					y = x - z;
-
-					if(z == y){
-						x = z - z;
-						y = y - z;
-					}
-					else{
-						y = z - x;
-						z = z - x;
-					}
-
-				}
-				else{
-					y = z + x;
-				}
-
+				x = z * y;
+				y = z - x;
 			}
 
-		}
-
-	}
-	else{
-		z = y - y;
-		y = z - x;
-
-		if(y != z){
-			z = x + z;
-		}
-		else{
-			y = z + x;
-			z = y + y;
-			z = y + z;
+			x = z * y;
 		}
 
 	}

@@ -18,33 +18,14 @@ void f186(int x, int y){
 
 			if(y <= y){
 				y = y - z;
-				z = y + y;
-
-				if(y == y){
-					y = x - y;
-					z = z - z;
-				}
-				else{
-					x = x + y;
-				}
-
-				x = x - y;
-
-				if(y <= x){
-					y = y * z;
-				}
-
+				x = z - z;
+				y = z - z;
 			}
 			else{
 				y = x - y;
-				z = y - x;
+				x = z + y;
 			}
 
-		}
-		else{
-			z = y * x;
-			x = x + x;
-			y = x * x;
 		}
 
 	}

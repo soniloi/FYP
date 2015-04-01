@@ -11,31 +11,17 @@ void f299(int x, int y){
 
 			if(y < z){
 				y = x + z;
-				z = y + z;
-				x = z - x;
-
-				if(y <= x){
-					y = z - y;
-				}
-				else{
-					y = z * z;
-				}
-
-			}
-			else{
-				y = x * x;
-				y = y - y;
+				y = z - z;
+				z = x * z;
 			}
 
-			y = z + x;
-			z = z - x;
+			x = z - x;
+			z = y + y;
 		}
 
 	}
 	else{
-		x = x * y;
-		x = y + z;
-		x = z + z;
+		y = z * z;
 	}
 
 

@@ -9,10 +9,23 @@ void f350(int x, int y){
 		if(z == x){
 			z = z - x;
 		}
-		else{
-			z = y * y;
-			z = y + x;
+
+	}
+	else{
+		y = x - y;
+
+		if(y != x){
 			y = z - z;
+			z = z - z;
+			x = z * y;
+
+			if(y == z){
+				y = z + z;
+			}
+
+		}
+		else{
+			z = z + y;
 		}
 
 	}

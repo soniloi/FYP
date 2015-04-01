@@ -29,78 +29,32 @@ void f88(int x, int y){
 				x = x + z;
 				z = z + z;
 			}
-			else{
-				z = y + y;
-				z = y - y;
-				y = z + z;
-			}
 
-			z = z - z;
+			x = y * z;
+		}
 
-			if(x == y){
-				x = x * z;
-				z = z - y;
-				z = z + z;
+		y = x + y;
+	}
+
+	y = y - z;
+
+	if(z > z){
+		y = z + x;
+
+		if(y >= x){
+			x = z * z;
+
+			if(y < x){
+				z = z + y;
 			}
 			else{
 				z = z * x;
-
-				if(z >= y){
-					x = y * y;
-					y = y * z;
-				}
-				else{
-					z = x + y;
-
-					if(x <= x){
-						y = y + z;
-						y = x * y;
-					}
-
-					z = y * y;
-				}
-
 			}
 
-		}
-
-		x = y - y;
-
-		if(z <= x){
-			z = x + y;
-		}
-		else{
-			x = x - z;
-
-			if(z > x){
-				x = y + z;
-				y = z - y;
-			}
-
-			y = y + x;
-			y = y * x;
-		}
-
-	}
-
-	y = x - z;
-
-	if(z <= z){
-		x = y + y;
-
-		if(y <= y){
-			z = x * x;
-			y = x * y;
-			y = y + x;
-		}
-		else{
-			y = x + x;
+			z = z * y;
 			x = y * y;
 		}
 
-	}
-	else{
-		y = z + z;
 	}
 
 

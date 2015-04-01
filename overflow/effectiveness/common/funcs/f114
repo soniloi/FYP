@@ -18,71 +18,20 @@ void f114(int x, int y){
 
 			if(z >= z){
 				z = x + z;
-
-				if(y == y){
-					x = y - y;
-					z = z + z;
-
-					if(x >= y){
-						z = y - y;
-						z = z * x;
-					}
-					else{
-						x = y - x;
-						x = z - z;
-						x = y * z;
-					}
-
-					y = x - x;
-				}
-				else{
-					x = y * x;
-					y = z - z;
-					y = y * y;
-				}
-
-				z = y - x;
-
-				if(x < z){
-					y = x - x;
-				}
-
-				y = z * z;
+				z = y + y;
+				x = x - y;
 			}
 			else{
-				x = y * y;
-
-				if(x >= y){
-					y = x + x;
-					z = y - z;
-				}
-				else{
-					x = x - z;
-					y = z + x;
-				}
-
 				z = z + z;
-
-				if(y >= y){
-					x = y * z;
-					y = x - z;
-					y = x * y;
-				}
-				else{
-					z = x + x;
-				}
-
-				y = z + x;
 			}
 
-			y = z * x;
+			z = x * y;
 		}
 
 	}
 	else{
-		z = x * y;
-		y = z - y;
-		x = y + z;
+		y = z + x;
+		y = x * y;
 	}
 
 

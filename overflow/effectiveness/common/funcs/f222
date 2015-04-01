@@ -26,21 +26,43 @@ void f222(int x, int y){
 
 			if(x != z){
 				x = y * z;
-				x = z * y;
-			}
-
-			z = x - y;
-
-			if(y <= z){
-				z = z + x;
-				x = x - y;
+				x = x + x;
 			}
 			else{
-				y = y - z;
-				z = x - y;
-				z = y * y;
+				z = z * y;
+				y = z - x;
+				z = y + z;
 			}
 
+			z = x * x;
+		}
+
+	}
+	else{
+		x = y * y;
+
+		if(y == y){
+			x = y - y;
+
+			if(y <= y){
+				z = z * z;
+				z = y + y;
+			}
+
+		}
+
+		z = y - z;
+
+		if(y >= z){
+			y = y + z;
+
+			if(z == y){
+				x = y * x;
+				z = y - y;
+			}
+
+			z = x - x;
+			y = y - z;
 		}
 
 	}

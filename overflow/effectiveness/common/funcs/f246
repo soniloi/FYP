@@ -11,48 +11,7 @@ void f246(int x, int y){
 
 			if(z >= y){
 				y = x + y;
-
-				if(x <= y){
-					z = y * x;
-				}
-				else{
-					z = y - x;
-					x = x + x;
-
-					if(x < x){
-						z = z + y;
-						x = x + z;
-						z = x - x;
-					}
-					else{
-						z = z - y;
-					}
-
-					z = x - z;
-				}
-
-				x = z + z;
-			}
-			else{
-				x = z - x;
-			}
-
-		}
-
-	}
-	else{
-		x = z * x;
-
-		if(x != z){
-			z = y - x;
-		}
-		else{
-			z = z + y;
-			x = z + x;
-			y = y - z;
-
-			if(z <= y){
-				y = z * x;
+				z = x * y;
 			}
 
 		}

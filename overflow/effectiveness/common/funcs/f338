@@ -11,87 +11,36 @@ void f338(int x, int y){
 
 			if(y != z){
 				z = y * z;
-				x = z + y;
-			}
-			else{
-				x = y * x;
-				y = x - z;
+				y = x + z;
 			}
 
 		}
+		else{
+			y = x - x;
+			y = y * y;
 
-		y = x - z;
-	}
-	else{
-		x = y - y;
-		z = y * x;
-
-		if(z != z){
-			y = x - y;
-
-			if(y == x){
-				z = z + x;
-
-				if(y <= y){
-					x = z - z;
-					y = x + y;
-					y = z - z;
-				}
-				else{
-					y = y + x;
-				}
-
+			if(y == y){
+				y = z * x;
+				y = x - y;
+				y = x + y;
 			}
 			else{
+				y = z + z;
 				y = y * y;
-				z = y - y;
-
-				if(y <= z){
-					x = x * z;
-
-					if(z != y){
-						z = x - y;
-						y = z + z;
-					}
-					else{
-						y = y + y;
-					}
-
-					x = y - z;
-
-					if(z != z){
-						x = z * y;
-						z = y * x;
-						x = x - z;
-					}
-					else{
-						z = z + x;
-						x = x - x;
-					}
-
-				}
-				else{
-					y = x * x;
-
-					if(y <= x){
-						x = y - y;
-					}
-
-					x = z * y;
-
-					if(z < z){
-						y = x + z;
-						y = z - x;
-					}
-
-				}
-
-				x = x + x;
+				y = z - z;
 			}
 
-			x = x - x;
+			x = z + z;
+
+			if(x == y){
+				y = x * z;
+				y = z * y;
+				x = z - x;
+			}
+
 		}
 
+		z = y + y;
 	}
 
 

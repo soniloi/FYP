@@ -15,52 +15,12 @@ void f340(int x, int y){
 
 			if(x == x){
 				z = y * y;
-				z = x * x;
-				y = z - z;
-
-				if(z < y){
-					y = z + y;
-					x = z * y;
-					x = z - z;
-
-					if(x < z){
-						x = x - x;
-					}
-
-				}
-				else{
-					x = y - x;
-
-					if(x != y){
-						x = x + y;
-						y = z * x;
-						x = z + z;
-					}
-					else{
-						x = z * y;
-						x = z - x;
-						z = x * y;
-					}
-
-				}
-
-			}
-			else{
+				y = z * x;
 				x = x - z;
-
-				if(y != x){
-					y = y - x;
-					z = x + y;
-				}
-
-				x = x * z;
 			}
 
 		}
 
-	}
-	else{
-		x = y + x;
 	}
 
 

@@ -7,77 +7,11 @@ void f161(int x, int y){
 		x = y * z;
 		y = y - y;
 	}
-	else{
-		x = x + z;
 
-		if(x == z){
-			y = x * x;
+	x = x * z;
 
-			if(z <= z){
-				x = y + y;
-
-				if(z <= x){
-					z = y - x;
-				}
-
-				x = y + x;
-				y = x * y;
-			}
-
-			x = y + z;
-		}
-
-		z = z + z;
-		z = z * y;
-
-		if(y == x){
-			x = x + y;
-
-			if(z >= x){
-				x = y * y;
-				z = x - z;
-			}
-
-		}
-		else{
-			z = x - z;
-
-			if(y == y){
-				y = y * z;
-				y = z - x;
-			}
-			else{
-				z = x * y;
-				y = y * x;
-			}
-
-			x = x * y;
-			z = z + z;
-
-			if(z != z){
-				x = y * x;
-				z = z + x;
-
-				if(x < y){
-					x = z * z;
-					y = x - y;
-				}
-
-			}
-			else{
-				x = x - z;
-				x = x + z;
-			}
-
-		}
-
-	}
-
-	y = x + x;
-
-	if(z < z){
-		x = z - x;
-		y = x + x;
+	if(z <= z){
+		y = y * x;
 	}
 
 

@@ -28,21 +28,8 @@ void f110(int x, int y){
 			if(z == x){
 				z = x + x;
 			}
-			else{
-				y = y - y;
-				z = x + z;
-			}
 
-			x = z + x;
-
-			if(z <= z){
-				x = y + z;
-				z = z - z;
-			}
-			else{
-				y = z - z;
-			}
-
+			y = y - y;
 		}
 
 	}

@@ -25,14 +25,11 @@ void f181(int x, int y){
 			if(x == y){
 				y = z - z;
 			}
-
-			z = y + x;
-
-			if(y < y){
-				z = z + z;
-				z = y - z;
+			else{
+				z = y + x;
 			}
 
+			z = y - y;
 		}
 
 	}

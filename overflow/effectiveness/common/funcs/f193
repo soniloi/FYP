@@ -25,20 +25,49 @@ void f193(int x, int y){
 				x = z * x;
 			}
 			else{
-				x = x * y;
-				y = z + z;
-				x = x + y;
+				x = x * x;
+				y = x - z;
 			}
 
-			z = x * x;
+			z = z * x;
 		}
 
 	}
 
-	x = y + z;
+	y = y + x;
 
-	if(y < y){
-		x = y + z;
+	if(x > z){
+		y = z + y;
+		y = y + x;
+
+		if(z != x){
+			x = z - x;
+
+			if(x == y){
+				y = y * z;
+				x = z * x;
+				x = x - y;
+			}
+			else{
+				x = x + x;
+				z = z - y;
+			}
+
+		}
+
+		x = x - x;
+
+		if(x <= z){
+			y = z - z;
+			x = y * x;
+
+			if(x >= y){
+				z = x + x;
+				x = y - y;
+			}
+
+		}
+
 	}
 
 

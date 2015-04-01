@@ -19,95 +19,31 @@ void f240(int x, int y){
 			if(y == z){
 				x = z - y;
 			}
-
-			y = y - y;
-
-			if(x != z){
-				z = x - x;
-				z = z * x;
-
-				if(x <= y){
-					y = y - x;
-				}
-
-				x = x * y;
+			else{
+				y = y - y;
 			}
 
+			z = x + z;
 		}
 
-		z = z - z;
+		x = y * x;
 
-		if(y <= z){
-			x = y * y;
-		}
-		else{
-			z = y - y;
-			y = x * z;
+		if(z <= x){
+			x = x - z;
 		}
 
-		x = z - y;
+		y = x - z;
 	}
 	else{
-		y = z + y;
-		x = y * z;
+		y = x + z;
 
 		if(z > z){
-			x = y + x;
-			y = y * z;
-		}
-		else{
-			z = z - x;
-
-			if(y != x){
-				y = z - y;
-
-				if(y >= z){
-					x = y - z;
-
-					if(y < x){
-						x = x + x;
-						x = y - y;
-						z = x * y;
-					}
-					else{
-						x = y - y;
-					}
-
-				}
-				else{
-					y = x - z;
-					x = z + y;
-				}
-
-				z = y * z;
-
-				if(z <= y){
-					y = y * z;
-					y = z + x;
-					z = y * y;
-				}
-
-			}
-			else{
-				y = z - x;
-				x = x - y;
-
-				if(z < x){
-					y = x * y;
-				}
-				else{
-					x = z + z;
-					y = z + y;
-					y = x + y;
-				}
-
-				y = y * x;
-			}
-
-			y = z + y;
+			y = x + z;
+			y = x - y;
 		}
 
-		y = y * x;
+		z = y - y;
+		y = x * z;
 	}
 
 

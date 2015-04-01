@@ -16,176 +16,39 @@ void f252(int x, int y){
 
 			if(x > z){
 				y = y * y;
-				x = y * z;
-				z = x * z;
-			}
-
-		}
-
-		y = x - z;
-
-		if(z > x){
-			z = z * z;
-			y = z - z;
-
-			if(y <= x){
-				y = x + x;
+				x = x - x;
+				z = x + x;
 			}
 			else{
-				z = x + z;
-				z = y - z;
-				z = x + z;
+				x = z - x;
 			}
 
-			z = y - x;
 		}
 
-		z = z * z;
-	}
-	else{
-		x = x * y;
-
-		if(x < x){
-			x = y - x;
-
-			if(y >= x){
-				x = z + x;
-
-				if(x != z){
-					z = y * y;
-					z = x * x;
-				}
-				else{
-					y = x * y;
-
-					if(y == y){
-						z = x - y;
-					}
-
-					x = y - x;
-
-					if(x <= z){
-						y = z * y;
-						x = x + y;
-					}
-					else{
-						y = z + z;
-						y = z - y;
-						y = y + z;
-					}
-
-				}
-
-				z = z * z;
-			}
-
-			z = y - z;
-			z = x * z;
-		}
-
-		y = y + y;
-		y = z - x;
-
-		if(y > y){
-			y = y + y;
-			y = x * z;
-			x = z + z;
-		}
-
+		y = z + z;
+		x = x + z;
 	}
 
-	z = y + y;
+	y = y + y;
 
-	if(y != x){
-		x = x - x;
-
-		if(x >= x){
-			z = z + z;
-			y = x * z;
-
-			if(y <= z){
-				z = x * x;
-				x = z + z;
-			}
-			else{
-				z = z * z;
-				x = y + y;
-				x = x + x;
-			}
-
-		}
-		else{
-			y = x - y;
-		}
-
-		x = z * y;
-		x = x * z;
-	}
-	else{
-		x = y + y;
-
-		if(z != z){
-			z = y * z;
-		}
-		else{
-			x = x - x;
-			x = z + x;
-
-			if(z > x){
-				x = y - y;
-				x = x + z;
-
-				if(y != z){
-					x = z - z;
-					z = y + y;
-				}
-				else{
-					y = z - y;
-					y = x + x;
-				}
-
-				y = x * z;
-			}
-			else{
-				z = z - z;
-				y = x * z;
-				y = z + x;
-			}
-
-			y = y * y;
-
-			if(x > y){
-				x = y + z;
-
-				if(y < z){
-					z = x - x;
-				}
-
-				x = z + y;
-			}
-			else{
-				y = z * z;
-				y = z * z;
-
-				if(z <= z){
-					z = z + z;
-					y = y * z;
-					z = z + z;
-				}
-
-				x = x + y;
-			}
-
-		}
-
-		y = x * x;
+	if(z > x){
+		z = y * z;
+		x = y * z;
+		z = z - z;
 	}
 
-	y = z - y;
+	z = y + x;
 
-	if(y == x){
-		x = x * x;
-		z = z + y;
+	if(z > z){
+		y = x * z;
+
+		if(z >= z){
+			x = x * x;
+			y = z * y;
+			x = x - y;
+		}
+
+		y = x * y;
 	}
 
 

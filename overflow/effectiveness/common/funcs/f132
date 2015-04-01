@@ -8,25 +8,6 @@ void f132(int x, int y){
 		x = y * x;
 		x = x + z;
 	}
-	else{
-		x = z - y;
-
-		if(z >= x){
-			x = z + z;
-
-			if(x < z){
-				z = x - x;
-			}
-			else{
-				y = y + z;
-			}
-
-		}
-		else{
-			y = y * z;
-		}
-
-	}
 
 
 	printf("%d", z);

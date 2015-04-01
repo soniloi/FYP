@@ -25,61 +25,33 @@ void f224(int x, int y){
 
 			if(x < z){
 				z = y * y;
-
-				if(y == z){
-					x = x + x;
-
-					if(y != y){
-						z = z - x;
-						y = y + x;
-						z = y + y;
-					}
-					else{
-						y = x + y;
-					}
-
-					z = x + x;
-
-					if(x > y){
-						x = x + y;
-					}
-
-				}
-				else{
-					y = y + y;
-				}
-
-				y = z * z;
+				z = y + z;
 			}
 			else{
-				z = x - y;
-				x = y + x;
+				x = z * z;
+				y = z - x;
+				z = z - x;
 			}
 
+		}
+
+	}
+
+	y = z * z;
+
+	if(z > x){
+		y = x + y;
+
+		if(x == x){
+			x = y - z;
 		}
 		else{
-			z = x * x;
-
-			if(z >= z){
-				x = y + y;
-			}
-			else{
-				x = x - y;
-				y = y - x;
-			}
-
-			z = y - y;
+			y = z * z;
 		}
 
 	}
-
-	x = x + z;
-
-	if(x >= y){
-		z = y * x;
-	}
 	else{
-		z = z - z;
+		y = x - z;
 	}
 
 

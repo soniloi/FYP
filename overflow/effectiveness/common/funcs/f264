@@ -11,23 +11,10 @@ void f264(int x, int y){
 		if(y < y){
 			y = y - x;
 		}
-		else{
-			z = z + x;
-			x = x - z;
-			z = y - x;
-
-			if(z > z){
-				z = z - x;
-				x = x + y;
-				x = z * z;
-			}
-
-		}
 
 	}
 	else{
-		y = y * z;
-		x = x * y;
+		z = z * y;
 	}
 
 

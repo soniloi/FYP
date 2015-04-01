@@ -16,47 +16,82 @@ void f197(int x, int y){
 
 			if(z <= x){
 				z = y * x;
-				z = z + z;
-				z = x - y;
+				y = z + z;
+				z = z + x;
 			}
 
-			x = y * y;
+			y = y + x;
 		}
 		else{
-			z = z - y;
-			y = z - x;
+			y = x - z;
+
+			if(y < x){
+				z = y * y;
+				y = x - x;
+			}
+
+			z = y - z;
 		}
 
 	}
 
-	y = x - x;
+	z = z * z;
 
-	if(z > y){
-		x = z + x;
+	if(x <= y){
+		x = z + z;
+		z = y + y;
 
-		if(z >= x){
-			y = x + z;
+		if(y < z){
+			z = x + x;
+		}
 
-			if(y != y){
-				y = z - y;
+	}
+	else{
+		y = z * z;
 
-				if(z != x){
-					x = x + y;
-				}
-				else{
-					x = z + y;
-				}
+		if(y <= x){
+			z = y + y;
+			z = z - z;
+		}
 
+		z = z + x;
+
+		if(z == z){
+			z = x + y;
+
+			if(z > x){
+				z = y * x;
+				z = y * x;
+				y = z - z;
+			}
+
+			y = y - y;
+
+			if(z == y){
+				y = z * x;
 			}
 			else{
-				z = y + y;
-				z = z - z;
+				z = z + y;
+				x = y + x;
+				y = y + y;
 			}
 
-			y = z + z;
 		}
 		else{
-			z = z - z;
+			y = y * x;
+			y = x * y;
+
+			if(z < y){
+				y = z + x;
+				x = x + y;
+				y = y - z;
+			}
+			else{
+				z = x + y;
+				z = y * x;
+				y = y + y;
+			}
+
 		}
 
 	}

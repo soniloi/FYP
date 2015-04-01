@@ -24,31 +24,14 @@ void f379(int x, int y){
 
 			if(z >= y){
 				z = z - x;
-				y = y + z;
-				z = z * z;
+				x = y - z;
+				z = x + z;
 			}
 			else{
-				z = z - y;
-				y = z * x;
-				x = y - x;
-
-				if(y == z){
-					z = x + y;
-					z = x + y;
-					y = y + x;
-
-					if(z == y){
-						y = y + x;
-					}
-
-				}
-				else{
-					y = z * y;
-				}
-
+				y = x * z;
 			}
 
-			y = z + y;
+			z = y - y;
 		}
 
 	}

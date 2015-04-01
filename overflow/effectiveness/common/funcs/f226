@@ -15,29 +15,89 @@ void f226(int x, int y){
 			x = z * y;
 			x = y - y;
 		}
-		else{
-			x = x + z;
-			y = z - y;
-		}
 
 	}
 
-	x = z * y;
+	y = x * z;
 
-	if(z != y){
+	if(y > z){
 		y = x * z;
+		y = z + z;
 
-		if(x <= x){
-			y = z - x;
+		if(y < x){
+			z = z * x;
+			y = y + y;
+			z = x + x;
 
-			if(x == x){
-				x = z - z;
+			if(x != y){
+				y = z - z;
 			}
 
-			y = z - y;
+		}
+		else{
+			z = y - y;
+
+			if(x != z){
+				y = x + x;
+				y = y - z;
+			}
+			else{
+				z = x + y;
+				y = z * x;
+				z = y - z;
+			}
+
+			x = z + x;
+			z = x + y;
 		}
 
-		y = y - z;
+	}
+	else{
+		z = x + y;
+
+		if(y > x){
+			z = y * y;
+
+			if(x > z){
+				y = x * x;
+				y = y * x;
+			}
+
+			y = x * x;
+		}
+		else{
+			z = x - x;
+			z = z + y;
+
+			if(x <= z){
+				z = z - z;
+				z = z + x;
+			}
+			else{
+				x = z * z;
+				y = x * z;
+				y = y - y;
+			}
+
+		}
+
+		x = x - z;
+
+		if(y > z){
+			x = x - x;
+
+			if(y > y){
+				z = x * z;
+				x = y + y;
+			}
+			else{
+				z = z * z;
+				z = y + z;
+			}
+
+			y = y - y;
+		}
+
 	}
 
 

@@ -14,24 +14,82 @@ void f103(int x, int y){
 
 			if(y > y){
 				z = x + y;
-				z = y * z;
-				y = x + y;
-			}
-			else{
-				x = x + z;
-				x = x + y;
-				z = x + x;
+				y = z - x;
+				z = x - x;
 			}
 
-			x = y - y;
+			y = y * x;
+		}
+		else{
+			z = x * x;
+
+			if(y < z){
+				z = x * x;
+				y = y - x;
+				z = z + y;
+			}
+			else{
+				z = z * y;
+			}
+
 		}
 
 	}
 
-	z = y - z;
+	x = y + y;
 
-	if(z <= y){
-		x = y + y;
+	if(z >= y){
+		y = x * z;
+
+		if(y != z){
+			z = y * z;
+
+			if(y <= z){
+				y = z * y;
+			}
+
+		}
+
+		y = x * y;
+
+		if(z < y){
+			y = x - x;
+			x = x + y;
+			z = x - z;
+		}
+		else{
+			x = x - y;
+			x = y - y;
+
+			if(x <= y){
+				z = y + z;
+				y = y + x;
+				x = y - x;
+			}
+
+		}
+
+		y = x + x;
+
+		if(z != x){
+			x = z + x;
+
+			if(z < x){
+				z = z * z;
+				y = y * y;
+				y = z - z;
+			}
+			else{
+				z = z * y;
+				z = x * z;
+				x = y * z;
+			}
+
+		}
+		else{
+			y = x + y;
+		}
+
 	}
 
 
