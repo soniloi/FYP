@@ -5,76 +5,17 @@ void f267(int x, int y){
 
 	if(y >= x){
 		x = z - x;
-		y = y * z;
+	}
+	else{
+		x = z - x;
+		y = x * z;
 
-		if(x <= y){
-			x = z - x;
-
-			if(z > z){
-				z = z * z;
-
-				if(x >= x){
-					z = z - y;
-					x = y + x;
-					y = x + y;
-					x = x + z;
-				}
-
-			}
-			else{
-				x = z + z;
-				z = y * y;
-				y = y + x;
-			}
-
-			y = x * z;
-			z = y - x;
-			x = x * y;
-			x = x * y;
+		if(x == z){
+			z = z + z;
+			z = z * x;
 		}
 		else{
-			x = x * y;
-			x = y * y;
-			x = x + y;
-			y = y * x;
-			x = x - x;
-
-			if(x >= z){
-				x = y - x;
-				x = z * y;
-
-				if(x > z){
-					x = x * x;
-					x = z * x;
-					x = x + z;
-				}
-				else{
-					y = x - y;
-
-					if(z < x){
-						z = z * y;
-						x = z * y;
-						z = x - x;
-						x = y + z;
-					}
-					else{
-						x = z + z;
-						z = z + x;
-						y = x * x;
-						x = z * y;
-					}
-
-					x = y - z;
-					x = x - z;
-					y = y * z;
-					x = x - z;
-					y = z + z;
-				}
-
-				z = z + y;
-			}
-
-			z = x - y;
+			z = y - y;
 		}
 
 	}

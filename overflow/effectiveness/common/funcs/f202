@@ -9,156 +9,57 @@ void f202(int x, int y){
 		if(y == z){
 			y = y * z;
 			y = z * x;
-			y = z - y;
-		}
-
-		x = y - x;
-
-		if(z >= y){
-			y = z - x;
-			x = z - y;
-			x = y + x;
-			x = z - z;
-			y = z - x;
-			x = x + y;
-		}
-
-		x = z + z;
-		x = x * y;
-		y = y - y;
-
-		if(z < y){
-			z = z - z;
-			z = z - x;
-
-			if(z == x){
-				z = x + x;
-				y = z - x;
-				z = y + y;
-
-				if(z > x){
-					x = y * y;
-					x = y - z;
-					x = y - y;
-
-					if(x == z){
-						y = z * y;
-						x = y * z;
-					}
-					else{
-						x = y + z;
-						z = x - z;
-						x = x - x;
-						x = y + z;
-						x = z - y;
-						z = x + y;
-					}
-
-					z = z * y;
-					y = y * y;
-				}
-				else{
-					x = z * z;
-				}
-
-			}
-
-			x = x * x;
-			z = x + z;
-			x = x - x;
-
-			if(y >= y){
-				y = y + y;
-				x = x - z;
-				x = z * z;
-
-				if(y >= z){
-					x = y * x;
-					x = y - y;
-					y = z - z;
-					y = z - z;
-
-					if(y <= y){
-						y = x * x;
-						x = x * z;
-						z = y - x;
-					}
-					else{
-						z = x * x;
-						z = x + y;
-					}
-
-				}
-
-				x = z + y;
-			}
-
-			z = y * x;
 		}
 		else{
-			z = y * x;
-
-			if(y < z){
-				y = z * y;
-				z = z - y;
-
-				if(z > x){
-					x = x * y;
-					x = x + y;
-					z = x * x;
-				}
-				else{
-					y = x + y;
-
-					if(z == y){
-						y = y * y;
-						x = y - z;
-					}
-
-				}
-
-				z = x - y;
-				x = z * z;
-
-				if(x <= x){
-					x = x - z;
-					y = z + x;
-					y = z * x;
-					z = x * x;
-					z = x - y;
-				}
-				else{
-					y = z * y;
-					y = y - y;
-					z = y + y;
-					z = z + x;
-					x = z + x;
-					z = z - x;
-
-					if(x == x){
-						z = y * x;
-						x = x * x;
-						y = z * z;
-						x = z + y;
-						x = z + y;
-					}
-
-				}
-
-				y = y * x;
-				y = y + x;
-			}
-
-			x = x + x;
-			y = z + z;
-
-			if(y != y){
-				x = y * y;
-			}
-
-			x = x * x;
+			y = y * z;
 		}
 
+		y = y * z;
+
+		if(x > x){
+			z = y * y;
+			z = y - y;
+		}
+		else{
+			x = y * z;
+		}
+
+		z = y - z;
+
+		if(x >= x){
+			z = y - z;
+			z = z + x;
+			x = x - x;
+		}
+		else{
+			y = y + y;
+			x = z + y;
+
+			if(y != z){
+				x = z + z;
+				y = z * z;
+			}
+			else{
+				z = y * y;
+
+				if(y != y){
+					z = y * x;
+				}
+				else{
+					y = y * y;
+					z = z * y;
+					y = z * z;
+				}
+
+				z = y + x;
+			}
+
+		}
+
+	}
+	else{
+		x = z * x;
+		y = z + z;
 	}
 
 

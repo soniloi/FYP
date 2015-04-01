@@ -16,129 +16,78 @@ void f52(int x, int y){
 					y = z + x;
 					z = y - x;
 					z = x * y;
-					y = z - y;
-
-					if(x != y){
-						x = y + y;
-						y = z * y;
-						y = z + x;
-						z = x + y;
-						z = z + z;
-						y = y * y;
-					}
-
-					x = y + z;
-
-					if(z > z){
-						z = y - y;
-						z = x * x;
-						z = y + y;
-						y = y - x;
-						x = z - z;
-						x = z - z;
-					}
-
-					z = z * x;
 				}
 				else{
-					z = x - x;
-					z = x + y;
-					x = z + z;
+					y = y + x;
 
-					if(x <= y){
+					if(y >= x){
+						z = y - z;
 						x = y - z;
 					}
 
 				}
 
-				x = x + y;
-				x = x - z;
-				z = x + y;
+				x = z * z;
+				z = z + z;
+			}
+			else{
+				y = y * y;
 
-				if(y < y){
-					y = x - x;
+				if(z == z){
+					z = x + y;
+					y = z * x;
+				}
+
+				y = z - y;
+				y = x * z;
+			}
+
+			z = x + y;
+
+			if(y != z){
+				x = x * y;
+
+				if(x > x){
+					z = x + y;
+				}
+				else{
+					z = z + x;
+				}
+
+				y = z * y;
+				z = z * x;
+
+				if(y != x){
+					y = z - z;
+					z = y + y;
+					y = z - x;
+				}
+				else{
 					y = z - y;
 
 					if(y >= z){
 						x = y + y;
 						y = y - x;
-						z = z - y;
-						x = x - z;
 					}
 
-				}
-
-				x = z * y;
-			}
-
-			y = x * y;
-
-			if(x >= y){
-				x = y + x;
-				x = y * y;
-				z = x - z;
-				y = z + x;
-
-				if(y <= y){
-					x = y - y;
-					z = x - x;
-					y = x * x;
-					z = y - z;
-
-					if(z < x){
-						z = y - y;
-						y = x - y;
-						y = z * y;
-						x = y - z;
-					}
-					else{
-						y = x + z;
-					}
-
-					x = z + x;
-					x = x - x;
-				}
-				else{
-					x = y * x;
-
-					if(x > z){
-						y = y - y;
-					}
-
-					z = y * x;
-					x = y - y;
+					z = y - x;
 				}
 
 			}
 			else{
-				y = z * x;
-
-				if(y >= z){
-					y = x - x;
-					z = y - x;
-					z = z + z;
-					z = x - y;
-					y = z + z;
-					x = x - x;
-				}
-				else{
-					y = y + y;
-					x = y + y;
-				}
-
-				y = z - y;
-				y = x + x;
+				z = z * z;
 			}
 
-			y = y - z;
-
-			if(z < x){
-				z = x + x;
-			}
-
-			y = y * y;
+		}
+		else{
+			y = y * x;
+			z = x * y;
 		}
 
+	}
+	else{
+		z = x - x;
+		x = y + z;
 	}
 
 

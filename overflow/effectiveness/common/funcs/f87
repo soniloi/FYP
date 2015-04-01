@@ -8,18 +8,6 @@ void f87(int x, int y){
 
 		if(y != y){
 			y = y + x;
-			z = z * y;
-		}
-		else{
-			z = y + z;
-			y = x * y;
-		}
-
-		z = z * y;
-
-		if(y > z){
-			x = x * y;
-			y = z - y;
 		}
 
 	}

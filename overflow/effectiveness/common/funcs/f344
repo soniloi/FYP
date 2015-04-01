@@ -6,11 +6,55 @@ void f344(int x, int y){
 	if(z <= x){
 		z = x * y;
 		x = x * x;
-		x = x * x;
+	}
+	else{
+		x = x - y;
 
 		if(y != y){
-			y = x - y;
-			y = y * z;
+			y = y * y;
+			x = z * z;
+			y = x - z;
+		}
+		else{
+			y = x + x;
+			y = z - z;
+			x = y * y;
+		}
+
+		y = y - y;
+		x = z + x;
+
+		if(y != y){
+			z = x - x;
+
+			if(x <= x){
+				y = y + y;
+				z = x * y;
+			}
+			else{
+				x = y * x;
+				y = z - z;
+				z = y - z;
+
+				if(z != z){
+					x = z * x;
+
+					if(y <= y){
+						z = x - x;
+					}
+					else{
+						x = y * y;
+						z = y + z;
+						y = x - y;
+					}
+
+				}
+
+			}
+
+		}
+		else{
+			z = y - x;
 		}
 
 	}

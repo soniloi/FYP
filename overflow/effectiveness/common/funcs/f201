@@ -8,7 +8,6 @@ void f201(int x, int y){
 	}
 	else{
 		x = x - y;
-		y = y * y;
 	}
 
 

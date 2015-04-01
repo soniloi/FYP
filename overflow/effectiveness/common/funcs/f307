@@ -5,25 +5,22 @@ void f307(int x, int y){
 
 	if(z != y){
 		y = y * y;
-		y = x * z;
+	}
+	else{
+		x = z + y;
+		y = x - z;
 
-		if(y > y){
-			y = z + x;
+		if(x < y){
 			y = x - x;
-			x = x + x;
-			x = x + y;
-			y = y - y;
-			y = z + y;
-
-			if(z <= x){
-				z = x * x;
-				y = z - z;
-				z = x + y;
-				z = z + z;
-			}
-
+			z = x - x;
+			z = y - y;
+		}
+		else{
+			y = y + z;
+			z = z * x;
 		}
 
+		z = x * x;
 	}
 
 

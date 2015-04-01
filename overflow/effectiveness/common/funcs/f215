@@ -10,17 +10,29 @@ void f215(int x, int y){
 			z = x * z;
 		}
 
-		y = x + z;
 	}
 	else{
-		y = x + z;
-	}
+		z = z * y;
 
-	y = y + x;
+		if(y >= z){
+			x = y - z;
+		}
+		else{
+			x = z + y;
+			x = y * y;
+		}
 
-	if(y >= z){
-		y = y * y;
-		y = y - z;
+		y = z * y;
+
+		if(z <= y){
+			z = x + y;
+		}
+		else{
+			x = y * z;
+			z = z + y;
+		}
+
+		x = y * x;
 	}
 
 

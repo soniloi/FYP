@@ -8,39 +8,84 @@ void f321(int x, int y){
 
 		if(y > x){
 			x = x * x;
-			y = z - z;
 		}
 		else{
-			y = x * z;
-			y = z + x;
+			y = z * x;
 
-			if(y > y){
-				x = y * x;
+			if(y <= x){
+				y = y + z;
 			}
-			else{
-				y = x * y;
 
-				if(y <= z){
-					x = x * z;
-					z = z + z;
+		}
 
-					if(x >= x){
-						x = y + z;
-						y = z * x;
-						z = y * z;
-						x = y + x;
+	}
+	else{
+		y = z * y;
+		x = x * z;
+
+		if(x >= y){
+			y = x + x;
+		}
+		else{
+			z = y + z;
+
+			if(z == x){
+				x = x * y;
+
+				if(z > z){
+					x = z - x;
+
+					if(x > z){
 						x = x - y;
 						z = y - x;
-					}
-					else{
-						y = y + x;
+						x = z - y;
 					}
 
-					z = x * x;
-					z = x * y;
-					y = x + y;
+					x = z * x;
+					y = z * x;
+				}
+				else{
+					x = z - y;
+					z = y + x;
 				}
 
+				z = x + z;
+				y = z + z;
+
+				if(y <= y){
+					z = x * z;
+					z = z + z;
+
+					if(x < y){
+						x = z + x;
+						x = z - x;
+					}
+
+				}
+				else{
+					z = z - x;
+					z = y + x;
+
+					if(x <= x){
+						z = x - y;
+						y = x - z;
+						z = y + x;
+					}
+
+				}
+
+			}
+			else{
+				x = x + z;
+				x = z + z;
+			}
+
+			y = z * y;
+			y = x - y;
+
+			if(x == z){
+				z = z + z;
+				y = y * z;
 			}
 
 		}

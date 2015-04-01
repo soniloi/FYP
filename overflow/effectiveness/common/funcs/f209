@@ -29,57 +29,20 @@ void f209(int x, int y){
 					if(x < x){
 						y = y + y;
 						x = y + z;
-						z = y * y;
-					}
-					else{
-						x = y * y;
-						x = x + z;
-						x = z * z;
-						y = z + x;
-						y = z * y;
-						z = x * y;
 					}
 
-					z = z + y;
-
-					if(y == y){
-						x = x * y;
-						y = x + z;
-						x = z + x;
-						x = z + z;
-					}
-
-					y = x + z;
-					y = x * y;
-					x = x * y;
+					y = x - x;
 				}
 
 			}
 			else{
-				y = z - y;
+				x = y * x;
+				z = x + x;
 			}
 
-			x = x - z;
-			y = z + z;
 		}
 		else{
-			x = z * y;
-			x = x * z;
-		}
-
-		z = z + y;
-		y = x + y;
-
-		if(y != y){
-			z = z + z;
-			z = z * x;
-
-			if(y >= z){
-				x = y - z;
-				y = y * z;
-			}
-
-			x = y - x;
+			z = x - z;
 		}
 
 	}

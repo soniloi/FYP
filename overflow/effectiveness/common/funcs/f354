@@ -9,15 +9,6 @@ void f354(int x, int y){
 		if(y != y){
 			z = z + z;
 			x = y - y;
-			z = z - z;
-		}
-
-	}
-	else{
-		x = z + y;
-
-		if(z > y){
-			y = y + x;
 		}
 
 	}

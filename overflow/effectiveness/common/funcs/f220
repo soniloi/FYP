@@ -17,27 +17,32 @@ void f220(int x, int y){
 				x = z + x;
 			}
 
-			y = x + y;
 		}
 		else{
-			z = y - z;
+			z = y - y;
 
-			if(x >= x){
-				x = y - y;
-				y = x * z;
-			}
-			else{
-				z = y * x;
+			if(z < y){
+				z = x * x;
 
-				if(y == y){
+				if(x < y){
+					y = y * x;
+					y = x - z;
+				}
+				else{
+					z = y + y;
 					y = z - y;
 					y = x * y;
-					x = z - z;
-					x = y + z;
-					x = y + y;
-					z = z - y;
 				}
 
+			}
+			else{
+				y = z * x;
+			}
+
+			z = z - x;
+			z = y - z;
+
+			if(y > y){
 				x = x - z;
 
 				if(x != y){
@@ -49,10 +54,13 @@ void f220(int x, int y){
 				if(y > y){
 					y = y * x;
 					x = x * x;
-					z = x + y;
-					z = z + z;
 				}
-				else{
+
+			}
+			else{
+				y = y + z;
+
+				if(z > x){
 					x = x + y;
 					z = z + y;
 
@@ -62,36 +70,16 @@ void f220(int x, int y){
 					else{
 						z = y * z;
 						z = y - y;
-						x = y + z;
-						z = y + y;
 					}
 
-					x = z - z;
-					y = y * y;
-					y = y * z;
-					x = z - x;
-				}
-
-				z = z + x;
-
-				if(x > y){
 					x = y + z;
-					y = x + x;
-					z = y + y;
-					z = z * x;
-					x = y - x;
-					z = z - x;
+				}
+				else{
+					y = x + y;
 				}
 
 			}
 
-		}
-
-		x = x + y;
-
-		if(z != y){
-			x = z - z;
-			z = z + x;
 		}
 
 	}

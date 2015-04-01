@@ -6,14 +6,6 @@ void f308(int x, int y){
 	if(y > x){
 		y = y - y;
 		y = z * y;
-		z = z + z;
-	}
-	else{
-		x = y - y;
-		x = x * z;
-		y = z - z;
-		z = x - z;
-		z = z * z;
 	}
 
 

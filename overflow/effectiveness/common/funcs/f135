@@ -6,11 +6,6 @@ void f135(int x, int y){
 	if(z != x){
 		y = y * y;
 		z = y - x;
-		z = z - y;
-		x = z + z;
-	}
-	else{
-		y = y - x;
 	}
 
 
