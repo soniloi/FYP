@@ -1,4 +1,4 @@
-#!/usr/bin/env/python
+#!/usr/bin/python
 
 import os
 import random
@@ -9,14 +9,12 @@ import Runner
 funcdir = './common/funcs'
 versionbasedir = './versions'
 
-min_funcs = 0
-max_funcs = 20
 versions_per_size = 4
 runs_per_technique = 100
 
 seed_initial = 13
 
-def run_selections(daa):
+def run_selections(daa, min_funcs, max_funcs):
     random.seed(seed_initial)
 
     seeds = random.sample(xrange(0, 10000000), versions_per_size)
@@ -53,3 +51,13 @@ def run_selections(daa):
             print '[Selector] ' + str(i) + '\t' + technique + '\t' + str(count) + '\t' + str(float(count)/float(versions_per_size*runs_per_technique))
 
         sys.stdout.flush()
+
+if len(sys.argv) != 4:
+    print "Usage: Selector <path-to-debug-asserts> <min-funcs> <max-funcs>"
+    sys.exit(1)
+
+daa = sys.argv[1]
+min_funcs = int(sys.argv[2])
+max_funcs = int(sys.argv[3])
+
+run_selections(daa, min_funcs, max_funcs)
