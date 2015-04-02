@@ -5,3 +5,5 @@
 set -x
 
 rm -f *.ll *.s *.dat eggshell eggshell-rand
+clear
+
