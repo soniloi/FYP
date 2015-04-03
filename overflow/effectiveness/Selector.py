@@ -9,12 +9,8 @@ import Runner
 funcdir = './common/funcs'
 versionbasedir = './versions'
 
-versions_per_size = 4
-runs_per_technique = 100
-
-seed_initial = 13
-
-def run_selections(daa, min_funcs, max_funcs):
+def run_selections(daa, min_funcs, max_funcs, versions_per_size, runs_per_technique, seed_initial):
+    print 'daa: ' + daa + '\tmin_funcs: ' + str(min_funcs) + '\tmax_funcs: ' + str(max_funcs) + '\tversions_per_size: ' + str(versions_per_size) + '\truns_per_technique: ' + str(runs_per_technique) + '\tseed_initial: ' + str(seed_initial)
     random.seed(seed_initial)
 
     seeds = random.sample(xrange(0, 10000000), versions_per_size)
@@ -52,12 +48,15 @@ def run_selections(daa, min_funcs, max_funcs):
 
         sys.stdout.flush()
 
-if len(sys.argv) != 4:
-    print "Usage: Selector <path-to-debug-asserts> <min-funcs> <max-funcs>"
+if len(sys.argv) != 7:
+    print 'Usage: ' + sys.argv[0] + ' <path-to-debug-asserts> <min-funcs> <max-funcs> <versions-per-size> <runs-per-technique> <seed-initial>'
     sys.exit(1)
 
 daa = sys.argv[1]
 min_funcs = int(sys.argv[2])
 max_funcs = int(sys.argv[3])
+versions_per_size = int(sys.argv[4])
+runs_per_technique = int(sys.argv[5])
+seed_initial = int(sys.argv[6])
 
-run_selections(daa, min_funcs, max_funcs)
+run_selections(daa, min_funcs, max_funcs, versions_per_size, runs_per_technique, seed_initial)
