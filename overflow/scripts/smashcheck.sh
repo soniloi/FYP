@@ -28,7 +28,7 @@ bindir=`dirname $bin`
 logfile="$bindir/run.log"
 
 # Attempt to smash stack
-gdb $bin -ex "run $data1 $data2" > $logfile 2>&1 &
+gdb $bin -ex "set confirm off" -ex "run $data1 $data2" -ex "quit" > $logfile 2>&1 &
 wait
 if $grepnc "$pattern_smash" $logfile; then
 	smashed=1
