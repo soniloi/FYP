@@ -17,8 +17,11 @@ using namespace llvm;
 static cl::opt<unsigned>
 RandomSeed("rnd-seed", cl::desc("Seed used to generate pseudo-randomness"), cl::value_desc("seed value"));
 
+static cl::opt<unsigned>
+MaxAllocs("max-allocs", cl::desc("Maximum number of dummy variables that may be inserted"), cl::value_desc("max inserts value"));
+
 static std::mt19937 rng;
-static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
+//static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
 static bool set = false;
 
 namespace {
@@ -41,6 +44,7 @@ namespace {
 			Type * Int32Type = IntegerType::getInt32Ty(getGlobalContext());
 
 			// Insert a bounded random number of alloca instructions at the start of the function
+			std::uniform_int_distribution<uint32_t> dist(0, MaxAllocs);
 			int its = dist(rng);
 			if(its > 0){
 				int i;
