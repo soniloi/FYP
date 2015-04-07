@@ -42,8 +42,12 @@ if [[ "$#" > $args_mandatory ]]; then
 	let pos_first=$((args_mandatory+1))
 	optso=""
 	for optflag in ${@:$pos_first}; do
-		if [[ $optflag == "-alloc-insert" ]]; then
+		if [[ $optflag == "-alloc-insert-4" ]]; then
+			optflag="-alloc-insert"
 			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=$seed -max-allocs=3"
+		elif [[ $optflag == "-alloc-insert-6" ]]; then
+			optflag="-alloc-insert"
+			optso="$optso $baseaddr/lib/AllocInsert.so -rnd-seed=$seed -max-allocs=5"
 		elif [[ $optflag == "-func-reorder" ]]; then
 			optso="$baseaddr/lib/FuncReorder.so -rnd-seed=$seed"
 		elif [[ $optflag == "-bb-reorder" ]]; then

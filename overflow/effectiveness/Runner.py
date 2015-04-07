@@ -23,7 +23,7 @@ data2_basepath = 'data2.dat'
 
 link = '' # Any linker flags that need to be passed
 
-optimizations = ['-alloc-insert', '-func-reorder', '-bb-reorder']
+optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
 
 def write_file(funcnames, versiondir, targetpath):
     mainpath = versiondir + os.sep + 'main.func'
