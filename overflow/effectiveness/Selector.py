@@ -41,7 +41,7 @@ def run_selections(daa, min_funcs, max_funcs, versions_per_size, runs_per_techni
                 if not technique in aggregate_smash_counts:
                     aggregate_smash_counts[technique] = 0
                 aggregate_smash_counts[technique] += smash_counts[technique]
-                print 'technique: ' + technique + '\tcount: ' + str(count)
+                print '[Runner] ' + str(i) + '\t' + technique + '\t' + str(count) + '\t' + str(float(count)/float(runs_per_technique))
 
         for technique, count in aggregate_smash_counts.iteritems():
             print '[Selector] ' + str(i) + '\t' + technique + '\t' + str(count) + '\t' + str(float(count)/float(versions_per_size*runs_per_technique))
