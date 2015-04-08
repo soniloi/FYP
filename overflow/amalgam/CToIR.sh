@@ -33,5 +33,5 @@ fi
 echo "compiled -> $progir"
 
 # Run common optimizations; this is really slow!
-#$local_opt $optflag $progir -o $progir
+$local_opt $optflag $progir -o $progir
 echo "optimized ($optlevel) -> $progir"
