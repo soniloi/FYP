@@ -2,9 +2,9 @@
 
 ### Generate LLVM IR from a C source file
 
-usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename>"
-args_mandatory=2
-if [[ "$#" < $args_mandatory ]]; then
+usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> <opt-level>"
+args_mandatory=3
+if [[ "$#" -ne $args_mandatory ]]; then
   echo $usage
   exit 1
 fi
@@ -18,10 +18,12 @@ fi
 progname=$2
 progc=$progname.c
 progir=$progname.ll
+
 local_clang="$baseaddr/bin/clang"
 local_opt="$baseaddr/bin/opt"
 frontendflag='-emit-llvm -S -c -w'
-optlevel='-O2'
+
+optlevel=$3
 optflag="$optlevel -S"
 
 # Run frontend
@@ -33,5 +35,5 @@ fi
 echo "compiled -> $progir"
 
 # Run common optimizations
-#$local_opt $optflag $progir -o $progir
-#echo "optimized ($optlevel) -> $progir"
+$local_opt $optflag $progir -o $progir
+echo "optimized ($optlevel) -> $progir"

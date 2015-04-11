@@ -25,6 +25,8 @@ link = '-ldl -lpthread' # Any linker flags that need to be passed
 
 optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
 
+metrics = ['size', 'retired', 'heap']
+
 def write_file(versiondir, targetpath):
     fileout = open(targetpath, 'w')
 
@@ -52,12 +54,10 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
 
     print '[--- ' + versiondir + ' ---]'
 
-    print 'runs_per_technique: \'' + str(runs_per_technique) + '\''
-
     random.seed(seed_initial)
     target_basename_rand = target_basename + '-rand'
     seeds = random.sample(xrange(0, 10000000), runs_per_technique)
-    #print seeds
+    print seeds
 
     target_sourcename = target_basename + '.c'
     target_irname_opt = target_basename + '.ll.optimized'
@@ -65,7 +65,6 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
 
     write_file(versiondir, target_sourcename)
 
-    '''
     # Compile to IR (needed for both normal and randomized versions)
     run_ctoir = subprocess.Popen([ctoir, daa, target_basename], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_ctoir.communicate()
@@ -82,11 +81,16 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
     heap = int(subprocess.check_output([heapcheck, target_basename, samplein]))
     print 'size: ' + str(size) + '\tretired: ' + str(retired) + '\theap: ' + str(heap)
 
-    
-    smash_counts = {}
+    '''
+    counts = {}
 
     for optimization in optimizations:
-        smash_counts[optimization] = 0
+        counts[optimization] = {}
+        for metric in metrics:
+            counts[optimization][metric] = {}
+            counts[optimization][metric]['min'] = sys.maxint
+            counts[optimization][metric]['max'] = 0
+            counts[optimization][metric]['tot'] = 0.0
 
         for seed in seeds:
             #subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
@@ -94,13 +98,9 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
             print optimization + ' with seed = ' + str(seed) + ': ',
             run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             stdout, stderr = run_irtobin.communicate()
-            #print stdout
+            print stdout
 
-            smashed = int(subprocess.check_output([smashcheck, target_basename_rand, data1, data2]))
-            smash_counts[optimization] += smashed
-            print ' smashed?: ' + str(smashed)
-
-    return smash_counts
+    return counts
     '''
 
 if len(sys.argv) != 5:
