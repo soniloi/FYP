@@ -15,17 +15,25 @@ scriptdir = '../scripts'
 calc_payloads = scriptdir + os.sep + 'calculate_payloads.sh'
 ctoir = scriptdir + os.sep + 'CToIR.sh'
 irtobin = scriptdir + os.sep + 'IRToBin.sh'
-sizecheck = scriptdir + os.sep + 'sizecheck.sh'
-retiredcheck = scriptdir + os.sep + 'retiredcheck.sh'
-heapcheck = scriptdir + os.sep + 'heapcheck.sh'
+
+#sizecheck = scriptdir + os.sep + 'sizecheck.sh'
+#retiredcheck = scriptdir + os.sep + 'retiredcheck.sh'
+#heapcheck = scriptdir + os.sep + 'heapcheck.sh'
 
 samplein = commondir + os.sep + 'sample1.sql'
 
 link = '-ldl -lpthread' # Any linker flags that need to be passed
 
-optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
+optimizations = ['-alloc-insert-4']
+#optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
 
 metrics = ['size', 'retired', 'heap']
+
+metrics = {
+    'size' : scriptdir + os.sep + 'sizecheck.sh',
+    'retired' : scriptdir + os.sep + 'retiredcheck.sh',
+    'heap' : scriptdir + os.sep + 'heapcheck.sh'
+}
 
 def write_file(versiondir, targetpath):
     fileout = open(targetpath, 'w')
@@ -66,7 +74,7 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
     write_file(versiondir, target_sourcename)
 
     # Compile to IR (needed for both normal and randomized versions)
-    run_ctoir = subprocess.Popen([ctoir, daa, target_basename], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    run_ctoir = subprocess.Popen([ctoir, daa, target_basename, '-O2'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_ctoir.communicate()
     #print stdout
 
@@ -76,12 +84,15 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
     #print stdout
 
     # Collect information about the base version
-    size = int(subprocess.check_output([sizecheck, target_basename, samplein]))
-    retired = int(subprocess.check_output([retiredcheck, target_basename, samplein]))
-    heap = int(subprocess.check_output([heapcheck, target_basename, samplein]))
-    print 'size: ' + str(size) + '\tretired: ' + str(retired) + '\theap: ' + str(heap)
+    #size = int(subprocess.check_output([sizecheck, target_basename, samplein]))
+    #retired = int(subprocess.check_output([retiredcheck, target_basename, samplein]))
+    #heap = int(subprocess.check_output([heapcheck, target_basename, samplein]))
+    #print 'size: ' + str(size) + '\tretired: ' + str(retired) + '\theap: ' + str(heap)
+    for metric, checkscript in metrics.iteritems():
+        retval = int(subprocess.check_output([checkscript, target_basename, samplein]))
+        print '\t' + metric + ': ' + str(retval),
+    print
 
-    '''
     counts = {}
 
     for optimization in optimizations:
@@ -95,13 +106,22 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
         for seed in seeds:
             #subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
 
-            print optimization + ' with seed = ' + str(seed) + ': ',
+            print '\n' + optimization + ' with seed = ' + str(seed) + ': ',
             run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             stdout, stderr = run_irtobin.communicate()
-            print stdout
+            #print stdout
 
-    return counts
-    '''
+            for metric, checkscript in metrics.iteritems():
+                retval = int(subprocess.check_output([checkscript, target_basename_rand, samplein]))
+                print '\t' + metric + ': ' + str(retval),
+            print
+
+            #size = int(subprocess.check_output([sizecheck, target_basename, samplein]))
+            #retired = int(subprocess.check_output([retiredcheck, target_basename, samplein]))
+            #heap = int(subprocess.check_output([heapcheck, target_basename, samplein]))
+            #print 'size: ' + str(size) + '\tretired: ' + str(retired) + '\theap: ' + str(heap)
+
+    #return counts
 
 if len(sys.argv) != 5:
     print 'Usage: ' + sys.argv[0] + ' <path-to-debug-asserts> <version-no> <runs-per-technique> <seed-initial>'
@@ -119,3 +139,12 @@ if not os.path.exists(versiondir):
 
 #print 'daa: ' + daa + '\tversiondir: ' + versiondir + '\ttarget_basename: ' + target_basename + '\truns_per_technique: ' + str(runs_per_technique) + '\tseed_initial: ' + str(seed_initial)
 run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial)
+'''
+counts = run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial)
+for optimization, metrics in counts.iteritems():
+    for metric, kinds in metrics.iteritems():
+        print optimization + '\t' + metric + '\tmin: ' + kinds['min']
+        print optimization + '\t' + metric + '\tmax: ' + kinds['min']
+        print optimization + '\t' + metric + '\tavg: ' + str(float(kinds['min'])/runs_per_technique)
+'''
+
