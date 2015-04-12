@@ -60,12 +60,12 @@ def write_file(versiondir, targetpath):
 
 def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial):
 
-    print '[--- ' + versiondir + ' ---]'
+    #print '[--- ' + versiondir + ' ---]',
 
     random.seed(seed_initial)
     target_basename_rand = target_basename + '-rand'
     seeds = random.sample(xrange(0, 10000000), runs_per_technique)
-    print seeds
+    #print seeds
 
     target_sourcename = target_basename + '.c'
     target_irname_opt = target_basename + '.ll.optimized'
@@ -83,15 +83,19 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
     stdout, stderr = run_irtobin.communicate()
     #print stdout
 
+    base_stats = {}
+
     # Collect information about the base version
-    #size = int(subprocess.check_output([sizecheck, target_basename, samplein]))
-    #retired = int(subprocess.check_output([retiredcheck, target_basename, samplein]))
-    #heap = int(subprocess.check_output([heapcheck, target_basename, samplein]))
-    #print 'size: ' + str(size) + '\tretired: ' + str(retired) + '\theap: ' + str(heap)
     for metric, checkscript in metrics.iteritems():
         retval = int(subprocess.check_output([checkscript, target_basename, samplein]))
-        print '\t' + metric + ': ' + str(retval),
+        base_stats[metric] = retval
+
+    '''
+    print ' base: ',
+    for metric, stat in base_stats.iteritems():
+        print '\t' + metric + ': ' + str(stat),
     print
+    '''
 
     counts = {}
 
@@ -104,22 +108,17 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
             counts[optimization][metric]['tot'] = 0.0
 
         for seed in seeds:
-            #subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
+            subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
 
-            print '\n' + optimization + ' with seed = ' + str(seed) + ': ',
             run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             stdout, stderr = run_irtobin.communicate()
             #print stdout
 
+            print '[' + versiondir + '] ' + optimization + ' with seed = ' + str(seed) + ':',
             for metric, checkscript in metrics.iteritems():
                 retval = int(subprocess.check_output([checkscript, target_basename_rand, samplein]))
-                print '\t' + metric + ': ' + str(retval),
+                print '\t' + metric + ': ' + str(float(retval)/float(base_stats[metric])),
             print
-
-            #size = int(subprocess.check_output([sizecheck, target_basename, samplein]))
-            #retired = int(subprocess.check_output([retiredcheck, target_basename, samplein]))
-            #heap = int(subprocess.check_output([heapcheck, target_basename, samplein]))
-            #print 'size: ' + str(size) + '\tretired: ' + str(retired) + '\theap: ' + str(heap)
 
     #return counts
 
