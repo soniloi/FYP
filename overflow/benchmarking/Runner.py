@@ -16,10 +16,6 @@ calc_payloads = scriptdir + os.sep + 'calculate_payloads.sh'
 ctoir = scriptdir + os.sep + 'CToIR.sh'
 irtobin = scriptdir + os.sep + 'IRToBin.sh'
 
-#sizecheck = scriptdir + os.sep + 'sizecheck.sh'
-#retiredcheck = scriptdir + os.sep + 'retiredcheck.sh'
-#heapcheck = scriptdir + os.sep + 'heapcheck.sh'
-
 samplein = commondir + os.sep + 'sample1.sql'
 
 link = '-ldl -lpthread' # Any linker flags that need to be passed
@@ -27,7 +23,7 @@ link = '-ldl -lpthread' # Any linker flags that need to be passed
 optimizations = ['-alloc-insert-4']
 #optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
 
-metrics = ['size', 'retired', 'heap']
+#metrics = ['size', 'retired', 'heap']
 
 metrics = {
     'size' : scriptdir + os.sep + 'sizecheck.sh',
@@ -101,7 +97,7 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
 
     for optimization in optimizations:
         counts[optimization] = {}
-        for metric in metrics:
+        for metric, checkscript in metrics.iteritems():
             counts[optimization][metric] = {}
             counts[optimization][metric]['min'] = sys.maxint
             counts[optimization][metric]['max'] = 0
@@ -114,13 +110,19 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
             stdout, stderr = run_irtobin.communicate()
             #print stdout
 
-            print '[' + versiondir + '] ' + optimization + ' with seed = ' + str(seed) + ':',
+            print '[Single] ' + versiondir + ' ' + optimization + ' with seed = ' + str(seed) + ':',
             for metric, checkscript in metrics.iteritems():
                 retval = int(subprocess.check_output([checkscript, target_basename_rand, samplein]))
-                print '\t' + metric + ': ' + str(float(retval)/float(base_stats[metric])),
+                retvalprop = float(retval)/float(base_stats[metric])
+                if retvalprop < counts[optimization][metric]['min']:
+                    counts[optimization][metric]['min'] = retvalprop
+                if retvalprop > counts[optimization][metric]['max']:
+                    counts[optimization][metric]['max'] = retvalprop
+                counts[optimization][metric]['tot'] += retvalprop
+                print '\t' + metric + ': ' + str(retvalprop),
             print
 
-    #return counts
+    return counts
 
 if len(sys.argv) != 5:
     print 'Usage: ' + sys.argv[0] + ' <path-to-debug-asserts> <version-no> <runs-per-technique> <seed-initial>'
@@ -137,13 +139,11 @@ if not os.path.exists(versiondir):
     os.makedirs(versiondir)
 
 #print 'daa: ' + daa + '\tversiondir: ' + versiondir + '\ttarget_basename: ' + target_basename + '\truns_per_technique: ' + str(runs_per_technique) + '\tseed_initial: ' + str(seed_initial)
-run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial)
-'''
+#run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial)
+
 counts = run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial)
 for optimization, metrics in counts.iteritems():
     for metric, kinds in metrics.iteritems():
-        print optimization + '\t' + metric + '\tmin: ' + kinds['min']
-        print optimization + '\t' + metric + '\tmax: ' + kinds['min']
-        print optimization + '\t' + metric + '\tavg: ' + str(float(kinds['min'])/runs_per_technique)
-'''
+        print '[Aggregate] ' + versiondir + ' ' + optimization + ' ' + metric + '\tmin: ' + str(kinds['min']) + '\tmax: ' + str(kinds['max']) + '\tavg: ' + str(float(kinds['tot'])/runs_per_technique)
+
 
