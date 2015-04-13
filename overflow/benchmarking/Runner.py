@@ -20,10 +20,8 @@ samplein = commondir + os.sep + 'sample1.sql'
 
 link = '-ldl -lpthread' # Any linker flags that need to be passed
 
-optimizations = ['-alloc-insert-4']
-#optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
-
-#metrics = ['size', 'retired', 'heap']
+#optimizations = ['-alloc-insert-4']
+optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
 
 metrics = {
     'size' : scriptdir + os.sep + 'sizecheck.sh',
@@ -31,6 +29,7 @@ metrics = {
     'heap' : scriptdir + os.sep + 'heapcheck.sh'
 }
 
+# Write a source file
 def write_file(versiondir, targetpath):
     fileout = open(targetpath, 'w')
 
@@ -54,7 +53,17 @@ def write_file(versiondir, targetpath):
 
     fileout.close()
 
-def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial):
+# Get the average reading of a compiled run for a given test, over a number of execution runs
+def get_average_reading(checkscript, basename, samplein, readings_per_run):
+    temp = float(subprocess.check_output([checkscript, basename, samplein])) # Run once to warm the cache, without using the output for anything
+    retval = 0.0
+    for i in range(0, readings_per_run):
+        retval += float(subprocess.check_output([checkscript, basename, samplein]))
+        #print '\t' + checkscript + ': ' + str(retval),
+    #print
+    return retval/float(readings_per_run)
+
+def run_single(daa, versiondir, target_basename, runs_per_technique, readings_per_run, seed_initial):
 
     #print '[--- ' + versiondir + ' ---]',
 
@@ -80,18 +89,18 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
     #print stdout
 
     base_stats = {}
+    for metric, checkscript in metrics.iteritems():
+        base_stats[metric] = 0.0
 
     # Collect information about the base version
     for metric, checkscript in metrics.iteritems():
-        retval = int(subprocess.check_output([checkscript, target_basename, samplein]))
-        base_stats[metric] = retval
-
-    '''
-    print ' base: ',
-    for metric, stat in base_stats.iteritems():
-        print '\t' + metric + ': ' + str(stat),
+        #retval = int(subprocess.check_output([checkscript, target_basename, samplein]))
+        #if i > 0: # Don't include the first reading, as it may throw off the average
+        #    base_stats[metric] += float(retval)
+        retval = get_average_reading(checkscript, target_basename, samplein, readings_per_run)
+        base_stats[metric] = float(retval)
+        print '\t' + metric + ': ' + str(retval),
     print
-    '''
 
     counts = {}
 
@@ -112,7 +121,8 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
 
             print '[Single] ' + versiondir + ' ' + optimization + ' with seed = ' + str(seed) + ':',
             for metric, checkscript in metrics.iteritems():
-                retval = int(subprocess.check_output([checkscript, target_basename_rand, samplein]))
+                #retval = int(subprocess.check_output([checkscript, target_basename_rand, samplein]))
+                retval = get_average_reading(checkscript, target_basename_rand, samplein, readings_per_run)
                 retvalprop = float(retval)/float(base_stats[metric])
                 if retvalprop < counts[optimization][metric]['min']:
                     counts[optimization][metric]['min'] = retvalprop
@@ -124,24 +134,25 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, seed_initia
 
     return counts
 
-if len(sys.argv) != 5:
-    print 'Usage: ' + sys.argv[0] + ' <path-to-debug-asserts> <version-no> <runs-per-technique> <seed-initial>'
+if len(sys.argv) != 6:
+    print 'Usage: ' + sys.argv[0] + ' <path-to-debug-asserts> <version-no> <runs-per-technique> <readings-per-run> <seed-initial>'
     sys.exit(1)
 
 daa = sys.argv[1]
 version_no = sys.argv[2]
 runs_per_technique = int(sys.argv[3])
-seed_initial = int(sys.argv[4])
+readings_per_run = int(sys.argv[4])
+seed_initial = int(sys.argv[5])
 
 versiondir = versionbasedir + os.sep + 'v-' + str(version_no)
 target_basename = versiondir + os.sep + 'amalgam'
 if not os.path.exists(versiondir):
     os.makedirs(versiondir)
 
-#print 'daa: ' + daa + '\tversiondir: ' + versiondir + '\ttarget_basename: ' + target_basename + '\truns_per_technique: ' + str(runs_per_technique) + '\tseed_initial: ' + str(seed_initial)
-#run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial)
+#print 'daa: ' + daa + '\tversiondir: ' + versiondir + '\ttarget_basename: ' + target_basename + '\truns_per_technique: ' + str(runs_per_technique) + '\treadings_per_run: ' + str(readings_per_run) + '\tseed_initial: ' + str(seed_initial)
+#run_single(daa, versiondir, target_basename, runs_per_technique, readings_per_run, seed_initial)
 
-counts = run_single(daa, versiondir, target_basename, runs_per_technique, seed_initial)
+counts = run_single(daa, versiondir, target_basename, runs_per_technique, readings_per_run, seed_initial)
 for optimization, metrics in counts.iteritems():
     for metric, kinds in metrics.iteritems():
         print '[Aggregate] ' + versiondir + ' ' + optimization + ' ' + metric + '\tmin: ' + str(kinds['min']) + '\tmax: ' + str(kinds['max']) + '\tavg: ' + str(float(kinds['tot'])/runs_per_technique)
