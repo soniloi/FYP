@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Construct payloads
+# Construct payloads: collect the necessary addresses, and write the files needed to smash eggshell
 
 grepnc="grep --color=never"
 
