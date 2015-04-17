@@ -5,12 +5,6 @@
 usage="Usage: $0 <executable> <library-fn-name> <item-buffer-bound>"
 grepnc="grep --color=never"
 
-# Check number of parameters
-#if [[ "$#" -ne 3 ]]; then
-#        echo $usage
-#        exit 1
-#fi
-
 binname=$1
 libfn="_IO_putc"
 bufbound=47
