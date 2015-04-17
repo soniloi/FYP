@@ -21,7 +21,10 @@ samplein = commondir + os.sep + 'sample1.sql'
 link = '-ldl -lpthread' # Any linker flags that need to be passed
 
 #optimizations = ['-alloc-insert-4']
-optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
+optimizations = ['-func-reorder']
+#optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
+
+randsuffix = '-rand'
 
 metrics = {
     'size' : scriptdir + os.sep + 'sizecheck.sh',
@@ -59,8 +62,6 @@ def get_average_reading(checkscript, basename, samplein, readings_per_run):
     retval = 0.0
     for i in range(0, readings_per_run):
         retval += float(subprocess.check_output([checkscript, basename, samplein]))
-        #print '\t' + checkscript + ': ' + str(retval),
-    #print
     return retval/float(readings_per_run)
 
 def run_single(daa, versiondir, target_basename, runs_per_technique, readings_per_run, seed_initial):
@@ -68,13 +69,14 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, readings_pe
     #print '[--- ' + versiondir + ' ---]',
 
     random.seed(seed_initial)
-    target_basename_rand = target_basename + '-rand'
+    target_basename_rand = target_basename + randsuffix
     seeds = random.sample(xrange(0, 10000000), runs_per_technique)
     #print seeds
 
     target_sourcename = target_basename + '.c'
-    target_irname_opt = target_basename + '.ll.optimized'
+    target_irname_rand = target_basename_rand + '.ll'
     target_asmname = target_basename + '.s'
+    target_asmname_rand = target_basename_rand + '.s'
 
     write_file(versiondir, target_sourcename)
 
@@ -94,9 +96,6 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, readings_pe
 
     # Collect information about the base version
     for metric, checkscript in metrics.iteritems():
-        #retval = int(subprocess.check_output([checkscript, target_basename, samplein]))
-        #if i > 0: # Don't include the first reading, as it may throw off the average
-        #    base_stats[metric] += float(retval)
         retval = get_average_reading(checkscript, target_basename, samplein, readings_per_run)
         base_stats[metric] = float(retval)
         print '\t' + metric + ': ' + str(retval),
@@ -113,7 +112,7 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, readings_pe
             counts[optimization][metric]['tot'] = 0.0
 
         for seed in seeds:
-            subprocess.call(['rm', '-f', target_irname_opt, target_asmname]) # Delete artefacts from earlier runs
+            subprocess.call(['rm', '-f', target_irname_rand, target_asmname_rand]) # Delete artefacts from earlier runs
 
             run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             stdout, stderr = run_irtobin.communicate()
@@ -121,8 +120,9 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, readings_pe
 
             print '[Single] ' + versiondir + ' ' + optimization + ' with seed = ' + str(seed) + ':',
             for metric, checkscript in metrics.iteritems():
-                #retval = int(subprocess.check_output([checkscript, target_basename_rand, samplein]))
                 retval = get_average_reading(checkscript, target_basename_rand, samplein, readings_per_run)
+                if(metric == 'size'):
+                    retval -= len(randsuffix) # Compensate for discrepancy in file-size that arises due to name difference
                 retvalprop = float(retval)/float(base_stats[metric])
                 if retvalprop < counts[optimization][metric]['min']:
                     counts[optimization][metric]['min'] = retvalprop
