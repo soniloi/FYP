@@ -21,8 +21,8 @@ samplein = commondir + os.sep + 'sample1.sql'
 link = '-ldl -lpthread' # Any linker flags that need to be passed
 
 #optimizations = ['-alloc-insert-4']
-optimizations = ['-func-reorder']
-#optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
+#optimizations = ['-func-reorder']
+optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
 
 randsuffix = '-rand'
 
@@ -81,7 +81,7 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, readings_pe
     write_file(versiondir, target_sourcename)
 
     # Compile to IR (needed for both normal and randomized versions)
-    run_ctoir = subprocess.Popen([ctoir, daa, target_basename, '-O2'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    run_ctoir = subprocess.Popen([ctoir, daa, target_basename, ''], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_ctoir.communicate()
     #print stdout
 
@@ -148,9 +148,6 @@ versiondir = versionbasedir + os.sep + 'v-' + str(version_no)
 target_basename = versiondir + os.sep + 'amalgam'
 if not os.path.exists(versiondir):
     os.makedirs(versiondir)
-
-#print 'daa: ' + daa + '\tversiondir: ' + versiondir + '\ttarget_basename: ' + target_basename + '\truns_per_technique: ' + str(runs_per_technique) + '\treadings_per_run: ' + str(readings_per_run) + '\tseed_initial: ' + str(seed_initial)
-#run_single(daa, versiondir, target_basename, runs_per_technique, readings_per_run, seed_initial)
 
 counts = run_single(daa, versiondir, target_basename, runs_per_technique, readings_per_run, seed_initial)
 for optimization, metrics in counts.iteritems():
