@@ -27,6 +27,9 @@
 *.out
 *.app
 
+# pyc
+*.pyc
+
 # IR and assembly files
 *.bc
 *.ll
@@ -58,12 +61,3 @@ rel/llvm/lib/Transforms/Scalar/
 rel/llvm/lib/Transforms/Utils/
 rel/llvm/lib/Transforms/Vectorize/
 rel/llvm/lib/Transforms/*/Debug+Asserts/
-
-# Junk created in test directories
-tests/sieve/*
-!tests/sieve/sieve.c
-tests/ackermann/*
-!tests/ackermann/ackermann.c
-
-# pyc
-*.pyc
