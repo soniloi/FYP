@@ -21,7 +21,6 @@ static cl::opt<unsigned>
 MaxAllocs("max-allocs", cl::desc("Maximum number of dummy variables that may be inserted"), cl::value_desc("max inserts value"));
 
 static std::mt19937 rng;
-//static std::uniform_int_distribution<uint32_t> dist(0, 3); // Restrict range to 0-3 FIXME: tweak this as appropriate
 static bool set = false;
 
 namespace {
@@ -64,5 +63,4 @@ namespace {
 }
 
 char AllocInsert::ID = 0; // Initialize pass ID
-static RegisterPass<AllocInsert> X("alloc-insert", "Alloc Insert Pass", true, false); // FIXME: check boolean params
-
+static RegisterPass<AllocInsert> X("alloc-insert", "Alloc Insert Pass", true, false);

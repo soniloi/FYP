@@ -23,7 +23,7 @@ namespace {
 		static char ID; // Pass identification, replacement for typeid
 		FuncReorder() : ModulePass(ID) {}
 
-		// Return a random integer from a uniformly-distributed interval start, end
+		// Return a random integer from a uniformly-distributed interval (start, end)
 		int uniform(uint start, uint end, std::mt19937 &rng){
 			std::uniform_int_distribution<uint32_t> dist(start, end);
 			return dist(rng);
@@ -75,5 +75,4 @@ namespace {
 }
 
 char FuncReorder::ID = 0; // Initialize pass ID
-static RegisterPass<FuncReorder> X("func-reorder", "Function Reordering Pass", true, false); // FIXME: check boolean params
-
+static RegisterPass<FuncReorder> X("func-reorder", "Function Reordering Pass", true, false);

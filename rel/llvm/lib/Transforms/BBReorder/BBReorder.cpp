@@ -78,5 +78,4 @@ namespace {
 }
 
 char BBReorder::ID = 0; // Initialize pass ID
-static RegisterPass<BBReorder> X("bb-reorder", "Basic Block Reorder Pass", true, false); // FIXME: check boolean params
-
+static RegisterPass<BBReorder> X("bb-reorder", "Basic Block Reorder Pass", true, false);
