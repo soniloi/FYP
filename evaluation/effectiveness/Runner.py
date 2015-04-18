@@ -91,7 +91,7 @@ def run_single(daa, seed_initial, funcnames, versiondir, target_basename, runs_p
     write_file(funcnames, versiondir, target_sourcename)
 
     # Compile to IR (needed for both normal and randomized versions)
-    run_ctoir = subprocess.Popen([ctoir, daa, target_basename], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    run_ctoir = subprocess.Popen([ctoir, daa, target_basename, ''], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_ctoir.communicate()
     #print stdout
 
