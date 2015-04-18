@@ -1,5 +1,12 @@
 #!/bin/bash
 
+## Compile, assemble, and link from LLVM IR (assembly form) to an executable, running randomization passes as requested
+## Possible passes:
+##	-alloc-insert-4: run AllocInsert pass with -max-allocs=3
+##	-alloc-insert-6: run AllocInsert pass with -max-allocs=5
+##	-func-reorder: run FuncReorder pass
+##	-bb-reorder: run BBReorder pass
+
 usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> <seed> <link> [options]"
 args_mandatory=4
 if [[ "$#" < $args_mandatory ]]; then
@@ -32,9 +39,7 @@ fi
 
 progrand="$progname-rand"
 prograndir="$progrand.ll"
-#progirunopt=$progir.unoptimized
-#progiropt=$progir.optimized
-#progs=$progname.s
+
 irflag='-S'
 
 # Run optimizer, if requested
@@ -83,4 +88,3 @@ if ! [[ -x $progname ]]; then
 	exit 1
 fi
 echo "assembled and linked -> $progname"
-
