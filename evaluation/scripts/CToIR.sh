@@ -1,6 +1,6 @@
 #!/bin/bash
 
-### Generate LLVM IR from a C source file
+### Generate LLVM IR (assembly form) from a C source file
 
 usage="Usage: $0 <path-to-Debug+Asserts-build-dir> <basename> <opt-level>"
 args_mandatory=3
@@ -34,6 +34,6 @@ if ! [[ -f $progir ]]; then
 fi
 echo "compiled -> $progir"
 
-# Run common optimizations
+# Run common optimizations to the level specified
 $local_opt $optflag $progir -o $progir
 echo "optimized ($optlevel) -> $progir"
