@@ -6,7 +6,7 @@ if [[ "$#" -ne 1 ]]; then
 fi
 
 daa=$1
-total_versions=16
+total_versions=64
 runs_per_technique=10
 readings_per_run=4
 seed_initial=17

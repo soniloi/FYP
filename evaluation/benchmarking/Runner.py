@@ -20,8 +20,6 @@ samplein = commondir + os.sep + 'sample1.sql'
 
 link = '-ldl -lpthread' # Any linker flags that need to be passed
 
-#optimizations = ['-alloc-insert-4']
-#optimizations = ['-func-reorder']
 optimizations = ['-alloc-insert-4', '-alloc-insert-6', '-func-reorder', '-bb-reorder']
 
 randsuffix = '-rand'
@@ -44,8 +42,6 @@ def write_file(versiondir, targetpath):
     # Construct and shuffle list of filepaths to functions we will be including
     funcpaths = os.listdir(funcdirpath)
     random.shuffle(funcpaths)
-    #print
-    #print funcpaths
     
     # Concatenate functions in order onto source
     for funcpath in funcpaths:
@@ -66,12 +62,9 @@ def get_average_reading(checkscript, basename, samplein, readings_per_run):
 
 def run_single(daa, versiondir, target_basename, runs_per_technique, readings_per_run, seed_initial):
 
-    #print '[--- ' + versiondir + ' ---]',
-
     random.seed(seed_initial)
     target_basename_rand = target_basename + randsuffix
     seeds = random.sample(xrange(0, 10000000), runs_per_technique)
-    #print seeds
 
     target_sourcename = target_basename + '.c'
     target_irname_rand = target_basename_rand + '.ll'
@@ -81,14 +74,12 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, readings_pe
     write_file(versiondir, target_sourcename)
 
     # Compile to IR (needed for both normal and randomized versions)
-    run_ctoir = subprocess.Popen([ctoir, daa, target_basename, ''], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    run_ctoir = subprocess.Popen([ctoir, daa, target_basename, '-O2'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_ctoir.communicate()
-    #print stdout
 
     # Compile base version without randomization
     run_irtobin = subprocess.Popen([irtobin, daa, target_basename, '0', link], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, stderr = run_irtobin.communicate()
-    #print stdout
 
     base_stats = {}
     for metric, checkscript in metrics.iteritems():
@@ -116,7 +107,6 @@ def run_single(daa, versiondir, target_basename, runs_per_technique, readings_pe
 
             run_irtobin = subprocess.Popen([irtobin, daa, target_basename, str(seed), link, optimization], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             stdout, stderr = run_irtobin.communicate()
-            #print stdout
 
             print '[Single] ' + versiondir + ' ' + optimization + ' with seed = ' + str(seed) + ':',
             for metric, checkscript in metrics.iteritems():
