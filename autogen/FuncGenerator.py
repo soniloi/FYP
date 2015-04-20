@@ -1,4 +1,4 @@
-#!/usr/bin/env/python
+#!/usr/bin/env python
 import random
 
 max_statements = 3 # Maximum number of statements in a basic block

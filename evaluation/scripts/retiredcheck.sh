@@ -24,7 +24,6 @@ temp="$bindir/rettempp"
 
 cat $input | $counter $stat $bin > $temp 2>&1
 retline=`$grepnc "$stat" $temp`
-#echo $retline
 retwords=($retline)
 retinsts=`echo ${retwords[0]} | tr -d ,`
 

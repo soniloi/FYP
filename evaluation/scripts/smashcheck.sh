@@ -1,10 +1,7 @@
 #!/bin/bash
 
-### Check whether running a binary with specific given payloads overflows the call stack
-### Program does nothing useful; it is just started and then exits; it has been
-###  arranged so that the stack will be smashed on exit
-### If no overflow occurs (or if the attempt causes a segmentation fault), then 
-###  there will be no output
+## Check whether running a binary with specific given payloads overflows the call stack such that a shell is spawned
+## Prints '1' to stdout if shell was spawned, '0' otherwise
 
 usage="Usage: $0 <path-to-binary> <path-to-first payload> <path-to-second-payload>"
 grepnc="grep --color=never -q"
